@@ -1,23 +1,24 @@
 {
-  "name": "hello_node",
+  "name": "hello-node",
   "version": "1.0.0",
-  "description": "first node project",
-  "main": "index.js",
-  "config" : { "port" : "3000" },
+  "private": true,
+  "config": {"port": "3001"},
   "scripts": {
-    "start": "node index.js",
-    "test": "tap test/*.js"
+    "start": "node ./bin/www"
   },
-  "author": "twotwo",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
-  },
-  "engines": {
-    "node": "^8.9.1"
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "hbs": "~4.0.1",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/twotwo/practice-nodejs.git"
-  }
+  },
+  "author": "twotwo <twotwo.li@gmail.com> (http://li3huo.com)",
+  "license": "MIT"
 }
