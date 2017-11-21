@@ -1,16 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET console listing. */
+/* Fake Info for Test */
+var info = require('../models/fake_info');
+
+/* GET console info. */
 router.get('/', function(req, res, next) {
-  // res.send('console response');
-  res.render('list', { title: 'user' }); // 加载 list.hbs 模板并传递数据给模板
+	var user = new Object();
+	user.appId = '20003'; // iOS Demo
+	res.render('console', { user: user, logs: info.logs }); // 加载 console.hbs 模板并传递数据给模板
 });
 
-/* POST console listing. */
+/* POST console info. */
 router.post('/', function(req, res, next) {
-  // res.send('console response');
-  res.render('list', { title: 'user' }); // 加载 list.hbs 模板并传递数据给模板
+	var user = new Object();
+	user.appId = req.body.appId || '';
+	user.devId = req.body.devId || '';
+
+	res.render('console', {  user: user, logs: info.logs }); // 加载 console.hbs 模板并传递数据给模板
 });
 
 module.exports = router;
