@@ -1,0 +1,14 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<p>log console</p>
+<form action="./" method="post">
+	<label for="user[name]">Name:
+		<input type="text" name="user[name]" value="{{user.name}}">
+	</label>
+	<input type="submit" name="submit" value="Update">
+</form>
+<ul>
+	{{#each users}}
+	<li><a href="/user/{{id}}">{{name}}</a></li>
+	{{/each}}
+</ul>
