@@ -1,0 +1,16 @@
+<a href="..">返回上级</a>
+<p></p>
+<form action="./" method="post">
+	<label for="appId">应用ID(AppID):
+		<input type="text" name="appId" value="{{user.appId}}">
+	</label>
+	<label for="devId">设备标识(IMEI/IDFA):
+		<input type="text" name="devId" value="{{user.devId}}">
+	</label>
+	<input type="submit" name="submit" value="Query">
+</form>
+<ul>
+	{{#each logs}}
+	<li>{{serverTime}} {{clientTime}} {{deviceId}}</li>
+	{{/each}}
+</ul>
