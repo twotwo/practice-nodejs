@@ -1,24 +1,27 @@
 {
-  "name": "hello-node",
+  "name": "hello_node",
   "version": "1.0.0",
-  "private": true,
-  "config": {"port": "3000"},
-  "scripts": {
-    "start": "node ./bin/www"
+  "description": "my first node.js web service",
+  "main": "index.js",
+  "config": {
+    "port": "3000"
   },
-  "dependencies": {
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.15.5",
-    "hbs": "~4.0.1",
-    "morgan": "~1.9.0",
-    "serve-favicon": "~2.4.5"
+  "scripts": {
+    "start": "node index.js",
+    "test": "tap test/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/twotwo/practice-nodejs.git"
+    "url": "git+https://github.com/twotwo/practice-nodejs.git"
   },
+  "keywords": [
+    "node.js",
+    "startup"
+  ],
   "author": "twotwo <twotwo.li@gmail.com> (http://li3huo.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twotwo/practice-nodejs/issues"
+  },
+  "homepage": "https://github.com/twotwo/practice-nodejs/hello_node"
 }

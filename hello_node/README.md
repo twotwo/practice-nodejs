@@ -1,73 +1,111 @@
 # hello_node
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+my first node.js web service
 
-## Dependencies
-
- * express-generator `npm install -g express-generator # Gloabal Install`
-
-
-## Generate Project by express-generator
-
-Make sure you have [Node.js](http://nodejs.org/) lts/carbon and [express-generator](http://wiki.li3huo.com/Node.js#express-generator) installed.
+## Generate Project
 
 ```bash
-➜  practice-nodejs git:(master) ✗ express --view=hbs hello_node && cd hello_node
+➜  practice-nodejs git:(master) ✗ mkdir hello_node && cd hello_node
+➜  hello_node git:(master) ✗ npm init                        
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
 
-   create : hello_node
-   create : hello_node/package.json
-   create : hello_node/app.js
-   create : hello_node/public
-   create : hello_node/routes
-   create : hello_node/routes/index.js
-   create : hello_node/routes/users.js
-   create : hello_node/views
-   create : hello_node/views/index.hbs
-   create : hello_node/views/layout.hbs
-   create : hello_node/views/error.hbs
-   create : hello_node/bin
-   create : hello_node/bin/www
-   create : hello_node/public/javascripts
-   create : hello_node/public/images
-   create : hello_node/public/stylesheets
-   create : hello_node/public/stylesheets/style.css
+See `npm help json` for definitive documentation on these fields
+and exactly what they do.
 
-   install dependencies:
-     $ cd hello_node && npm install
+Use `npm install <pkg>` afterwards to install a package and
+save it as a dependency in the package.json file.
 
-   run the app:
-     $ DEBUG=hello-node:* npm start
+Press ^C at any time to quit.
+package name: (hello_node) 
+version: (1.0.0) 
+description: my first node.js web service
+entry point: (index.js) 
+test command: tap test/*.js
+git repository: https://github.com/twotwo/practice-nodejs.git
+keywords: node.js startup
+author: li3huo <twotwo.li@gmail.com> (http://li3huo.com)
+license: (ISC) MIT
+About to write to /private/tmp/hello_node/package.json:
 
-➜  hello_node tree .
-.
-├── app.js
-├── bin
-│   └── www
-├── package.json
-├── public
-│   ├── images
-│   ├── javascripts
-│   └── stylesheets
-│       └── style.css
-├── routes
-│   ├── index.js
-│   └── users.js
-└── views
-    ├── error.hbs
-    ├── index.hbs
-    └── layout.hbs
+{
+  "name": "hello_node",
+  "version": "1.0.0",
+  "description": "my first node.js web service",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twotwo/practice-nodejs.git"
+  },
+  "keywords": [
+    "node.js",
+    "startup"
+  ],
+  "author": "li3huo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twotwo/practice-nodejs/issues"
+  },
+  "homepage": "https://github.com/twotwo/practice-nodejs#readme"
+}
 
-7 directories, 9 files
+
+Is this ok? (yes) yes
 ```
 
-### config app port
+### index.js
 
-    "config": {"port": "3001"} #add to package.json
+```js
+var http = require('http');
 
-    var port = normalizePort(process.env.npm_package_config_port); #add to bin/www
+/* 使用package.json中定义的端口，如果没有定义就使用3000*/
+var port = process.env.npm_package_config_port ||3000;
 
-## Running Project
+http.createServer(function(req, res) {
+    res.end('Hello World!');
+}).listen(port, "127.0.0.1");
 
+console.log("Node app is running at localhost:" + port);
+```
+
+### package.json
+
+```json
+{
+  "name": "hello_node",
+  "version": "1.0.0",
+  "description": "my first node.js web service",
+  "main": "index.js",
+  "config": {
+    "port": "3000"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twotwo/practice-nodejs.git"
+  },
+  "keywords": [
+    "node.js",
+    "startup"
+  ],
+  "author": "li3huo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twotwo/practice-nodejs/issues"
+  },
+  "homepage": "https://github.com/twotwo/practice-nodejs/hello_node"
+}
+```
+
+## Running Locally
+
+Make sure you have [Node.js](http://nodejs.org/) lts/carbon installed.
 
 ```bash
 git clone https://github.com/twotwo/practice-nodejs.git # or clone your own fork
@@ -75,19 +113,4 @@ cd hello_node
 npm install
 npm start
 ```
-
-## Components
-
-### route
-在routes/下定义路由，比如console.js；
-在app.js中应用路由：app.use('/console', require('./routes/console'));
-
-### view
-use [hbs](https://github.com/pillarjs/hbs) as view engine, refer to [模板引擎 hbs 备忘](http://www.cnblogs.com/chyingp/p/hbs-getting-started.html)
-
-### module
-MVC中的 module , 对应后台中的业务逻辑
-
-### persistence
-持久层，数据库、缓存或文件系统
 
