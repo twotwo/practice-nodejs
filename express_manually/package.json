@@ -1,0 +1,26 @@
+{
+  "name": "hello_node",
+  "version": "1.0.0",
+  "description": "first node project",
+  "main": "index.js",
+  "config": {
+    "port": "3000"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "tap test/*.js"
+  },
+  "author": "twotwo <twotwo.li@gmail.com> (http://li3huo.com)",
+  "dependencies": {
+    "express": "^4.16.2",
+    "test": "^0.6.0"
+  },
+  "engines": {
+    "node": "^8.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twotwo/practice-nodejs.git"
+  },
+  "license": "MIT"
+}
