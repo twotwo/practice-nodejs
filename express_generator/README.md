@@ -78,5 +78,30 @@ npm start # 启动服务
 curl localhost:3000 # 访问服务
 ```
 
+## Add features to Project
 
+### 1. 在首页中显示users链接
+参考 [hbs](https://github.com/pillarjs/hbs) view engine
+
+views/index.hbs
+
+```html
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<ul>
+  <li><a href="/users/">users</a></li>
+</ul>
+```
+
+### 2. 添加一些展示用的业务数据
+
+models/fake_info.js
+```js
+
+```
+
+### 3. users增删改查的业务逻辑
+
+views/user_list.hbs //展示用户列表
+routes/users.js     //业务逻辑
 
