@@ -39,7 +39,7 @@ exports.splitLogs = function(user, data) {
             log.accountId = line[6];
             log.roleId = line[7];
             log.roleName = line[8];
-            log.eventValue = line[9];
+            log.eventValue = line[9]||'&quot;';
             logs.push(log);
         }
     }

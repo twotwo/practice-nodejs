@@ -12,9 +12,49 @@
 	</label>
 	<input type="submit" name="submit" value="Query">
 </form>
-<ul>
-	<pre>cmd={{cmd}}</pre>{{error}}
-	{{#each logs}}
-	<li>{{eventId}} {{receiveTime}} {{appId}} {{uid}} {{channelId}} {{devId}} {{accountId}} {{roleId}} {{roleName}} {{eventValue}}</li>
-	{{/each}}
-</ul>
+
+<pre>cmd={{cmd}}</pre>{{error}}
+
+<h2>Stat Logs</h2>
+<div class="rTable"><div class="rTableRow">
+	<div class="rTableHead"><strong>Event</strong></div>
+	<div class="rTableHead"><strong>rTime</strong></div>
+	<div class="rTableHead"><strong>AppId</strong></div>
+	<div class="rTableHead"><strong>UID</strong></div>
+	<div class="rTableHead"><strong>Channel</strong></div>
+	<div class="rTableHead"><strong>DevID</strong></div>
+	<div class="rTableHead"><strong>Account</strong></div>
+	<div class="rTableHead"><strong>Role</strong></div>
+	<div class="rTableHead"><strong>rName</strong></div>
+	<div class="rTableHead"><strong>rTime</strong></div>
+	<div class="rTableHead"><strong>eValue</strong></div>
+</div>
+
+{{#each logs}}
+<div class="rTableRow">
+	<div class="rTableCell">{{eventId}}</div>
+	<div class="rTableCell">{{receiveTime}}</div>
+	<div class="rTableCell">{{appId}}</div>
+	<div class="rTableCell">{{uid}}</div>
+	<div class="rTableCell">{{channelId}}</div>
+	<div class="rTableCell"> {{devId}}</div>
+	<div class="rTableCell">{{accountId}}</div>
+	<div class="rTableCell">{{roleId}}</div>
+	<div class="rTableCell"> {{roleName}}</div>
+	<div class="rTableCell">{{eventValue}}</div>
+</div>
+{{/each}}
+
+<div class="rTableRow">
+	<div class="rTableHead"><strong>Event</strong></div>
+	<div class="rTableHead"><strong>rTime</strong></div>
+	<div class="rTableHead"><strong>AppId</strong></div>
+	<div class="rTableHead"><strong>UID</strong></div>
+	<div class="rTableHead"><strong>Channel</strong></div>
+	<div class="rTableHead"><strong>DevID</strong></div>
+	<div class="rTableHead"><strong>Account</strong></div>
+	<div class="rTableHead"><strong>Role</strong></div>
+	<div class="rTableHead"><strong>rName</strong></div>
+	<div class="rTableHead"><strong>rTime</strong></div>
+	<div class="rTableHead"><strong>eValue</strong></div>
+</div></div>
