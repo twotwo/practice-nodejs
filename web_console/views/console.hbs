@@ -7,10 +7,14 @@
 	<label for="devId">设备标识(IMEI/IDFA):
 		<input type="text" name="devId" value="{{user.devId}}">
 	</label>
+	<label for="ipAddress">IP地址:
+		<input type="text" name="ipAddress" value="{{user.ipAddress}}">
+	</label>
 	<input type="submit" name="submit" value="Query">
 </form>
 <ul>
+	<pre>cmd={{cmd}}</pre>{{error}}
 	{{#each logs}}
-	<li>{{serverTime}} {{clientTime}} {{deviceId}}</li>
+	<li>{{_id}} {{this}}</li>
 	{{/each}}
 </ul>
