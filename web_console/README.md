@@ -25,9 +25,28 @@ Make sure you have [Node.js](http://nodejs.org/) lts/carbon and [express-generat
 
 ### config app port
 
-    "config": {"port": "3001"} #add to package.json
+    "config": {"port": "3002"} #add to package.json
 
     var port = normalizePort(process.env.npm_package_config_port); #add to bin/www
+
+
+### NGINX reverse proxy to node.js server
+
+```nginx
+server {
+        listen  80;
+        server_name my_ip_address;
+        access_log  /data/logs/nginx/default_access.log main;
+
+        location /web_console {
+                rewrite ^/web_console/(.*)$ /$1 break;
+                proxy_pass http://127.0.0.1:3002;
+                proxy_set_header  Host            $host;
+                proxy_set_header  X-Real-IP       $remote_addr;
+                proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+}
+```
 
 ## Running Project
 
