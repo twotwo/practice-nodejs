@@ -10,6 +10,10 @@ var users = require('./routes/users');
 
 var app = express();
 
+var pathPrefix = process.argv;
+app.locals.pathPrefix = process.argv[2]||'';
+console.log("app.locals.pathPrefix="+app.locals.pathPrefix);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

@@ -43,9 +43,20 @@ server {
                 proxy_pass http://127.0.0.1:3002;
                 proxy_set_header  Host            $host;
                 proxy_set_header  X-Real-IP       $remote_addr;
-                proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+                proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 }
+```
+
+```bash
+➜  web_console git:(master) ✗ npm start /web_console
+
+> hello-node@1.0.0 start /opt/app/js/nodejs/practice-nodejs/web_console
+> node ./bin/www "/web_console"
+
+app.locals.pathPrefix=/web_console
+listen on 3002
+
 ```
 
 ## Running Project

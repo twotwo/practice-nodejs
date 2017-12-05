@@ -1,6 +1,6 @@
-<a href="..">返回上级</a>
+<a href="{{pathPrefix}}">返回上级</a>
 <ul>
 	{{#each users}}
-	<li><a href="./users/{{id}}">{{name}}</a></li>
+	<li><a href="{{pathPrefix}}/users/{{id}}">{{name}}</a></li>
 	{{/each}}
 </ul>
