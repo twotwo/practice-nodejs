@@ -1,4 +1,4 @@
 {
-    "context":".",
+    "context":"con",
     "log_dir":"./data"
 }

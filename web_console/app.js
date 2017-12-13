@@ -41,11 +41,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/console', require('./routes/console'));
+//路由设置
+app.use('/', index); //多加一个根路由
+app.use(path.join('/', app.locals.pathPrefix), index); //context+本应用的根路由
+app.use(path.join('/', app.locals.pathPrefix, '/users'), users);
+app.use(path.join('/', app.locals.pathPrefix, '/console'), require('./routes/console'));
+
+app.use(path.join('/', app.locals.pathPrefix), express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
