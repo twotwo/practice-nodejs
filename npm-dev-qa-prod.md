@@ -47,7 +47,7 @@ if (process.env.NODE_ENV==='dev') {
     }else {
         var config = require('./conf/config-dev.json'); //非windows的开发环境
         console.log('load ../conf/config-dev.json');
-}
+    }
 }else if (process.env.NODE_ENV==='qa'){
 	var config = require('./conf/config-qa.json'); //测试环境的配置
 	console.log('load ../conf/config-qa.json');

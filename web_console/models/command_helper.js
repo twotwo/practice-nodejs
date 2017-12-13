@@ -1,12 +1,10 @@
-var logFile = "/tmp/2017-12-04.log";
-
 /*
  * 根据用户属性，生成对应查询命令
  */
 exports.genCommand = function(user) {
     var cmd = '';
     cmd +="tail -n" + user.readLines||"10000";
-    cmd +=" "+logFile;
+    cmd +=" "+user.logFile;
     cmd +="|awk 'BEGIN{FS=\"\\\\\\\\x02\"} {if($3==\""+user.appId+"\"";
     //add devid
     if (user.devId != "")

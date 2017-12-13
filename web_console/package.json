@@ -1,14 +1,21 @@
 {
   "name": "hello-node",
   "version": "1.0.0",
+  "description": "a web console for log query.",
   "private": true,
-  "config": {"port": "3002"},
+  "config": {
+    "port": "3002"
+  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "prod": "NODE_ENV='prod' node ./bin/www",
+    "qa": "NODE_ENV='qa' node ./bin/www",
+    "dev": "NODE_ENV='dev' node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
+    "date-utils": "^1.2.21",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "hbs": "~4.0.1",
