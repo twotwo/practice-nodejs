@@ -62,3 +62,18 @@ if (process.env.NODE_ENV==='dev') {
 * 生产环境 `npm run prod`
 * 测试环境 `npm run qa`
 * 本地开发环境 `npm run dev`
+
+### 用PM2启动
+
+```bash
+$ pm2 start npm -- run qa
+[PM2] Applying action restartProcessId on app [npm](ids: 0)
+[PM2] [npm](0) ✓
+[PM2] Process successfully started
+┌──────┬──────┬────────┬────┬─────┬──────────┐
+│ Name │ mode │ status │ ↺  │ cpu │ memory   │
+├──────┼──────┼────────┼────┼─────┼──────────┤
+│ npm  │ fork │ online │ 15 │ 0%  │ 7.7 MB   │
+└──────┴──────┴────────┴────┴─────┴──────────┘
+ Use `pm2 show <id|name>` to get more details about an app
+```
