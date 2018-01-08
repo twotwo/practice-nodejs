@@ -16,7 +16,9 @@ var result = api.getMenu(function (err, result) {
      */
     if (err) {
         console.log('err: '+err);
-        console.log('code: '+result.errcode); 
+        if(result) {
+            console.log('code: '+result.errcode);
+        }
     } else {
         console.log(result.errmsg); //ok
         console.log(result.errcode); //0

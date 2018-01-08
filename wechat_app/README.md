@@ -41,3 +41,11 @@ added 64 packages in 4.361s
 
 
 ### 单元测试
+[Getting Started](https://mochajs.org/#getting-started)
+
+```bash
+npm install mocha -g #建议装个全局的
+npm i chai chai-http ejs
+```
+
+test.js: 模拟微信公共平台HTTP POST过来的消息

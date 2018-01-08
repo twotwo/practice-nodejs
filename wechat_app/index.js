@@ -20,7 +20,10 @@ app.use('/wechat', wechat(config, function (req, res, next) {
 
   // 后续可以根据MsgType对消息进行第一级分发
   if(message.MsgType === 'event') {
-    console.log('event '+message.Event);
+    console.log('event = '+message.Event);
+  } else if (message.MsgType === 'text') {
+    
+    console.log('content = '+message.Content);
   }
 
   res.reply([
@@ -37,3 +40,6 @@ app.use('/wechat', wechat(config, function (req, res, next) {
 app.listen(app.get('port'), function() {
     console.log("wechat app is running at localhost:" + app.get('port'))
 })
+
+//add for unit testing
+module.exports = app; 
