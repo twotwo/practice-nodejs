@@ -1,0 +1,7 @@
+{
+    "token": "wechat_sample",
+    "appid": "wechat appid",
+    "encodingAESKey": "key for message",
+    "checkSignature": true,
+    "appsecret": "dev password"
+}

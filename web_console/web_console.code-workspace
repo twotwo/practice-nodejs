@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "/opt/app/js/nodejs/practice-nodejs"
+		},
+		{
+			"path": "/opt/local/ide/workspaces/w2016/SSAP"
 		}
 	]
 }

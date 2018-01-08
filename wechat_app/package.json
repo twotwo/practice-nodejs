@@ -1,0 +1,20 @@
+{
+  "name": "wechat_app",
+  "version": "1.0.0",
+  "description": "自有微信应用服务",
+  "main": "index.js",
+  "config": {
+    "port": "3003"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "liyan",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "wechat": "^2.1.0",
+    "wechat-api": "^1.35.1"
+  }
+}
