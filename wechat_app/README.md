@@ -9,6 +9,8 @@
 * [微信公众平台接口调试工具](https://mp.weixin.qq.com/debug)
 * [使用 npm 配置多套环境参数](../npm-dev-qa-prod.md)
 
+* [基于HTTP的单元测试](https://github.com/chaijs/chai-http) //HTTP Response assertions for the Chai Assertion Library
+
 ## 服务创建
 
 ### 初始化node.js应用
@@ -40,7 +42,7 @@ added 64 packages in 4.361s
 ### 接口调测
 
 
-### 单元测试
+## 单元测试
 [Getting Started](https://mochajs.org/#getting-started)
 
 ```bash
@@ -48,4 +50,8 @@ npm install mocha -g #建议装个全局的
 npm i chai chai-http ejs
 ```
 
-test.js: 模拟微信公共平台HTTP POST过来的消息
+### test.js - 模拟微信公共平台HTTP POST过来的消息
+
+* 直接连通 wechat 服务接入程序；
+* 端到端显示请求和响应；
+* 支持明文报文
