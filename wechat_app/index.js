@@ -4,6 +4,10 @@ var wechat = require('wechat');
 //微信配置参数，参见./conf/wechat.json.sample
 var config = require('./conf/wechat.json');
 
+if (process.env.NODE_ENV==='dev') {
+  config.checkSignature =false;
+}
+
 var app = express();
 //使用package.jsond的config.port设置服务端口
 app.set('port', (process.env.npm_package_config_port||3000))
@@ -12,7 +16,10 @@ app.set('port', (process.env.npm_package_config_port||3000))
  * 腾讯微信服务请求到$host:$port/wechat，交给wechat函数进行处理
  */
 app.use('/wechat', wechat(config, function (req, res, next) {
-  // 微信输入信息都在req.weixin上 
+  //微信消息xml字串
+  console.log(req.weixin_xml);
+  
+  // 微信消息对象：req.weixin
   var message = req.weixin;
   console.log('msg from '+message.FromUserName);
   console.log('msg type '+message.MsgType);
@@ -22,7 +29,7 @@ app.use('/wechat', wechat(config, function (req, res, next) {
   if(message.MsgType === 'event') {
     console.log('event = '+message.Event);
   } else if (message.MsgType === 'text') {
-    
+
     console.log('content = '+message.Content);
   }
 
@@ -37,9 +44,16 @@ app.use('/wechat', wechat(config, function (req, res, next) {
 }));
 
 //luanch express web service
-app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function() {
     console.log("wechat app is running at localhost:" + app.get('port'))
 })
 
+
 //add for unit testing
-module.exports = app; 
+module.exports = app;
+var close = module.exports.close = function() {
+  console.log('shutting down the server...');
+  server.close(function () {
+    process.exit(0);
+  });
+};
