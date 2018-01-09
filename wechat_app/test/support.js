@@ -70,7 +70,7 @@ exports.tail = function (checkSignature) {
     var s = [config.token, q.timestamp, q.nonce].sort().join('');
     q.signature = require('crypto').createHash('sha1').update(s).digest('hex');
   }
-  q.echostr = 'hehe';
+  q.echostr = 'hello';
   return '?' + querystring.stringify(q);
 };
 
