@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "coverage": "istanbul cover _mocha -- -R spec"
   },
   "author": "liyan",
   "license": "MIT",
