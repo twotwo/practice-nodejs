@@ -12,15 +12,27 @@ var tail = require('./support').tail;
 var template = require('./support').template;
 
 // 启动要测试的微信服务程序
-var app = require('../index');
+var app = require('../index').app;
+var server = require('../index').server;
+
+// 直接测试独立运行的服务
 // var app = 'http://106.75.19.156';
 
 // 模拟微信公共平台推送的消息
-describe('Test WeChat Service', function(){  
+describe('Test WeChat Service', function() {
+
+    after(function(done) {
+      if(typeof(server)!="undefined") {
+        console.log('shutting down the server...');
+        server.close();
+        process.exit(0);
+      }
+      done();
+    });
 
   it('msgType=text', function (done) {
     var info = {
-      sp: 'nvshen',
+      sp: '李四',
       user: '张三',
       type: 'text',
       text: '测试中'
@@ -32,7 +44,7 @@ describe('Test WeChat Service', function(){
         expect(err).to.be.null;
         expect(res).to.have.status(200);
         //response content
-        // console.log(res.text);
+        console.log(res.text);
         done();
       });
   });

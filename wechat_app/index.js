@@ -17,7 +17,7 @@ app.set('port', (process.env.npm_package_config_port||3000))
  */
 app.use('/wechat', wechat(config, function (req, res, next) {
   //微信消息xml字串
-  console.log(req.weixin_xml);
+  console.log('srv get '+req.weixin_xml);
   
   // 微信消息对象：req.weixin
   var message = req.weixin;
@@ -50,10 +50,7 @@ var server = app.listen(app.get('port'), function() {
 
 
 //add for unit testing
-module.exports = app;
-var close = module.exports.close = function() {
-  console.log('shutting down the server...');
-  server.close(function () {
-    process.exit(0);
-  });
+module.exports = {
+  server : server,
+  app : app
 };
