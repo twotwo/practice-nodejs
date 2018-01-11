@@ -9,7 +9,13 @@
 * [微信公共平台主动调用API Node库](http://doxmate.cool/node-webot/wechat-api/) wechat-api 项目官网
 * [微信公众平台接口调试工具](https://mp.weixin.qq.com/debug)
 
-### 测试
+### 测试(Based on Jest&SuperTest)
+* [JavaScript测试概览](http://wiki.li3huo.com/JavaScript_Testing_Overview#Jest)
+* [How to test Express.js with Jest and Supertest](http://www.albertgao.xyz/2017/05/24/how-to-test-expressjs-with-jest-and-supertest/)
+* [Jest](https://facebook.github.io/jest/)
+* [Supertest](https://github.com/visionmedia/supertest)
+
+### 测试(Based on Mocha&Chai&Istanbul)
 * [JavaScript测试概览](http://wiki.li3huo.com/JavaScript_Testing_Overview#Mocha)
 * [Mocha](https://mochajs.org) 提供测试框架
 * [Chai](https://github.com/chaijs/chai) 提供断言方法
@@ -51,25 +57,62 @@ added 64 packages in 4.361s
 
 
 ## 单元测试
-[Getting Started](https://mochajs.org/#getting-started)
+[Getting Started](https://facebook.github.io/jest/docs/en/getting-started.html)
 
 ```bash
-npm install mocha istanbul -g #建议全局安装的
-npm i chai chai-http ejs
+npm install -g jest #请全局安装
+npm i --save-dev ejs supertest
 ```
 
-### test.js - 模拟微信公共平台HTTP POST过来的消息
+### test/index.test.js - 模拟微信公共平台HTTP POST过来的消息
 
 * 直接连通 wechat 服务接入程序；
 * 端到端显示请求和响应；
 * 支持明文报文
 
-### 计算集成mocha的代码覆盖率(istanbul和mocha都全局安装) 
+### 运行测试
 
 ```bash
-istanbul cover _mocha #or
+npm run test
 npm run coverage
 
 # Opening reports
 open coverage/lcov-report/*.html
+```
+
+
+## Others
+
+### tags
+
+create tag `wechat_mocha`
+
+```bash
+➜  wechat_app git:(master) ✗ git tag -a wechat_mocha -m 'test based on mocha'
+➜  wechat_app git:(master) ✗ git push origin wechat_mocha
+Counting objects: 6, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 1.09 KiB | 1.09 MiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/twotwo/practice-nodejs.git
+ * [new tag]         wechat_mocha -> wechat_mocha
+```
+
+checkout tag `wechat_mocha`
+
+```bash
+➜  /tmp git clone https://github.com/twotwo/practice-nodejs.git
+Cloning into 'practice-nodejs'...
+remote: Counting objects: 262, done.
+remote: Compressing objects: 100% (34/34), done.
+remote: Total 262 (delta 29), reused 54 (delta 25), pack-reused 203
+Receiving objects: 100% (262/262), 55.49 KiB | 291.00 KiB/s, done.
+Resolving deltas: 100% (124/124), done.
+➜  /tmp cd practice-nodejs/wechat_app
+➜  wechat_app git:(master) git checkout -b mocha wechat_mocha
+Switched to a new branch 'mocha'
+➜  wechat_app git:(mocha) git log
+commit 00ed6f05af11d3bb5182a0f8faadf2b8037070b3 (HEAD -> mocha, tag: wechat_mocha)
 ```

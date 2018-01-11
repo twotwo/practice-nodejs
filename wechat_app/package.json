@@ -8,17 +8,22 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --exit",
-    "coverage": "istanbul cover _mocha -- -R spec"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "author": "liyan",
   "license": "MIT",
   "dependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^3.0.0",
-    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "wechat": "^2.1.0",
     "wechat-api": "^1.35.1"
-  }
+  },
+  "devDependencies": {
+    "ejs": "^2.5.7",
+    "supertest": "^3.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+}
 }
