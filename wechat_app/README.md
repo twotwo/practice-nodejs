@@ -56,7 +56,7 @@ added 64 packages in 4.361s
 ### 接口调测
 
 
-## 单元测试
+## 单元测试(Based on Jest&SuperTest)
 [Getting Started](https://facebook.github.io/jest/docs/en/getting-started.html)
 
 ```bash
