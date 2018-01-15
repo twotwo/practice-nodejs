@@ -25,5 +25,5 @@
   "jest": {
     "testEnvironment": "node",
     "verbose": true
-}
+  }
 }

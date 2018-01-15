@@ -42,7 +42,7 @@ describe('WeChat Service', function() {
     var config = require('../conf/wechat.json');
     test('模拟微信公共平台发送的验证消息', function (done) {
         request(app)
-        .get('/wechat' + tail())
+        .get('/wechat' + tail(config.checkSignature))
         .expect(200)
         .then(function(res) {
           //response content

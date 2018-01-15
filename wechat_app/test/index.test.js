@@ -47,8 +47,8 @@ describe('WeChat Service', function() {
         //response content
         // console.log('jest.resp = '+res.text);
         expect(res.text).toMatch("<ToUserName><![CDATA[张三]]></ToUserName>");
+        done();
       });
-      done();
     });
 
   });
@@ -68,8 +68,8 @@ describe('WeChat Service', function() {
         .expect(200)
         .then(function(res) {
           expect(res.text).toMatch("<ToUserName><![CDATA["+info.user+"]]></ToUserName>");
+          done();
         });
-        done();
     });
   });
 
