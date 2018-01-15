@@ -2,6 +2,10 @@
 
 ## 参考
 
+### 业务
+* [微信公众平台技术文档](https://mp.weixin.qq.com/wiki)
+* [接口测试号申请](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421137522)
+
 ### 开发
 * [wechat](https://www.npmjs.com/package/wechat) 微信公共平台自动回复消息接口服务中间件
 * [微信公共平台服务 Node库](http://doxmate.cool/node-webot/wechat/) wechat 项目官网
