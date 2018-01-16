@@ -1,7 +1,7 @@
 /**
  * Test Case based on Jest&SuperTest
  * 
- * Verify that the message is really from the WeChat server
+ * [Verify that the message is really from the WeChat server](https://mp.weixin.qq.com/wiki?id=mp1421135319)
  */
 process.env.NODE_ENV = 'dev';
 
@@ -9,8 +9,8 @@ process.env.NODE_ENV = 'dev';
 const request = require('supertest');
 
 //微信服务辅助支持
-var tail = require('./support').tail;
-var template = require('./support').template;
+var tail = require('../libs/support').tail;
+var template = require('../libs/support').template;
 
 // 启动要测试的微信服务程序
 const app = require('../index').app;
@@ -19,8 +19,8 @@ const server = require('../index').server;
 // 直接测试独立运行的服务
 // var app = 'http://localhost:3003';
 
-// 模拟微信公共平台推送的消息
-describe('WeChat Service', function() {
+// 模拟微信公共平台服务器验证
+describe('WeChat Service: Verify the service', function() {
 
   // shutdown wechat server after all tests
   afterAll(function() {

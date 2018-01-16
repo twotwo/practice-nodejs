@@ -66,22 +66,41 @@ added 64 packages in 4.361s
 ```bash
 npm install -g jest #请全局安装
 npm i --save-dev ejs supertest
-```
 
-### test/index.test.js - 模拟微信公共平台HTTP POST过来的消息
-
-* 直接连通 wechat 服务接入程序；
-* 端到端显示请求和响应；
-* 支持明文报文
-
-### 运行测试
-
-```bash
+# 运行测试
 npm run test
 npm run coverage
 
 # Opening reports
 open coverage/lcov-report/*.html
+```
+
+### test/verify.test.js - 模拟微信公共平台接入验证(HTTP GET)
+
+* TOKEN wechat_sample
+* EncodingAESKey 安全模式（推荐）下，消息加解密专用
+
+```bash
+jest test/verify.test.js
+```
+
+### test/message.test.js - 模拟微信公共平台HTTP POST过来的消息
+
+* 直接连通 wechat 服务接入程序；
+* 端到端显示请求和响应；
+* 支持明文报文
+
+```bash
+jest test/message.test.js
+```
+
+### test/event.test.js - 模拟微信公共平台事件推送
+
+* Following / Unfollowing Events
+
+
+```bash
+DEBUG=wechat* jest test/event.test.js
 ```
 
 
