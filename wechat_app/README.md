@@ -59,6 +59,30 @@ added 64 packages in 4.361s
 
 ### 接口调测
 
+* `routes/app/main.js` var debug = require('debug')('wechat.main');
+* `libs/wechat.js` var debug = require('debug')('wechat');
+
+```bash
+# 显示debug信息
+npm run dev
+# 调试模式，参考 https://nodejs.org/api/debugger.html
+npm run debug
+```
+
+Stepping: 
+* cont, c - Continue execution
+* next, n - Step next
+* step, s - Step in
+* out, o - Step out
+* pause - Pause running code (like pause button in Developer Tools)
+
+Breakpoints
+* setBreakpoint('script.js', 1), sb(...) - Set breakpoint on first line of script.js
+
+```bash
+debug> sb('./index.js', 29)
+Warning: script './index.js' was not loaded yet.
+```
 
 ## 单元测试(Based on Jest&SuperTest)
 [Getting Started](https://facebook.github.io/jest/docs/en/getting-started.html)

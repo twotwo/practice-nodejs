@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "debug": "NODE_ENV=dev DEBUG=wechat* node inspect index.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
