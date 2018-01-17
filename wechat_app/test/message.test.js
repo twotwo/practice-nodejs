@@ -4,7 +4,7 @@
  * [Receiving standard messages](https://mp.weixin.qq.com/wiki?id=mp1421140453)
  */
 process.env.NODE_ENV = 'dev';
-
+var debug = require('debug')('wechat.message');
 //HTTP assertions made with SuperTest
 const request = require('supertest');
 
@@ -27,7 +27,7 @@ describe('WeChat Service: Receiving standard messages', function() {
 
     if(typeof(server)!="undefined") {
       server.close();
-      console.log('shutting down the server...');
+      debug('shutting down the server...');
     }
   });
 
@@ -50,7 +50,7 @@ describe('WeChat Service: Receiving standard messages', function() {
       .then(function(res) {
         // expect(res.statusCode).toBe(200);
         //response content
-        console.log('jest.resp = '+res.text);
+        debug('jest.resp = '+res.text);
         // expect(res.text).toMatch("<ToUserName><![CDATA[张三]]></ToUserName>");
         done();
       });
@@ -71,7 +71,7 @@ describe('WeChat Service: Receiving standard messages', function() {
       .then(function(res) {
         // expect(res.statusCode).toBe(200);
         //response content
-        console.log('jest.resp = '+res.text);
+        debug('jest.resp = '+res.text);
         // expect(res.text).toMatch("<ToUserName><![CDATA[张三]]></ToUserName>");
         done();
       });

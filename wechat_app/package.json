@@ -16,10 +16,12 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2",
+    "mysql": "^2.15.0",
     "wechat": "^2.1.0",
     "wechat-api": "^1.35.1"
   },
   "devDependencies": {
+    "debug": "^3.1.0",
     "ejs": "^2.5.7",
     "supertest": "^3.0.0"
   },

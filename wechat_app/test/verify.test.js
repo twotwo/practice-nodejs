@@ -4,7 +4,7 @@
  * [Verify that the message is really from the WeChat server](https://mp.weixin.qq.com/wiki?id=mp1421135319)
  */
 process.env.NODE_ENV = 'dev';
-
+var debug = require('debug')('wechat.verify');
 //HTTP assertions made with SuperTest
 const request = require('supertest');
 
@@ -27,7 +27,7 @@ describe('WeChat Service: Verify the service', function() {
 
     if(typeof(server)!="undefined") {
       server.close();
-      console.log('shutting down the server...');
+      debug('shutting down the server...');
     }
   });
 
@@ -46,7 +46,7 @@ describe('WeChat Service: Verify the service', function() {
         .expect(200)
         .then(function(res) {
           //response content
-          console.log('jest.resp = '+res.text);
+          debug('jest.resp = '+res.text);
         //   expect(res.text).toMatch("<ToUserName><![CDATA[张三]]></ToUserName>");
           done();
         });

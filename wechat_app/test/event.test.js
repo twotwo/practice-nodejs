@@ -4,7 +4,7 @@
  * [Receiving event pushes](https://mp.weixin.qq.com/wiki?id=mp1421140454)
  */
 process.env.NODE_ENV = 'dev';
-
+var debug = require('debug')('wechat.event');
 //HTTP assertions made with SuperTest
 const request = require('supertest');
 
@@ -31,7 +31,7 @@ describe('WeChat Service: Receiving event pushes', function() {
 
     if(typeof(server)!="undefined") {
       server.close();
-      console.log('shutting down the server...');
+      debug('shutting down the server...');
     }
   });
 
@@ -55,7 +55,7 @@ describe('WeChat Service: Receiving event pushes', function() {
       .then(function(res) {
         // expect(res.statusCode).toBe(200);
         //response content
-        console.log('jest.resp = '+res.text);
+        debug('resp = '+res.text);
         // expect(res.text).toMatch("<ToUserName><![CDATA[张三]]></ToUserName>");
         done();
       });
@@ -76,7 +76,7 @@ describe('WeChat Service: Receiving event pushes', function() {
       .then(function(res) {
         // expect(res.statusCode).toBe(200);
         //response content
-        console.log('jest.resp = '+res.text);
+        debug('resp = '+res.text);
         done();
       });
     });

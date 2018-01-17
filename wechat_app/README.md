@@ -105,7 +105,7 @@ open coverage/lcov-report/*.html
 * EncodingAESKey 安全模式（推荐）下，消息加解密专用
 
 ```bash
-jest test/verify.test.js
+DEBUG=wechat* jest test/verify.test.js
 ```
 
 ### test/message.test.js - 模拟微信公共平台HTTP POST过来的消息
@@ -115,7 +115,7 @@ jest test/verify.test.js
 * 支持明文报文
 
 ```bash
-jest test/message.test.js
+DEBUG=wechat* jest test/message.test.js
 ```
 
 ### test/event.test.js - 模拟微信公共平台事件推送
