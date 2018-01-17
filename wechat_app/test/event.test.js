@@ -29,7 +29,7 @@ describe('WeChat Service: Receiving event pushes', function() {
   // shutdown wechat server after all tests
   afterAll(function() {
 
-    if(typeof(server)!="undefined") {
+    if(typeof(server)!='undefined') {
       server.close();
       debug('shutting down the server...');
     }
@@ -41,7 +41,7 @@ describe('WeChat Service: Receiving event pushes', function() {
     test('#msgType=event, Event=subscribe(订阅)', function (done) {
 
       var info = {
-        sp: 'to 李四',
+        sp: '公众号ID',
         user: '张三',
         type: 'event',
         event: 'subscribe'
@@ -64,7 +64,7 @@ describe('WeChat Service: Receiving event pushes', function() {
     test('#msgType=event, unsubscribe(取消订阅)', function (done) {
 
       var info = {
-        sp: 'to 李四',
+        sp: '公众号ID',
         user: '张三',
         type: 'event',
         event: 'unsubscribe'

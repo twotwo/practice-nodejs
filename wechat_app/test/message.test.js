@@ -25,7 +25,7 @@ describe('WeChat Service: Receiving standard messages', function() {
   // shutdown wechat server after all tests
   afterAll(function() {
 
-    if(typeof(server)!="undefined") {
+    if(typeof(server)!='undefined') {
       server.close();
       debug('shutting down the server...');
     }
@@ -36,7 +36,7 @@ describe('WeChat Service: Receiving standard messages', function() {
     test('#msgType=text 任意消息', function (done) {
 
       var info = {
-        sp: 'to 李四',
+        sp: '公众号ID',
         user: '张三',
         type: 'text',
         text: '关键字'
@@ -59,7 +59,7 @@ describe('WeChat Service: Receiving standard messages', function() {
     test('#msgType=text 关键字回复(ABCD)', function (done) {
 
       var info = {
-        sp: 'to 李四',
+        sp: '公众号ID',
         user: '张三',
         type: 'text',
         text: 'ABCD'

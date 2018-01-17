@@ -53,7 +53,9 @@ added 64 packages in 4.361s
 
 具体内容参见 menu.js 中的注释
 
-运行： node menu.js
+```bash
+DEBUG=wechat* node menu.js appid appsecret
+```
 
 ## 服务调测
 
