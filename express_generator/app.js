@@ -21,8 +21,8 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));  //模板文件所在目录
+app.set('view engine', 'hbs');                    //要使用的模板引擎
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -30,6 +30,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+/**
+ * `express.static` 是Express中内置的中间件函数，基于 serve-static
+ * 负责提供 Express 应用程序的静态资源
+ */
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
