@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>微信分享</title>
+    </head>
+    <body>
+        <span style="color: blue;font-size: 24px;">微信分享</span>
+    </body>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> 
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/wechat_share.js"></script> 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.ajax({url: "/sign?url=" + encodeURIComponent(location.href.split('#')[0]), 
+                success: function(data) {
+                    // $("#div1").html(JSON.toString(data));
+                    if (data != null) {
+                        // data = JSON.parse(data);
+                        $("#div1").html('appId='+data.appId+'<br>signature='+data.signature);
+                        var timeStamp = data.timeStamp;
+                        var nonceStr = data.nonceStr;
+                        var signature = data.signature;
+
+                        wxfxConfig.timeStamp = timeStamp;
+                        wxfxConfig.nonceStr = nonceStr;
+                        wxfxConfig.signature = signature;
+                        wxfxConfig.zm_title = "微信消息分享标题";
+                        wxfxConfig.zm_summary = "微信消息分享描述";
+                        wxfxConfig.zm_link = "http://papa2.feiliu.com/static/test.html";
+                        wxfxConfig.zm_imgurl = "http://game.feiliu.com/wechat/logo.png";
+
+                        wxfxConfig.init();
+                    }
+
+                }
+            });
+        });
+    </script>
+</html>
+
+
