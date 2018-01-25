@@ -19,13 +19,10 @@
                     if (data != null) {
                         // data = JSON.parse(data);
                         $("#div1").html('appId='+data.appId+'<br>signature='+data.signature);
-                        var timeStamp = data.timeStamp;
-                        var nonceStr = data.nonceStr;
-                        var signature = data.signature;
-
-                        wxfxConfig.timeStamp = timeStamp;
-                        wxfxConfig.nonceStr = nonceStr;
-                        wxfxConfig.signature = signature;
+                        wxfxConfig.appId = data.appId;
+                        wxfxConfig.timeStamp = data.timeStamp;
+                        wxfxConfig.nonceStr = data.nonceStr;
+                        wxfxConfig.signature = data.signature;
                         wxfxConfig.zm_title = "微信消息分享标题";
                         wxfxConfig.zm_summary = "微信消息分享描述";
                         wxfxConfig.zm_link = "http://papa2.feiliu.com/share/index.html";
