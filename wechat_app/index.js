@@ -47,11 +47,43 @@ app.use('/wechat', wechat(config, function (req, res, next) {
 }));
 
 var debug = require('debug')('sign');
+var WechatAPI = require('wechat-api');
+var api = new WechatAPI(config.appid, config.appsecret);
 /**
  * 生成前端wx.config所需签名信息
  */
 app.get('/sign', function(req, res) {
-  res.send('Hello World!')
+  // debug('req = %O',req);
+  debug('req.query.url = %S', req.query.url);
+  url = req.query.url;
+
+  var param = {
+    debug: false,
+    jsApiList: ['onMenuShareTimeline',
+                'onMenuShareAppMessage', 
+                'onMenuShareQQ',
+                'onMenuShareWeibo', 
+                'onMenuShareQZone'],
+    url: url
+  };
+
+  api.getJsConfig(param, function (err, result) {
+
+    debug('getJsConfig');
+    /**
+     * 未认证的订阅号返回以下错误：
+     * WeChatAPIError: api unauthorized; code: 48001
+     */
+    if (err) {
+        debug('err => %o', err);
+        res.send('Fail to get JsConfig! '+err);
+    } else {
+        //get menu
+        debug('config => %j', result);
+        res.send(result);
+    }
+});
+
 })
 
 /**
