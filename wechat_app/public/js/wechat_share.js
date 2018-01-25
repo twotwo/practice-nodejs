@@ -20,6 +20,10 @@ var wxfxConfig = {
             signature: wxfxConfig.signature, // 必填，签名，见附录1
             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
+        // console.log('appId = '+wxfxConfig.appId);
+        // console.log('timestamp = '+wxfxConfig.timeStamp);
+        // console.log('nonceStr = '+wxfxConfig.nonceStr);
+        // console.log('signature = '+wxfxConfig.signature);
     },
     wxready: function () {
         wx.ready(function () {
