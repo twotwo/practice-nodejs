@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "dev": "DEBUG=sign node index.js",
     "debug": "NODE_ENV=dev DEBUG=wechat* node inspect index.js",
     "test": "jest",
     "coverage": "jest --coverage"
@@ -16,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2",
+    "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "wechat": "^2.1.0",
     "wechat-api": "^1.35.1"

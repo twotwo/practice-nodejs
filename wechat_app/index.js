@@ -12,6 +12,9 @@ var app = express();
 //使用package.jsond的config.port设置服务端口
 app.set('port', (process.env.npm_package_config_port||3000))
 
+var logger = require('morgan');
+app.use(logger('dev'));
+
 /**
  * 腾讯微信服务请求到$host:$port/wechat，交给wechat函数进行处理
  */
@@ -42,6 +45,21 @@ app.use('/wechat', wechat(config, function (req, res, next) {
     }
   ]);
 }));
+
+var debug = require('debug')('sign');
+/**
+ * 生成前端wx.config所需签名信息
+ */
+app.get('/sign', function(req, res) {
+  res.send('Hello World!')
+})
+
+/**
+ * `express.static` 是Express中内置的中间件函数，基于 serve-static
+ * 负责提供 Express 应用程序的静态资源
+ */
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 //luanch express web service
 var server = app.listen(app.get('port'), function() {
