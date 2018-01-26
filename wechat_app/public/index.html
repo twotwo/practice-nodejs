@@ -6,7 +6,12 @@
         <title>微信分享</title>
     </head>
     <body>
-        <span style="color: blue;font-size: 24px;">微信分享</span>
+        <span style="color: blue;font-size: 24px;">微信分享样例</span>
+        <ol>
+            <li>ajax(jquery.js)调用后台sign接口，获得当前页面的验签</li>
+            <li>wsConfig(wechat_share.js)把数据包一下，调用js-sdk相关的方法</li>
+            <li>张小龙家的服务放过这个页面，正常显示描述信息和缩略图</li>
+        </ol>
     </body>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -19,19 +24,20 @@
                     if (data != null) {
                         // data = JSON.parse(data);
                         $("#div1").html('appId='+data.appId+'<br>signature='+data.signature);
-                        wxfxConfig.appId = data.appId;
-                        wxfxConfig.timeStamp = data.timestamp;
-                        wxfxConfig.nonceStr = data.nonceStr;
-                        wxfxConfig.signature = data.signature;
-                        wxfxConfig.zm_title = "微信消息分享标题";
-                        wxfxConfig.zm_summary = "微信消息分享描述";
-                        wxfxConfig.zm_link = "http://papa2.feiliu.com/share/index.html";
-                        wxfxConfig.zm_imgurl = "http://game.feiliu.com/wechat/logo.png";
-                        // console.log('appId='+wxfxConfig.appId);
-                        // console.log('nonceStr='+wxfxConfig.nonceStr);
-                        // console.log('timeStamp='+wxfxConfig.timeStamp);
-                        // console.log('signature='+wxfxConfig.signature);
-                        wxfxConfig.init();
+                        wsConfig.debug = data.debug;
+                        wsConfig.appId = data.appId;
+                        wsConfig.timestamp = data.timestamp;
+                        wsConfig.nonceStr = data.nonceStr;
+                        wsConfig.signature = data.signature;
+                        wsConfig.ws_title = "微信消息之标题";
+                        wsConfig.ws_summary = "微信消息之描述";
+                        wsConfig.ws_link = location.href.split('#')[0]; //就是分享当前打开的地址
+                        wsConfig.ws_imgurl = "http://game.feiliu.com/wechat/logo.png";
+                        // console.log('appId='+wsConfig.appId);
+                        // console.log('nonceStr='+wsConfig.nonceStr);
+                        // console.log('timeStamp='+wsConfig.timeStamp);
+                        // console.log('signature='+wsConfig.signature);
+                        wsConfig.init();
                     }
 
                 }
