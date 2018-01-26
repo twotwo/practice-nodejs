@@ -30,8 +30,12 @@ function getMenu() {
 
         debug('getMenu');
         /**
-         * 未认证的订阅号返回以下错误：
-         * WeChatAPIError: api unauthorized; code: 48001
+         * 常见错误：
+         * 
+         * 1. 未认证的订阅号 WeChatAPIError: api unauthorized; code: 48001
+         * 
+         * 2. 从未加入白名单的地址访问
+         * WeChatAPIError: invalid ip xxxx, not in whitelist; code: 40164
          */
         if (err) {
             debug('err => %o', err);
