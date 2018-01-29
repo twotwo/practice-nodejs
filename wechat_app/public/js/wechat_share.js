@@ -20,11 +20,11 @@ var wsConfig = {
             signature: wsConfig.signature, // 必填，签名，见附录1
             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
-        console.log('debug = '+wsConfig.debug);
-        console.log('appId = '+wsConfig.appId);
-        console.log('timestamp = '+wsConfig.timestamp);
-        console.log('nonceStr = '+wsConfig.nonceStr);
-        console.log('signature = '+wsConfig.signature);
+        // console.log('debug = '+wsConfig.debug);
+        // console.log('appId = '+wsConfig.appId);
+        // console.log('timestamp = '+wsConfig.timestamp);
+        // console.log('nonceStr = '+wsConfig.nonceStr);
+        // console.log('signature = '+wsConfig.signature);
     },
     wxready: function () {
         wx.ready(function () {
