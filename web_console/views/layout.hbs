@@ -2,7 +2,12 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/{{pathPrefix}}/stylesheets/style.css' />
+    {{#if PROD_MODE}}
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    {{else}}
+      <link rel='stylesheet' href='/{{pathPrefix}}/js/vue.js' />
+    {{/if}}
+    <link rel='stylesheet' href='/{{pathPrefix}}/css/style.css' />
   </head>
   <body>
     {{{body}}}
