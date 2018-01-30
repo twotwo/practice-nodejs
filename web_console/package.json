@@ -10,7 +10,7 @@
     "start": "node ./bin/www",
     "prod": "NODE_ENV='prod' node ./bin/www",
     "qa": "NODE_ENV='qa' node ./bin/www",
-    "dev": "NODE_ENV='dev' node ./bin/www"
+    "dev": "DEBUG=console,command NODE_ENV='dev' node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",

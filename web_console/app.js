@@ -27,13 +27,17 @@ if (process.env.NODE_ENV==='dev') {
 	console.log('load ../conf/config-qa.json');
 }else {
 	var config = require('./conf/config.json'); //正式环境的配置
-	console.log('load ../conf/config.json');
+  console.log('load ../conf/config.json');
+  //enable PROD_MODE in views/layout.hbs
+  app.locals.PROD_MODE=true;
 }
 app.locals.pathPrefix = path.join('.', config.context||'');
 console.log("app.locals.pathPrefix="+app.locals.pathPrefix);
 
-// add config to app
-app.set('config', config); 
+/**
+ * Global properties
+ */
+global.config = config;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
