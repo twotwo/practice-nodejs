@@ -7,7 +7,7 @@
  * @param {*} next 
  */
 exports.setRemoteAdress = function(req, res, next) {
-  // console.log(req.session);
+  // expose session to *.hbs
   res.locals.session = req.session;
   if (!req.session.remoteAdress) {
     req.session.remoteAdress = (req.headers['x-forwarded-for'] ||
