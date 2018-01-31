@@ -1,21 +1,47 @@
 <a href="/{{pathPrefix}}">root</a>
 <p>Login from <b>{{session.remoteAdress}}</b></p>
-<p></p>
-<form action="./" method="post">
-	<label for="appId">应用ID(AppID):
-		<input type="text" name="appId" value="{{user.appId}}">
-	</label>
-	<label for="appId">渠道ID(ChannelID):
-		<input type="text" name="channelId" value="{{user.channelId}}">
-	</label>
-	<label for="devId">设备标识(IMEI/IDFA):
-		<input type="text" name="devId" value="{{user.devId}}">
-	</label>
-	<label for="ipAddress">IP地址:
-		<input type="text" name="ipAddress" value="{{user.ipAddress}}">
-	</label>
-	<input type="submit" name="submit" value="Query">
+
+<form id="demo" action="./" method="post">
+    <!-- text -->
+    <p>应用ID(AppID) <input type="text" name="appId" v-model="appId"> </p>
+	<p>渠道ID(ChannelID) <input type="text" name="channelId" v-model="channelId"> </p>
+	<p>手机信息(IMEI/IDFA) <input type="text" name="devId" v-model="devId"> </p>
+	<p>设备标识(UID) <input type="text" name="uid" v-model="uid"> </p>
+	<p>IP地址 <input type="text" name="ipAddress" v-model="ipAddress"> </p>
+    <!-- checkbox -->
+    <p><input type="checkbox" v-model="checked"> {&#123;checked ? &quot;yes&quot; : &quot;no&quot;&#125;}</p>
+    <!-- radio buttons -->
+    <p>
+        <input type="radio" name="picked" value="one" v-model="picked">
+        <input type="radio" name="picked" value="two" v-model="picked">
+        {&#123;picked&#125;}
+    </p>
+    <!-- select -->
+    <p>
+        <select v-model="selected">
+            <option>one</option>
+            <option>two</option>
+        </select>
+        {&#123;selected&#125;}
+    </p>
+    <p>data: {&#123;$data&#125;}</p>
+	 <input type="submit" name="submit" value="Submit">
 </form>
+
+<script>
+new Vue({
+    el: '#demo',
+    data: {
+        appId      : '{{option.appId}}',
+		channelId  : '{{option.channelId}}',
+        devId  : '{{option.devId}}',
+        uid   : '{{option.uid}}',
+		ipAddress: '{{option.ipAddress}}',
+        selected : 'two',
+        multiSelect: ['one', 'three']
+    }
+})
+</script>
 
 <pre>cmd={{cmd}}</pre>{{error}}
 
@@ -24,28 +50,33 @@
 	<div class="rTableHead"><strong>Event</strong></div>
 	<div class="rTableHead"><strong>rTime</strong></div>
 	<div class="rTableHead"><strong>AppId</strong></div>
-	<div class="rTableHead"><strong>UID</strong></div>
 	<div class="rTableHead"><strong>Channel</strong></div>
+	<div class="rTableHead"><strong>UID</strong></div>
 	<div class="rTableHead"><strong>DevID</strong></div>
-	<div class="rTableHead"><strong>Account</strong></div>
-	<div class="rTableHead"><strong>Role</strong></div>
-	<div class="rTableHead"><strong>rName</strong></div>
-	<div class="rTableHead"><strong>rTime</strong></div>
-	<div class="rTableHead"><strong>eValue</strong></div>
+	<div class="rTableHead"><strong>AccountID</strong></div>
+	<div class="rTableHead"><strong>AccountType</strong></div>
+	<div class="rTableHead"><strong>RoleID</strong></div>
+	<div class="rTableHead"><strong>RoleName</strong></div>
+	<div class="rTableHead"><strong>RoleLevel</strong></div>
+	<div class="rTableHead"><strong>NET</strong></div>
+	<div class="rTableHead"><strong>IP</strong></div>
 </div>
 
 {{#each logs}}
 <div class="rTableRow">
-	<div class="rTableCell">{{eventId}}</div>
+	<div class="rTableCell">{{eventID}}</div>
 	<div class="rTableCell">{{receiveTime}}</div>
-	<div class="rTableCell">{{appId}}</div>
+	<div class="rTableCell">{{appID}}</div>
+	<div class="rTableCell">{{channelID}}</div>
 	<div class="rTableCell">{{uid}}</div>
-	<div class="rTableCell">{{channelId}}</div>
-	<div class="rTableCell"> {{devId}}</div>
-	<div class="rTableCell">{{accountId}}</div>
-	<div class="rTableCell">{{roleId}}</div>
+	<div class="rTableCell"> {{devID}}</div>
+	<div class="rTableCell">{{accountID}}</div>
+	<div class="rTableCell">{{accountType}}</div>
+	<div class="rTableCell">{{roleID}}</div>
 	<div class="rTableCell"> {{roleName}}</div>
-	<div class="rTableCell">{{eventValue}}</div>
+	<div class="rTableCell">{{roleLevel}}</div>
+	<div class="rTableCell">{{net}}</div>
+	<div class="rTableCell">{{ipAddr}}</div>
 </div>
 {{/each}}
 
@@ -53,12 +84,14 @@
 	<div class="rTableHead"><strong>Event</strong></div>
 	<div class="rTableHead"><strong>rTime</strong></div>
 	<div class="rTableHead"><strong>AppId</strong></div>
-	<div class="rTableHead"><strong>UID</strong></div>
 	<div class="rTableHead"><strong>Channel</strong></div>
+	<div class="rTableHead"><strong>UID</strong></div>
 	<div class="rTableHead"><strong>DevID</strong></div>
-	<div class="rTableHead"><strong>Account</strong></div>
-	<div class="rTableHead"><strong>Role</strong></div>
-	<div class="rTableHead"><strong>rName</strong></div>
-	<div class="rTableHead"><strong>rTime</strong></div>
-	<div class="rTableHead"><strong>eValue</strong></div>
+	<div class="rTableHead"><strong>AccountID</strong></div>
+	<div class="rTableHead"><strong>AccountType</strong></div>
+	<div class="rTableHead"><strong>RoleID</strong></div>
+	<div class="rTableHead"><strong>RoleName</strong></div>
+	<div class="rTableHead"><strong>RoleLevel</strong></div>
+	<div class="rTableHead"><strong>NET</strong></div>
+	<div class="rTableHead"><strong>IP</strong></div>
 </div></div>
