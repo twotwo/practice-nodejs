@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+      <script src="/conn/js/vue.js"></script>
+    <link rel='stylesheet' href='/conn/css/style.css' />
+  </head>
+
+  <body>
+<a href="/conn">root</a>
+
+<h2>使用到的技术点</h2>
+<ol>
+  <li><a href="https://cn.vuejs.org/v2/guide/conditional.html">条件渲染 v-if</a></li>
+  <li><a href="https://cn.vuejs.org/v2/guide/computed.html">计算属性 computed</a></li>
+</ol>
+
+<h2>Stat Logs</h2>
+<div class="rTable" id="table">
+  <p><input type="checkbox" v-model="columns"> {&#123;columns ? '全部字段' : '精简字段'&#125;}</p>
+  
+  <div class="rTableRow">
+    <div class="rTableHead" v-if="show"><strong>Event</strong></div>
+    <div class="rTableHead" v-if="show"><strong>rTime</strong></div>
+    <div class="rTableHead" v-if="show"><strong>AppId</strong></div>
+    <div class="rTableHead"><strong>Channel</strong></div>
+    <div class="rTableHead"><strong>UID</strong></div>
+    <div class="rTableHead"><strong>DevID</strong></div>
+    <div class="rTableHead"><strong>AccountID</strong></div>
+    <div class="rTableHead"><strong>AccountType</strong></div>
+    <div class="rTableHead"><strong>RoleID</strong></div>
+    <div class="rTableHead"><strong>RoleName</strong></div>
+    <div class="rTableHead"><strong>RoleLevel</strong></div>
+    <div class="rTableHead"><strong>NET</strong></div>
+    <div class="rTableHead"><strong>IP</strong></div>
+  </div>
+
+  <div class="rTableRow">
+      <div class="rTableHead" v-if="show"><strong>Event</strong></div>
+      <div class="rTableHead" v-if="show"><strong>rTime</strong></div>
+      <div class="rTableHead" v-if="show"><strong>AppId</strong></div>
+    <div class="rTableHead"><strong>Channel</strong></div>
+    <div class="rTableHead"><strong>UID</strong></div>
+    <div class="rTableHead"><strong>DevID</strong></div>
+    <div class="rTableHead"><strong>AccountID</strong></div>
+    <div class="rTableHead"><strong>AccountType</strong></div>
+    <div class="rTableHead"><strong>RoleID</strong></div>
+    <div class="rTableHead"><strong>RoleName</strong></div>
+    <div class="rTableHead"><strong>RoleLevel</strong></div>
+    <div class="rTableHead"><strong>NET</strong></div>
+    <div class="rTableHead"><strong>IP</strong></div>
+  </div>
+</div>
+
+<script>
+new Vue({
+  el: '#table',
+  data: {
+      columns: true, //显示全部字段
+  },
+  computed: {
+    show: function () {
+      console.log('column = '+this.columns);
+      return this.columns;
+    }
+  }
+})
+</script>
+</body></html>
