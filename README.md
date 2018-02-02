@@ -23,8 +23,13 @@ Hello World!%
 基于 express 的web程序，启动方式与 `hello_node` 相同
 
 ## 3. express_generator
+[express-generator](http://expressjs.com/en/starter/generator.html)
+
 用命令 `express --view=hbs express_generator && cd express_generator` 直接生成express工程
 
 
-## 4. web_console
+## 4. hello_sequelize
+使用 [Sequelize](http://wiki.li3huo.com/NodeJS_ORM_Solutions#Sequelize) ORM
+
+## 5. web_console
 在 `express_generator` 基础上增加更多后台逻辑

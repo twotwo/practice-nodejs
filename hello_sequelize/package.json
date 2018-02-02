@@ -1,0 +1,30 @@
+{
+  "name": "hello_sequelize",
+  "version": "1.0.0",
+  "description": "Sequelize getting started",
+  "main": "app.js",
+  "scripts": {
+    "dev": "DEBUG=sequelize node app.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twotwo/practice-nodejs.git"
+  },
+  "keywords": [
+    "sequelize"
+  ],
+  "author": "li3huo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twotwo/practice-nodejs/issues"
+  },
+  "homepage": "https://github.com/twotwo/practice-nodejs#readme",
+  "dependencies": {
+    "mysql2": "^1.5.1",
+    "sequelize": "^4.32.3"
+  },
+  "devDependencies": {
+    "debug": "^3.1.0"
+  }
+}
