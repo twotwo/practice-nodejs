@@ -4,7 +4,7 @@
   "description": "Sequelize getting started",
   "main": "app.js",
   "scripts": {
-    "dev": "DEBUG=sequelize node app.js",
+    "dev": "DEBUG=sequelize* node app.js",
     "test": "DEBUG=sequelize* jest"
   },
   "repository": {
