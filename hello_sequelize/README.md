@@ -66,7 +66,56 @@ mysql test> select * from pets;
 
 ## Features of Sequelize
 
-### 1. [Executing raw SQL queries](http://docs.sequelizejs.com/manual/installation/usage.html#executing-raw-sql-queries)
+### 1. [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
+定义对象和表结构的映射
+
+#### Import
+
+```javascript
+// 获取dao
+const project_dao = db.import('project', require('./path/to/models/project'));
+
+// The model definition is done in /path/to/models/project.js
+sequelize.import('project', (sequelize, DataTypes) => {
+  return sequelize.define("project", {
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT
+  })
+})
+```
+
+#### Configuration
+
+```javascript
+const Bar = sequelize.define('bar', { /* bla */ }, {
+  // don't add the timestamp attributes (updatedAt, createdAt)
+  timestamps: false,
+
+  // don't delete database entries but set the newly added attribute deletedAt
+  // to the current date (when deletion was done). paranoid will only work if
+  // timestamps are enabled
+  paranoid: true,
+
+  // don't use camelcase for automatically added attributes but underscore style
+  // so updatedAt will be updated_at
+  underscored: true,
+
+  // disable the modification of table names; By default, sequelize will automatically
+  // transform all passed model names (first parameter of define) into plural.
+  // if you don't want that, set the following
+  freezeTableName: true,
+
+  // define the table's name
+  tableName: 'my_very_custom_table_name',
+
+  // Enable optimistic locking.  When enabled, sequelize will add a version count attribute
+  // to the model and throw an OptimisticLockingError error when stale instances are saved.
+  // Set to true or a string with the attribute name you want to use to enable.
+  version: true
+});
+```
+
+### 2. [Executing raw SQL queries](http://docs.sequelizejs.com/manual/installation/usage.html#executing-raw-sql-queries)
 
 ```javascript
 sequelize
