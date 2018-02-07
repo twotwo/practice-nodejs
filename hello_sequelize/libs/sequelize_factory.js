@@ -4,7 +4,7 @@
 
 const Sequelize = require('sequelize')
 const config = require('../conf/orm')
-const debug = require('debug')('sequelize.factory');
+const debug = require('debug')('sequelize:dao:factory');
 
 const Factory = {
   Sequelize,
@@ -16,6 +16,15 @@ const Factory = {
           config.password,
           config.option);
     }
+  }, 
+  getDataAcessObject(model) {
+    debug('get dao '+model);
+    /**
+     * http://docs.sequelizejs.com/manual/tutorial/models-definition.html#import
+     * 
+     * import DAO Model is cached by Sequelize
+     */
+    return Factory.sequelize.import(model, require('../models/'+model));
   }
 };
 

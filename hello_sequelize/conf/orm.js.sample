@@ -2,14 +2,24 @@
  * Sequelize 带连接池的配置
  */
 var config = {
-    database: 'sys', // 使用哪个数据库
-    username: 'www', // 用户名
-    password: 'www', // 口令
+    database: 'test', // 使用哪个数据库
+    username: 'test', // 用户名
+    password: 'test', // 口令
     option: {
         operatorsAliases: false, //http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
         host: 'localhost', // 主机名
         port: 3306, // 端口号，MySQL默认3306
+        logging: false,
         dialect: 'mysql',
+        define: {
+            underscored: true,
+            freezeTableName: false,
+            charset: 'utf8',
+            dialectOptions: {
+              collate: 'utf8_general_ci'
+            },
+            timestamps: false
+        },
         pool: {
             max: 5,
             min: 0,
