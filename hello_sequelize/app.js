@@ -2,11 +2,11 @@ const debug = require('debug')('sequelize');
 
 //获取Sequelize单一实例
 const Factory = require('./libs/sequelize_factory');
-const current = Factory.sequelize;
 const Sequelize = Factory.Sequelize;
+const sequelize = Factory.sequelize;
 
 //测试连接
-current.authenticate().then(() => {
+sequelize.authenticate().then(() => {
     debug('Connection has been established successfully.');
 }).catch(err => {
     debug('Unable to connect to the database:', err);
@@ -14,23 +14,13 @@ current.authenticate().then(() => {
 
 
 // define model
-const User = current.define('user', {
-  username: {
-    type: Sequelize.STRING(100)
-  },
-  password: {
-    type: Sequelize.STRING(16)
-  },
-  email: {
-    type: Sequelize.STRING(100)
-  }
-}, {timestamps: false});
+const user_dao = Factory.getDataAcessObject('user');
 
 // force: true will drop the table if it already exists
 try {
-  User.sync({force: false}).then(() => {
+  user_dao.sync({force: false}).then(() => {
       // Table created
-      return User.create({
+      return user_dao.create({
         username: 'John',
         password: '23rwefsdaf',
         email: 'Hancock@m.com'
@@ -40,15 +30,39 @@ try {
   debug('sync(false) table');
 }
 
+debug('user_dao = %O', user_dao);
+sequelize.query("SELECT count(*) as count FROM users;").then(myTableRows => {
+  debug('count =', myTableRows[0][0].count);
+})
+
 // first query
-User.findAll().then(users => {
+user_dao.findAll().then(users => {
   debug('findAll() count=',users.length);
   for(let user of users) {
     debug('user',user.dataValues);
   }
 })
 
-User.findOne().then(user => {
+user_dao.findOne().then(user => {
     debug('username =',user.get('username'));
-  });
-  
+});
+
+// async function wait() {
+//   debug('wait for connection release...');
+//   await sleep(3000);
+// };
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms))
+// };
+// wait();
+
+//sync and close pool connections
+sequelize.sync().then(() => {
+  debug("handles before:", process._getActiveHandles().length);
+  return sequelize.close().then(() => {
+    debug("handles after:", process._getActiveHandles().length);
+  })
+})
+.then(() => {
+  debug('shutdown gracefully', process._getActiveHandles().length);
+});
