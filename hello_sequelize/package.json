@@ -4,8 +4,8 @@
   "description": "Sequelize getting started",
   "main": "app.js",
   "scripts": {
-    "dev": "DEBUG=sequelize* node app.js",
-    "test": "DEBUG=sequelize* jest"
+    "dev": "DEBUG=sequelize:dao:* node app.js",
+    "test": "DEBUG=sequelize:dao:* jest"
   },
   "repository": {
     "type": "git",
