@@ -10,7 +10,7 @@ if (process.env.NODE_ENV==='dev') {
 
 var app = express();
 //使用package.jsond的config.port设置服务端口
-app.set('port', (process.env.npm_package_config_port||3000))
+app.set('port', (process.env.npm_package_config_port||3003))
 
 var logger = require('morgan');
 app.use(logger('dev'));
