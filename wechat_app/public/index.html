@@ -24,7 +24,7 @@
                     if (data != null) {
                         // data = JSON.parse(data);
                         $("#div1").html('appId='+data.appId+'<br>signature='+data.signature);
-                        wsConfig.debug = data.debug;
+                        wsConfig.debug = true; //data.debug;
                         wsConfig.appId = data.appId;
                         wsConfig.timestamp = data.timestamp;
                         wsConfig.nonceStr = data.nonceStr;
