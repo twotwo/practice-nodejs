@@ -2,28 +2,40 @@ let debug = require('debug')('command');
 
 /**
  * 根据用户属性，生成对应查询命令
- * @param {*} user 
+ * @param {*} form 
  */
-exports.genCommand = function(user) {
-    var cmd = '';
-    cmd +="tail -n" + user.readLines;
-    cmd +=" "+user.logFile;
-    cmd +="|awk 'BEGIN{FS=\"\\\\\\\\x02\"} {if($8==\""+user.channelId+"\"";
-    //add appId
-    if (user.appId != "")
-        cmd +=" && $3==\""+user.appId+"\"";
-    //add devId
-    if (user.devId != "")
-        cmd +=" && $20==\""+user.devId+"\"";
-    //add uid
-    if (user.uid)
-        cmd +=" && $4~\""+user.uid+"\"";
-    //add ip address
-    if (user.ipAddress != "")
-        cmd +=" && $7==\""+user.ipAddress+"\"";
-    cmd +=") print $0}'";
-    //max 50 records 
-    cmd +="|tail -n50";
+exports.genCommand = function(form) {
+    let cmd = ''; //合成可执行的cmd
+    let options = []; //用户选择参数集
+    cmd +="tail -n" + form.readLines;
+    cmd +=" "+form.logFile;
+
+    //add appId $3
+    if (form.appId != "")
+      options.push("$3==\""+form.appId+"\"");
+    //add uid $4
+    if (form.uid != "")
+      options.push("$4~\""+form.uid+"\"");
+    //add ipAddress $7
+    if (form.ipAddress != "")
+      options.push("$7==\""+form.ipAddress+"\"");
+    //add channelId $8
+    if (form.channelId != "")
+      options.push("$8==\""+form.channelId+"\"");
+    //add devId $20
+    if (form.devId != "")
+      options.push("$20==\""+form.devId+"\"");
+
+    //拼接awk命令
+    if(options.length>0) {
+      cmd +="|awk 'BEGIN{FS=\"\\\\\\\\x02\"} {if("+options.shift();
+      if(options.length>0) {
+        cmd +=" && ";
+        cmd += options.join(' && ');
+      }
+      cmd +=") print $0}'"; //结束awk命令拼接
+    } 
+    cmd +="|tail -n50"; //max 50 records
     return cmd;
 }
 
@@ -36,13 +48,13 @@ const { exec } = require('child_process');
  * @param {*} callback function(error, stdout, stderr, cost)
  */
 exports.execute = function(command, callback) {
-    let start_point = Date.now(); // in milliseconds
-    exec(command, 
-      {maxBuffer: 1024 * 500}, 
-      function(error, stdout, stderr) { 
-        callback(error, stdout, stderr, Date.now()-start_point); 
-      });
-  };
+  let start_point = Date.now(); // in milliseconds
+  exec(command, 
+    {maxBuffer: 1024 * 500}, 
+    function(error, stdout, stderr) { 
+      callback(error, stdout, stderr, Date.now()-start_point); 
+    });
+};
 
 
 /**
@@ -58,7 +70,7 @@ exports.formatLogs = function(data) {
         try {
             line = lines[i].split("\\x02");
             debug('split to %d', line.length);
-            if(line.length < 17) continue;
+            if(line.length != 47) continue;
             log.receiveTime = line[0];
             log.logVer = line[1];
             log.appID = line[2];
@@ -78,10 +90,40 @@ exports.formatLogs = function(data) {
             log.imei = line[14];
             log.imsi = line[15];
             log.dtn = line[16];
+            log.brandName = line[17];
+            log.serial = line[18];
+            log.devID = line[19];
+            log.idfa = line[20];
+            log.idfv = line[21];
+            log.screen = line[22];
+            log.lang = line[23];
+            log.gps = line[24];
+            log.net = line[25];
+            log.machine = line[26];
+            log.accountID = line[27];
+            log.accountName = line[28];
+            log.accountType = line[29];
+            log.serverID = line[30];
+            log.roleLevel = line[31];
+            log.roleID = line[32];
+            log.roleName = line[33];
+            log.jailBreak = line[34];
+            log.isTest = line[35];
+            log.ds1 = line[36];
+            log.ds2 = line[37];
+            log.ds3 = line[38];
+            log.ds4 = line[39];
+            log.reserv1 = line[40];
+            log.reserv2 = line[41];
+            log.reserv3 = line[42];
+            log.reserv4 = line[43];
+            log.reserv5 = line[44];
+            log.eventID = line[45];
+            log.eventValue = line[46];
         } catch(error) {
             debug('formatLogs: line = %d, error = %S', i, error);
         }
         logs.push(log);
     }
-    return logs;
+    return logs.reverse();
 }

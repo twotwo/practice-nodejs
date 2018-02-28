@@ -38,7 +38,7 @@ router.post('/', function(req, res, next) {
 	debug('req.body =',req.body);
 
 	var option = {};
-	option.channelId = req.body.channelId || "300000";
+	option.channelId = req.body.channelId || "";
 	option.appId = req.body.appId || '';
 	option.devId = req.body.devId || '';
 	option.uid = req.body.uid || '';
