@@ -61,16 +61,16 @@ router.post('/', function(req, res, next) {
 
 	var cmd = command.genCommand(option);
 
-	command.execute(cmd, function(error, stdout, stderr) {
+	command.execute(cmd, function(error, stdout, stderr, cost) {
 		if (error) {
 			//console.error(`exec error: ${error}`);
 			res.render('console', {  option: option, cmd: cmd, 
-				error: error});
+				error: error, cost: cost});
 		} else {
 			// console.log(`stdout: ${stdout}`);
 			// 加载 console.hbs 模板并传递数据给模板
 			res.render('console', {  option: option, cmd: cmd, 
-				logs: command.formatLogs(stdout) });
+				logs: command.formatLogs(stdout), cost: cost});
 		}
 	  });
 });

@@ -33,15 +33,16 @@ const { exec } = require('child_process');
 /**
  * 执行本地命令，increased maxBuffer to 500KB
  * @param {*} command 
- * @param {*} callback function(error, stdout, stderr)
+ * @param {*} callback function(error, stdout, stderr, cost)
  */
 exports.execute = function(command, callback) {
-  exec(command, 
-    {maxBuffer: 1024 * 500}, 
-    function(error, stdout, stderr) { 
-      callback(error, stdout, stderr); 
-    });
-};
+    let start_point = Date.now(); // in milliseconds
+    exec(command, 
+      {maxBuffer: 1024 * 500}, 
+      function(error, stdout, stderr) { 
+        callback(error, stdout, stderr, Date.now()-start_point); 
+      });
+  };
 
 
 /**
