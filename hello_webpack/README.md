@@ -78,3 +78,13 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 
 `npm install --save-dev csv-loader xml-loader`
 
+## 5. [Output Management](https://webpack.js.org/guides/output-management/)
+
+### 5.1 Setting up HtmlWebpackPlugin
+
+`npm install --save-dev html-webpack-plugin`
+
+### 5.2 Cleaning up the /dist folder
+
+`npm install clean-webpack-plugin --save-dev`
+
