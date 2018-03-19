@@ -116,3 +116,39 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 
 comment `devtool: 'inline-source-map',`
 
+## 8. [Production](https://webpack.js.org/guides/production/)
+
+### 8.1 Setup
+
+`npm install --save-dev webpack-merge`
+
+```
+                       + -  webpack.common.js
+webpack.config.js  ==> |    webpack.dev.js
+                       + -  webpack.prod.js
+```
+
+### 8.2 NPM Scripts
+
+### 8.3 Minification
+ * UglifyJSPlugin
+ * BabelMinifyWebpackPlugin
+ * ClosureCompilerPlugin
+
+### 8.4 Source Mapping
+
+```js
+  plugins: [
+    new UglifyJSPlugin({
+      sourceMap: true
+    })
+  ]
+```
+
+### 8.5 Specify the Environment
+
+`webpack.prod.js` new webpack.DefinePlugin
+
+### 8.6 CLI Alternatives
+
+`--define process.env.NODE_ENV="'production'"`
