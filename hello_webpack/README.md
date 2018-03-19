@@ -184,3 +184,16 @@ webpack.config.js  ==> |    webpack.dev.js
 ### 9.3 Dynamic Imports
 
 ### 9.4 Bundle Analysis
+
+## 10. [Lazy Loading](https://webpack.js.org/guides/lazy-loading/)
+懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。
+
+## 11. [Caching](https://webpack.js.org/guides/caching/)
+
+### 11.1 [Output Filenames](https://webpack.js.org/configuration/output/#output-filename)
+
+`filename: '[name].[chunkhash].js',`
+
+### 11.2 Extracting Boilerplate
+
+### 11.3 Module Identifiers
