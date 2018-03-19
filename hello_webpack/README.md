@@ -106,3 +106,13 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 `npm install --save-dev webpack-dev-server`
 
 #### 6.2.3 Using webpack-dev-middleware
+
+## 7. [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
+
+### Minify the Output
+`npm install --save-dev uglifyjs-webpack-plugin`
+
+[uglifyjs-webpack-plugin](https://www.npmjs.com/package/uglifyjs-webpack-plugin)
+
+comment `devtool: 'inline-source-map',`
+
