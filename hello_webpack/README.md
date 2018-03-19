@@ -152,3 +152,35 @@ webpack.config.js  ==> |    webpack.dev.js
 ### 8.6 CLI Alternatives
 
 `--define process.env.NODE_ENV="'production'"`
+
+## 9. [Code Splitting](https://webpack.js.org/guides/code-splitting/)
+
+有三种常用的代码分离方法：
+
+ * 入口起点：使用 entry 配置手动地分离代码
+ * 防止重复：使用 CommonsChunkPlugin 去重和分离 chunk
+ * 动态导入：通过模块的内联函数调用来分离代码
+
+### 9.1 Entry Points
+
+### 9.2 Prevent Duplication
+
+`webpack.prod.js` optimization
+
+```js
+  optimization: {
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendor',
+                chunks: 'all'
+            }
+        }
+    }
+  },
+```
+
+### 9.3 Dynamic Imports
+
+### 9.4 Bundle Analysis
