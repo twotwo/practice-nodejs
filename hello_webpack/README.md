@@ -1,4 +1,4 @@
-# webpack入门
+# webpack 4入门
  * [webpack.js](https://webpack.js.org/)
  * [概念](https://doc.webpack-china.org/concepts/)
  * [getting started](https://webpack.js.org/guides/getting-started/)
@@ -57,3 +57,24 @@ Entrypoint main [big] = main.js
 [./src/index.js] 260 bytes {main} [built]
     + 1 hidden module
 ```
+
+## 4. [Asset Management](https://webpack.js.org/guides/asset-management/)
+
+### 4.1 Loading CSS
+
+`npm install --save-dev style-loader css-loader`
+
+webpack 根据正则表达式，来确定应该查找哪些文件，并将其提供给指定的 loader。在这种情况下，以 .css 结尾的全部文件，都将被提供给 style-loader 和 css-loader。
+
+### 4.2 Loading Images
+
+`npm install --save-dev file-loader`
+
+### 4.3 Loading Fonts
+
+//暂时忽略
+
+### 4.4 Loading Data
+
+`npm install --save-dev csv-loader xml-loader`
+
