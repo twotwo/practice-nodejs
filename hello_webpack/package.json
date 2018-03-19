@@ -1,0 +1,16 @@
+{
+  "name": "hello_webpack",
+  "version": "1.0.0",
+  "description": "* [概念](https://doc.webpack-china.org/concepts/)  * [getting started](https://doc.webpack-china.org/guides/getting-started/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.1.1",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
