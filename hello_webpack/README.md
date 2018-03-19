@@ -88,3 +88,21 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 
 `npm install clean-webpack-plugin --save-dev`
 
+## 6. [Development](https://webpack.js.org/guides/development/)
+
+### 6.1 Using source maps
+
+本指南中的工具仅用于开发环境，请不要在生产环境中使用它们！
+
+为了更容易地追踪错误和警告，JavaScript 提供了 source map 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 b.js，source map 就会明确的告诉你。
+
+`webpack.config.js` devtool: 'inline-source-map',
+
+### 6.2 Choosing a Development Tool
+
+#### 6.2.1 Using Watch Mode
+#### 6.2.2 Using [webpack-dev-server](https://webpack.js.org/configuration/dev-server)
+
+`npm install --save-dev webpack-dev-server`
+
+#### 6.2.3 Using webpack-dev-middleware
