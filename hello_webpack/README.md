@@ -105,7 +105,13 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 
 `npm install --save-dev webpack-dev-server`
 
-#### 6.2.3 Using webpack-dev-middleware
+#### 6.2.3 Using webpack-dev-middleware *
+webpack-dev-middleware 是一个容器(wrapper)，它可以把 webpack 处理后的文件传递给一个服务器(server)。
+
+ * `npm install --save-dev express webpack-dev-middleware`
+ * `webpack.config.js` publicPath: '/'
+ * `server.js`
+ * `package.json` "server": "node server.js",
 
 ## 7. [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
 
@@ -197,3 +203,30 @@ webpack.config.js  ==> |    webpack.dev.js
 ### 11.2 Extracting Boilerplate
 
 ### 11.3 Module Identifiers
+
+## 12. [Shimming](https://doc.webpack-china.org/guides/shimming/)
+引入全局依赖或者加patch
+
+### 12.1 Shimming Globals
+导入全局变量
+
+ * `webpack.common.js` plugins.webpack.ProvidePlugin `join: ['lodash', 'join']`
+ * `src/index.js` 直接调用join方法
+
+### 12.2 Granular Shimming
+使用 imports-loader 覆写 this 
+
+require.resolve('index.js') 编译不通过 `Error: Cannot find module 'index.js'`
+
+ * `npm install --save-dev imports-loader`
+ * `webpack.common.js` module.rules `imports-loader`
+
+### 12.3 Global Exports
+某个库(library)创建出一个全局变量，它期望用户使用这个变量
+
+ * `webpack.common.js` module.rules `exports-loader`
+ * `index.js` globals.js helpers.parse
+
+### 12.4 Loading Polyfills
+腻子功能
+
