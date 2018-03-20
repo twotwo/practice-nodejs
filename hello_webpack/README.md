@@ -109,9 +109,13 @@ webpack 根据正则表达式，来确定应该查找哪些文件，并将其提
 webpack-dev-middleware 是一个容器(wrapper)，它可以把 webpack 处理后的文件传递给一个服务器(server)。
 
  * `npm install --save-dev express webpack-dev-middleware`
- * `webpack.config.js` publicPath: '/'
+ * `webpack.config.js` output.publicPath: '/'
  * `server.js`
  * `package.json` "server": "node server.js",
+
+##### 6.2.3.1 [Public Path](https://webpack.js.org/guides/public-path/)
+ * `const ASSET_PATH = process.env.ASSET_PATH || '/';`
+
 
 ## 7. [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
 
@@ -230,3 +234,46 @@ require.resolve('index.js') 编译不通过 `Error: Cannot find module 'index.js
 ### 12.4 Loading Polyfills
 腻子功能
 
+## 13. [Progressive Web Application](https://webpack.js.org/guides/progressive-web-application/)
+渐进式网络应用程序(Progressive Web Application - PWA)，是一种可以提供类似于原生应用程序(native app)体验的网络应用程序(web app)。PWA 可以用来做很多事。其中最重要的是，在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 Service Workers 的网络技术来实现的。
+
+## 14. [TypeScript](https://webpack.js.org/guides/typescript/)
+TypeScript 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。
+
+## 15. [Migrating Versions](https://webpack.js.org/guides/migrating/)
+更多内容，请参考 [更新日志](https://github.com/webpack/webpack/releases)
+
+## 16. [Environment Variables](https://webpack.js.org/guides/environment-variables/)
+
+`webpack --env.NODE_ENV=local --env.production --progress`
+
+```js
+module.exports = env => {
+  // Use env.<YOUR VARIABLE> here:
+  console.log('NODE_ENV: ', env.NODE_ENV) // 'local'
+  console.log('Production: ', env.production) // true
+
+  return {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  }
+}
+```
+
+## 17. [Build Performance](https://webpack.js.org/guides/build-performance/)
+一些改进构建/编译性能的实用技巧
+
+## 18. [Content Security Policies](https://webpack.js.org/guides/csp/)
+
+## 19. [Development - Vagrant](https://webpack.js.org/guides/development-vagrant/)
+在虚拟机中运行开发环境
+
+### Advanced Usage with nginx
+用 nginx 来代理 webpack-dev-server
+
+## 20. [Dependency Management](https://webpack.js.org/guides/dependency-management/)
+
+## 21. [Integrations](https://webpack.js.org/guides/integrations/)
