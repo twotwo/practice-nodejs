@@ -37,6 +37,16 @@ $ npm install webpack@3 webpack-dev-middleware@2 --save-dev #对齐webpack3
 ## UI Framework
  * [Vue.js](https://cn.vuejs.org/v2/guide/)
 
+### Vue.js v2.x
+
+```bash
+# init project with vue-cli
+$ npm update -g vue-cli
+$ vue -V
+2.9.3
+$ vue init webpack my-project
+```
+
 ```bash
 $ npm install vue vuex vue-cookie vue-router --save
 $ npm install vue-loader vue-style-loader vue-template-compiler --save-dev
