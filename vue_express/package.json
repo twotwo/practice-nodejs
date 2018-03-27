@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "cross-env DEBUG=console,helper:*,login NODE_ENV='dev' node ./bin/www",
     "dev-wds": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "start": "NODE_ENV='production' node ./bin/www",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
@@ -22,6 +22,7 @@
     "debug": "^3.1.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
     "mysql2": "^1.5.3",
     "sequelize": "^4.37.4",
     "vue": "^2.5.2",

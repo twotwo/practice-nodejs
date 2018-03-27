@@ -13,18 +13,22 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const app = express();
-const helper = require('./libs/express_helper.js');
-
-let config = helper.getConfig();
-
-// app.locals.* expose in *.hbs
-app.locals.pathPrefix = path.posix.join('.', config.context||'');
-console.log("app.locals.pathPrefix="+app.locals.pathPrefix);
 
 /**
  * Global properties
  */
+const helper = require('./libs/express_helper.js');
+let config = helper.getConfig();
 global.config = config;
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
+// app.locals.* expose in *.hbs
+app.locals.pathPrefix = path.posix.join('.', config.context||'');
+const webContext = path.posix.join('/', app.locals.pathPrefix);
+console.log("webContext = "+webContext);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -43,7 +47,6 @@ app.use(session({
  */
 // const index = require('./routes/index');
 // // app.use('/', index); //多加一个根路由
-// const webContext = path.posix.join('/', app.locals.pathPrefix);
 // app.use(webContext+'/index', index); //context+本应用的根路由
 // app.use(webContext+'/users', require('./routes/users'));
 // app.use(webContext+'/console', require('./routes/console'));
@@ -58,10 +61,10 @@ if (process.env.NODE_ENV==='dev') {
     const webpack = require('webpack');
     const compiler = webpack(webpackConfig);
     app.use(webpackDevMiddleware(compiler, {
-        publicPath: '/'
+        publicPath: webContext
     }));
 } else {
-    app.use(webContext, express.static(path.posix.join(__dirname, 'static')));
+    app.use(webContext, express.static(path.posix.join(__dirname, 'dist')));
 }
 
 // catch 404 and forward to error handler

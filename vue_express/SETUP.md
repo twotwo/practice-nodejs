@@ -126,5 +126,14 @@ $ npm install cross-env --save-dev
  * `libs/express_helper.js` 获取当前配置参数
  * `config/webpack.dev.conf.js` module.exports = devWebpackConfig;
 
+### 2. 前端支持 `context`
 
-### 2. 
+config/index.js
+
+```js
+const config = require('./prod.env.js'); //line 6
+...
+    assetsPublicPath: config.context, //line 13
+...
+    assetsPublicPath: config.context, //line 54
+```
