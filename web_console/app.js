@@ -1,18 +1,18 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+// const favicon = require('serve-favicon');
+const logger = require('morgan');
+// const cookieParser = require('cookie-parser');
+/**
+ * [body-parser](https://github.com/expressjs/body-parser) parse HTTP Body to req.body
+ */
+const bodyParser = require('body-parser');
 /**
  * [express-session](https://github.com/expressjs/session)
  */
-var session = require('express-session');
+const session = require('express-session');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
-var app = express();
+const app = express();
 
 if (process.env.NODE_ENV==='dev') {
 	if (process.platform==='win32') {
@@ -55,13 +55,18 @@ app.use(session({
   saveUninitialized: false
 }));
 
-//路由设置
+/**
+ * 路由设置
+ */
+const index = require('./routes/index');
 app.use('/', index); //多加一个根路由
-app.use(path.posix.join('/', app.locals.pathPrefix), index); //context+本应用的根路由
-app.use(path.posix.join('/', app.locals.pathPrefix, '/users'), users);
-app.use(path.posix.join('/', app.locals.pathPrefix, '/console'), require('./routes/console'));
+const webContext = path.posix.join('/', app.locals.pathPrefix);
+app.use(webContext, index); //context+本应用的根路由
+app.use(webContext+'/users', require('./routes/users'));
+app.use(webContext+'/console', require('./routes/console'));
+// app.use(webContext+'/login', require('./routes/login'));
 
-app.use(path.posix.join('/', app.locals.pathPrefix), express.static(path.posix.join(__dirname, 'public')));
+app.use(webContext, express.static(path.posix.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

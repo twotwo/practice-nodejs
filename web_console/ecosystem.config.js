@@ -8,7 +8,8 @@ module.exports = {
       name      : 'web-console',
       script    : './bin/www',
       env: {
-        COMMON_VARIABLE: 'true'
+        COMMON_VARIABLE: 'true',
+        NODE_PORT: 3002
       },
       env_production : {
         NODE_ENV: 'production'

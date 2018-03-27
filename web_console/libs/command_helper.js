@@ -25,6 +25,9 @@ exports.genCommand = function(form) {
     //add devId $20
     if (form.devId != "")
       options.push("$20==\""+form.devId+"\"");
+    //add eventId $46
+    if (form.eventId != "")
+      options.push("$46==\""+form.eventId+"\"");
 
     //拼接awk命令
     if(options.length>0) {
@@ -52,10 +55,78 @@ exports.execute = function(command, callback) {
   exec(command, 
     {maxBuffer: 1024 * 500}, 
     function(error, stdout, stderr) { 
-      callback(error, stdout, stderr, Date.now()-start_point); 
+      callback(error, stdout.trim(), stderr, Date.now()-start_point); 
     });
 };
 
+/**
+ * 日志数据格式化
+ * @param {*} line 
+ */
+exports.formatLog = function(line) {
+
+  let log = {};
+  try {
+    values = line.split("\\x02");
+    debug('formatLog() split to %d pieces', values.length);
+    if(values.length != 47) {
+      return 'params.length != 47';
+    }
+    log.receiveTime = values[0];
+    log.logVer = values[1];
+    log.appID = values[2];
+    log.uid = values[3];
+    //去掉后13位的时间戳
+    log.uid = log.uid.substring(0,log.uid.length-13);
+    log.sdkVer = values[4];
+    log.logTime = values[5];
+    log.ipAddr = values[6];
+    log.channelID = values[7];
+    log.gameVer = values[8];
+    log.osName = values[9];
+    log.osVer = values[10];
+    log.countryCode = values[11];
+    log.SP = values[12];
+    log.macAddr = values[13];
+    log.imei = values[14];
+    log.imsi = values[15];
+    log.dtn = values[16];
+    log.brandName = values[17];
+    log.serial = values[18];
+    log.devID = values[19];
+    log.idfa = values[20];
+    log.idfv = values[21];
+    log.screen = values[22];
+    log.lang = values[23];
+    log.gps = values[24];
+    log.net = values[25];
+    log.machine = values[26];
+    log.accountID = values[27];
+    log.accountName = values[28];
+    log.accountType = values[29];
+    log.serverID = values[30];
+    log.roleLevel = values[31];
+    log.roleID = values[32];
+    log.roleName = values[33];
+    log.jailBreak = values[34];
+    log.isTest = values[35];
+    log.ds1 = values[36];
+    log.ds2 = values[37];
+    log.ds3 = values[38];
+    log.ds4 = values[39];
+    log.reserv1 = values[40];
+    log.reserv2 = values[41];
+    log.reserv3 = values[42];
+    log.reserv4 = values[43];
+    log.reserv5 = values[44];
+    log.eventID = values[45];
+    log.eventValue = values[46];
+  } catch(error) {
+    debug('formatLogs: values = %d, error = %S', i, error);
+  }
+  debug('formatLog() log = %S', log);
+  return log;
+}
 
 /**
  * 把日志矩阵拆解成日志数组对象
@@ -63,67 +134,13 @@ exports.execute = function(command, callback) {
  * @param {*} data logs reading from Statis Sdk.
  */
 exports.formatLogs = function(data) {
-    var logs = [];
-    var lines = data.split("\n");
-    for(var i=0; i<lines.length; i++) {
-        log = {};
-        try {
-            line = lines[i].split("\\x02");
-            debug('split to %d', line.length);
-            if(line.length != 47) continue;
-            log.receiveTime = line[0];
-            log.logVer = line[1];
-            log.appID = line[2];
-            log.uid = line[3];
-            //去掉后13位的时间戳
-            log.uid = log.uid.substring(0,log.uid.length-13);
-            log.sdkVer = line[4];
-            log.logTime = line[5];
-            log.ipAddr = line[6];
-            log.channelID = line[7];
-            log.gameVer = line[8];
-            log.osName = line[9];
-            log.osVer = line[10];
-            log.countryCode = line[11];
-            log.SP = line[12];
-            log.macAddr = line[13];
-            log.imei = line[14];
-            log.imsi = line[15];
-            log.dtn = line[16];
-            log.brandName = line[17];
-            log.serial = line[18];
-            log.devID = line[19];
-            log.idfa = line[20];
-            log.idfv = line[21];
-            log.screen = line[22];
-            log.lang = line[23];
-            log.gps = line[24];
-            log.net = line[25];
-            log.machine = line[26];
-            log.accountID = line[27];
-            log.accountName = line[28];
-            log.accountType = line[29];
-            log.serverID = line[30];
-            log.roleLevel = line[31];
-            log.roleID = line[32];
-            log.roleName = line[33];
-            log.jailBreak = line[34];
-            log.isTest = line[35];
-            log.ds1 = line[36];
-            log.ds2 = line[37];
-            log.ds3 = line[38];
-            log.ds4 = line[39];
-            log.reserv1 = line[40];
-            log.reserv2 = line[41];
-            log.reserv3 = line[42];
-            log.reserv4 = line[43];
-            log.reserv5 = line[44];
-            log.eventID = line[45];
-            log.eventValue = line[46];
-        } catch(error) {
-            debug('formatLogs: line = %d, error = %S', i, error);
-        }
-        logs.push(log);
-    }
-    return logs.reverse();
+  let logs = [];
+  let lines = data.split("\n");
+  for(var i=0; i<lines.length; i++) {
+    let log = exports.formatLog(lines[i]);
+    if(typeof(log) === 'object') {
+			logs.push(log);
+		}
+  }
+  return logs.reverse();
 }

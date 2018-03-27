@@ -43,6 +43,7 @@ router.post('/', function(req, res, next) {
 	option.devId = req.body.devId || '';
 	option.uid = req.body.uid || '';
 	option.ipAddress = req.body.ipAddress || '';
+	option.eventId = req.body.eventId || '';
 	//读取行数
 	option.readLines = req.body.readLines || '150000';
 	//显示哪些字段
