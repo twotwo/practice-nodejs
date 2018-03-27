@@ -31,5 +31,8 @@ Hello World!%
 ## 4. hello_sequelize
 使用 [Sequelize](http://wiki.li3huo.com/NodeJS_ORM_Solutions#Sequelize) ORM
 
-## 5. web_console
+## 5. [vue_express](./vue_express)
+前后端集成的项目。使用 `express` + `vue` 创建和初试化项目；使用 [webpack-dev-middleware](https://www.npmjs.com/package/webpack-dev-middleware) 来集成前后端开发
+
+## 6. web_console
 在 `express_generator` 基础上增加更多后台逻辑
