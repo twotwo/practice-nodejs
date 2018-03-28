@@ -7,11 +7,13 @@
 
 ## Building
 
-目前推荐webpack v3
+目前推荐 webpack v3, 入门参考: [Get Started](https://webpack.js.org/guides/getting-started/)
 
  * [webpack](https://www.npmjs.com/package/webpack) 3.11.0
  * [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) 2.11.2
  * [webpack-dev-middleware](https://www.npmjs.com/package/webpack-dev-middleware) 是一个容器(wrapper)，它可以把 webpack 处理后的文件传递给一个服务器(server) 2.0.6
+
+  - [使用参考](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)
 
 ### webpack plugins
  * [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
@@ -45,6 +47,10 @@ $ npm update -g vue-cli
 $ vue -V
 2.9.3
 $ vue init webpack my-project
+# 现存项目添加vue.js框架
+$ vue init webpack my-old-project
+? Target directory exists. Continue? Yes
+...
 ```
 
 ```bash
@@ -54,5 +60,6 @@ $ npm install babel-core babel-loader babel-preset-es2015 --save-dev
 ```
 
 ## Others
- * [cross-env](https://www.npmjs.com/package/cross-env)
- * [debug](https://www.npmjs.com/package/debug)
+ * [cross-env](https://www.npmjs.com/package/cross-env) POSIX style command cross all systems
+ * [debug](https://www.npmjs.com/package/debug) debugging utility
+ * [axios](https://github.com/axios/axios) Promise based HTTP client for the browser and node.js
