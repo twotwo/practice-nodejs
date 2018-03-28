@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  "context":"/ssap",
+  "context":"/",
   "log_dir":"./data"
 }

@@ -8,7 +8,7 @@
     "port": "3000"
   },
   "scripts": {
-    "dev": "cross-env DEBUG=console,helper:*,login NODE_ENV='dev' node ./bin/www",
+    "dev": "cross-env DEBUG=app:*,helper:*,login NODE_ENV='dev' node ./bin/www",
     "dev-wds": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "NODE_ENV='production' node ./bin/www",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
@@ -18,6 +18,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "date-utils": "^1.2.21",
     "debug": "^3.1.0",
     "express": "^4.16.3",

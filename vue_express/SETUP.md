@@ -137,3 +137,34 @@ const config = require('./prod.env.js'); //line 6
 ...
     assetsPublicPath: config.context, //line 54
 ```
+
+### g
+
+```bash
+$ npm install axios --save
+```
+
+ * src/util/axios.js
+ * call script
+
+```js
+<script>
+import {doGet, doPost} from "./util/axios"
+
+let req = {a:123};
+let data = '';
+doPost('/console', req)
+  .then((resp) => {
+    data = resp.data;
+    console.log(data)
+  })
+  .catch((err) => {
+    console.log(err)
+  });
+
+
+export default {
+  name: 'App'
+}
+</script>
+```

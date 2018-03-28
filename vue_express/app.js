@@ -49,7 +49,7 @@ app.use(session({
 // // app.use('/', index); //多加一个根路由
 // app.use(webContext+'/index', index); //context+本应用的根路由
 // app.use(webContext+'/users', require('./routes/users'));
-// app.use(webContext+'/console', require('./routes/console'));
+app.use(path.posix.join(webContext, '/console'), require('./routes/console'));
 // app.use(webContext+'/login', require('./routes/login'));
 
 //开发模式下打开前端调试模式
