@@ -138,7 +138,7 @@ const config = require('./prod.env.js'); //line 6
     assetsPublicPath: config.context, //line 54
 ```
 
-### g
+### 3. 前端访问后端
 
 ```bash
 $ npm install axios --save
@@ -168,3 +168,7 @@ export default {
 }
 </script>
 ```
+
+### 4. 添加一个前端页面
+ * `components/Console.vue` 页面
+ * `router/index.js` 中添加路由

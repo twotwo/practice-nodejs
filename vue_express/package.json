@@ -8,7 +8,7 @@
     "port": "3000"
   },
   "scripts": {
-    "dev": "cross-env DEBUG=app:*,helper:*,login NODE_ENV='dev' node ./bin/www",
+    "dev": "cross-env DEBUG=srv:*,helper:*,login NODE_ENV='dev' node ./bin/www",
     "dev-wds": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "NODE_ENV='production' node ./bin/www",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
