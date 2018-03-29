@@ -7,24 +7,33 @@
 
 ## Building
 
+### webpack
+webpack是一个模块打包器，可以对 js 和 css 进行预处理，还支持代码热替换，使修改代码后不用刷新页面也能在浏览器中立即看到效果。
+
+![](./what-is-webpack.png)
+
 目前推荐 webpack v3, 入门参考: [Get Started](https://webpack.js.org/guides/getting-started/)
 
+```bash
+$ npm install webpack@3 webpack-dev-middleware@2 --save-dev #对齐webpack3
+```
+
+#### using webpack-dev-middleware
+ * [使用参考](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)
+
+
+
+#### webpack plugins list
  * [webpack](https://www.npmjs.com/package/webpack) 3.11.0
  * [webpack-dev-server](https://www.npmjs.com/package/webpack-dev-server) 2.11.2
  * [webpack-dev-middleware](https://www.npmjs.com/package/webpack-dev-middleware) 是一个容器(wrapper)，它可以把 webpack 处理后的文件传递给一个服务器(server) 2.0.6
-
-  - [使用参考](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)
-
-### webpack plugins
  * [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
 
 ```bash
 $ npm install clean-webpack-plugin copy-webpack-plugin style-loader css-loader --save-dev
 ```
 
-```bash
-$ npm install webpack@3 webpack-dev-middleware@2 --save-dev #对齐webpack3
-```
+
 
 ## Testing
  * [Jest](http://wiki.li3huo.com/JavaScript_Testing_Overview#Jest)
