@@ -25,26 +25,26 @@ router.use( (req, res, next) => {
  */
 function getherOptions(params) {
 
-    var option = {};
-    option.channelId = params.channelId || "";
-    option.appId = params.appId || '';
-    option.devId = params.devId || '';
-    option.uid = params.uid || '';
+	let option = {};
+	option.channelId = params.channelId || "";
+	option.appId = params.appId || '';
+	option.devId = params.devId || '';
+	option.uid = params.uid || '';
 	option.ipAddress = params.ipAddress || '';
 	option.eventId = params.eventId || '';
 
 	//读取行数
 	option.readLines = params.readLines || '150000';
 
-    debug('process.env.NODE_ENV = %s', process.env.NODE_ENV);
-    //获取日志文件地址
-    if (process.env.NODE_ENV === 'production') {
-        var dt = new Date();
-        var todayLog = dt.toFormat("/YYYY-MM-DD.log");
-        option.logFile = global.config.log_dir + todayLog; //正式环境
-    } else {
-        option.logFile = global.config.log_dir + '/2017-12-04.log'; //非正式环境，读取本地测试文件
-    }
+	debug('process.env.NODE_ENV = %s', process.env.NODE_ENV);
+	//获取日志文件地址
+	if (process.env.NODE_ENV === 'production') {
+			var dt = new Date();
+			var todayLog = dt.toFormat("/YYYY-MM-DD.log");
+			option.logFile = global.config.log_dir + todayLog; //正式环境
+	} else {
+			option.logFile = global.config.log_dir + '/2017-12-04.log'; //非正式环境，读取本地测试文件
+	}
 	debug('logFile = ' + option.logFile);
 	
 	return option;
