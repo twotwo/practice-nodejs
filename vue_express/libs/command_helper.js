@@ -142,5 +142,5 @@ exports.formatLogs = function(data) {
 			logs.push(log);
 		}
   }
-  return logs.reverse();
+  return logs;
 }
