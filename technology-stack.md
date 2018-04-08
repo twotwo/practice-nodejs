@@ -69,6 +69,7 @@ $ npm install babel-core babel-loader babel-preset-es2015 --save-dev
 ```
 
 ## Others
+ * [cnpm](https://www.npmjs.com/package/cnpm) `$ npm install cnpm -g --registry=https://registry.npm.taobao.org`
  * [cross-env](https://www.npmjs.com/package/cross-env) POSIX style command cross all systems
  * [debug](https://www.npmjs.com/package/debug) debugging utility
  * [axios](https://github.com/axios/axios) Promise based HTTP client for the browser and node.js
