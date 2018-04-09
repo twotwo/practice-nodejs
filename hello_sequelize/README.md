@@ -53,7 +53,7 @@ var config = {
         }
     }
 };
-module.exports = config 
+module.exports = config
 ```
 ### 2. conf/*.sql
 真实表结构，正式项目不建议用sync({force: true})方式自动创建表结构

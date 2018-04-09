@@ -3,8 +3,8 @@
  */
 
 const Sequelize = require('sequelize')
-const config = require('../conf/orm')
-const debug = require('debug')('sequelize:dao:factory');
+const config = require('../models/orm')
+const debug = require('debug')('dao:factory');
 
 const Factory = {
   Sequelize,

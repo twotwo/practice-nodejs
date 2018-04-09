@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "DEBUG=sequelize node app.js",
-    "test": "DEBUG=sequelize:dao:* jest"
+    "test": "DEBUG=dao:* jest"
   },
   "repository": {
     "type": "git",

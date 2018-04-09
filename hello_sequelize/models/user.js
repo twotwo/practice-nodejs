@@ -1,23 +1,21 @@
 //获取Sequelize单一实例
 const Factory = require('../libs/sequelize_factory');
-const sequelize = Factory.sequelize;
-const Sequelize = Factory.Sequelize;
 
 /**
  * 表结构对应../conf/user.sql
  */
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define("user", {
+  return Factory.sequelize.define("user", {
     username: {
-      type: Sequelize.STRING(100),
+      type: Factory.Sequelize.STRING(100),
       field: 'username'
     },
     password: {
-      type: Sequelize.STRING(16),
+      type: Factory.Sequelize.STRING(16),
       field: 'password'
     },
     email: {
-      type: Sequelize.STRING(100),
+      type: Factory.Sequelize.STRING(100),
       field: 'email'
     }
   }, {
