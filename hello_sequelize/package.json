@@ -22,7 +22,7 @@
   "homepage": "https://github.com/twotwo/practice-nodejs#readme",
   "dependencies": {
     "mysql2": "^1.5.1",
-    "sequelize": "^4.32.3"
+    "sequelize": "^4.37.6"
   },
   "devDependencies": {
     "debug": "^3.1.0"

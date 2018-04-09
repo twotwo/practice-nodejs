@@ -2,7 +2,7 @@
 const Factory = require('../libs/sequelize_factory');
 
 /**
- * 表结构对应../conf/user.sql
+ * 表结构对应: user.sql
  */
 module.exports = (sequelize, DataTypes) => {
   return Factory.sequelize.define("user", {
