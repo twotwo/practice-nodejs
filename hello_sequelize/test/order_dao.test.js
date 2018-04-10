@@ -41,6 +41,7 @@ describe("基于 Sequelize 实现的 各种表对象操作", () => {
 
   // shutdown after all tests
   afterAll(() => {
+    // debug('sequelize.pool = %O', Factory.sequelize.connectionManager.pool);
     Factory.sequelize.close();
   });
 
@@ -92,6 +93,9 @@ describe("基于 Sequelize 实现的 各种表对象操作", () => {
             }
           }
         )
+        .then(result => {
+          debug("affectedCount = %d, affectedRows = %s", result[0], result[1]);
+        })
         .then(() => {
           order_dao.findById(query_key).then(order => {
             // debug('order = %O', order);

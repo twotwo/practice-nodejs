@@ -17,6 +17,10 @@ const Factory = {
           config.option);
     }
   }, 
+  /**
+   * 
+   * @param {*} <a href="http://docs.sequelizejs.com/class/lib/model.js~Model.html">model</a>
+   */
   getDataAcessObject(model) {
     debug('get dao '+model);
     /**
@@ -24,7 +28,7 @@ const Factory = {
      * 
      * import DAO Model is cached by Sequelize
      */
-    return Factory.sequelize.import(model, require('../models/'+model));
+    return Factory.sequelize.import(model, require(`../models/${model}`));
   }
 };
 
