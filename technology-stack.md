@@ -1,9 +1,25 @@
 # Technology Stack of Node.js
  * [](https://github.com/dwyl/technology-stack)
 
-## OS
- * CentOS
- * macOS
+## Overview
+
++----------+------------------+
+|          |                  |
+| Businiess|                  |
+|          |                  |
++----------+------------------+
+|          |                  |
+| Frontend | UI Components    |
+|          | Vue.js           |
+|----------+------------------+
+|          | Express          |
+| Backend  | sequelize        |
+|          | mysql2           |
++----------+------------------+
+|          | Webpack 3        |
+|   CI     | Jest             |
+|          |                  |
++----------+------------------+
 
 ## Building
 
