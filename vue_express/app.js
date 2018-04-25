@@ -26,9 +26,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // app.locals.* expose in *.hbs
-app.locals.pathPrefix = path.posix.join('.', config.context||'');
+app.locals.pathPrefix = path.posix.join('.', config.context || '');
 const webContext = path.posix.join('/', app.locals.pathPrefix);
-console.log("webContext = "+webContext);
+console.log("webContext = " + webContext);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -53,29 +53,36 @@ app.use(path.posix.join(webContext, '/console'), require('./routes/console'));
 // app.use(webContext+'/login', require('./routes/login'));
 
 //开发模式下打开前端调试模式
-if (process.env.NODE_ENV==='dev') {
-    console.log('load webpack-dev-middleware...');
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackConfig = require('./build/webpack.dev.conf.js');
-    // console.log('publicPath: '+webpackConfig.output.publicPath);
-    const webpack = require('webpack');
-    const compiler = webpack(webpackConfig);
-    app.use(webpackDevMiddleware(compiler, {
-        publicPath: webContext
-    }));
+if (process.env.NODE_ENV === 'dev') {
+  console.log('load webpack-dev-middleware...');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const webpackConfig = require('./build/webpack.dev.conf.js');
+  // console.log('publicPath: '+webpackConfig.output.publicPath);
+  const webpack = require('webpack');
+  const compiler = webpack(webpackConfig);
+  compiler.apply(new webpack.ProgressPlugin());
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: webContext,
+    logLevel: 'error'
+  }));
+  app.use(webpackHotMiddleware(compiler, {
+    log: false,
+    heartbeat: 2000,
+  }));
 } else {
-    app.use(webContext, express.static(path.posix.join(__dirname, 'dist')));
+  app.use(webContext, express.static(path.posix.join(__dirname, 'dist')));
 }
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'dev' ? err : {};

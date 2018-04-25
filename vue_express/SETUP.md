@@ -117,12 +117,13 @@ curl localhost:3000 # 访问服务
 ```bash
 $ npm install date-utils debug express express-session sequelize mysql2 --save
 $ npm install webpack-dev-middleware@2.0.6 --save-dev #对齐webpack3
+$ npm install webpack-hot-middleware --save-dev #页面热更新
 $ npm install cross-env --save-dev
 ```
 
 #### 1.1 整合进 express
  * 配置信息， 复用 `config/` 中的配置
- * `app.js`
+ * `app.js` express 加载 webpack-dev-middleware 和 webpack-hot-middleware
  * `libs/express_helper.js` 获取当前配置参数
  * `config/webpack.dev.conf.js` module.exports = devWebpackConfig;
 
