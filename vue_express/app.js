@@ -63,12 +63,18 @@ if (process.env.NODE_ENV === 'dev') {
   const compiler = webpack(webpackConfig);
   compiler.apply(new webpack.ProgressPlugin());
   app.use(webpackDevMiddleware(compiler, {
+    hot: true,
     publicPath: webContext,
-    logLevel: 'error'
+    logLevel: 'error',
+    stats: {
+      colors: true
+    },
+    historyApiFallback: true
   }));
   app.use(webpackHotMiddleware(compiler, {
     log: false,
-    heartbeat: 2000,
+    path: "/__webpack_hmr",
+    heartbeat: 2000
   }));
 } else {
   app.use(webContext, express.static(path.posix.join(__dirname, 'dist')));

@@ -4,7 +4,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -19,10 +19,11 @@ const createLintingRule = () => ({
   }
 })
 
+const hotMiddlewareScript = 'webpack-hot-middleware/client?noInfo=true&reload=true&timeout=2000&overlay=false'
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: [hotMiddlewareScript, './src/main.js']
   },
   output: {
     path: config.build.assetsRoot,
