@@ -47,3 +47,7 @@ Hello World!%
 ## 7. [command_line_parser](./command_line_parser)
 
 按照 [Notation rules](https://github.com/75lb/command-line-args/wiki/Notation-rules) 来解析命令行参数
+
+## 8. [http-client](./http-client)
+
+使用 `axios` 和 `command-line-args` 完成的一些 http 工具
