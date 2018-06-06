@@ -3,6 +3,7 @@
 
 ## Overview
 
+```
 +----------+------------------+
 |          |                  |
 | Businiess|                  |
@@ -20,6 +21,7 @@
 |   CI     | Jest             |
 |          |                  |
 +----------+------------------+
+```
 
 ## Building
 
@@ -88,4 +90,6 @@ $ npm install babel-core babel-loader babel-preset-es2015 --save-dev
  * [cnpm](https://www.npmjs.com/package/cnpm) `$ npm install cnpm -g --registry=https://registry.npm.taobao.org`
  * [cross-env](https://www.npmjs.com/package/cross-env) POSIX style command cross all systems
  * [debug](https://www.npmjs.com/package/debug) debugging utility
+ * [command_line_parser](https://www.npmjs.com/package/command_line_parser)
+ * [shelljs](https://www.npmjs.com/package/shelljs) a portable (Windows/Linux/OS X) implementation of Unix shell commands on top of the Node.js API
  * [axios](https://github.com/axios/axios) Promise based HTTP client for the browser and node.js
