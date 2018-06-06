@@ -1,6 +1,6 @@
 // 接受的命令行参数
 const optionDefinitions = [
-  { name: "verbose", alias: "v", type: Boolean },
+  { name: "verbose", alias: "v", type: Boolean, defaultValue: true },
   { name: "src", type: String, multiple: true, defaultOption: true },
   { name: "timeout", alias: "t", type: Number }
 ]
@@ -15,6 +15,8 @@ if (options.verbose) {
   debug.enabled = true
   debug("options = %O", options)
 }
+
+debug("command argv = %s", process.argv)
 
 // node clp.js -vt 1000 one.js two.js
 console.log("options = %o", options)
