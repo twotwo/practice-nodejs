@@ -6,7 +6,7 @@ node.js 入门练手项目
 
 * [配置多套环境参数](npm-dev-qa-prod.md)
 
-## 1. hello_node
+## 1. [hello_node](./hello_node)
 
 可演示的最简单 node web 程序
 
@@ -26,13 +26,13 @@ Hello World!%
 
 基于 express 的 web 程序，启动方式与 `hello_node` 相同
 
-## 3. express_generator
+## 3. [express_generator](./express_generator)
 
 [express-generator](http://expressjs.com/en/starter/generator.html)
 
 用命令 `express --view=hbs express_generator && cd express_generator` 直接生成 express 工程
 
-## 4. hello_sequelize
+## 4. [hello_sequelize](./hello_sequelize)
 
 使用 [Sequelize](http://wiki.li3huo.com/NodeJS_ORM_Solutions#Sequelize) ORM
 
