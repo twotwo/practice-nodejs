@@ -12,7 +12,7 @@
   },
   "author": "twotwo <twotwo.li@gmail.com> (http://li3huo.com)",
   "dependencies": {
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "test": "^0.6.0"
   },
   "engines": {
