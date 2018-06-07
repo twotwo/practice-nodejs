@@ -6,7 +6,7 @@ my first node.js web service
 
 ```bash
 ➜  practice-nodejs git:(master) ✗ mkdir hello_node && cd hello_node
-➜  hello_node git:(master) ✗ npm init                        
+➜  hello_node git:(master) ✗ npm init
 This utility will walk you through creating a package.json file.
 It only covers the most common items, and tries to guess sensible defaults.
 
@@ -17,10 +17,10 @@ Use `npm install <pkg>` afterwards to install a package and
 save it as a dependency in the package.json file.
 
 Press ^C at any time to quit.
-package name: (hello_node) 
-version: (1.0.0) 
+package name: (hello_node)
+version: (1.0.0)
 description: my first node.js web service
-entry point: (index.js) 
+entry point: (index.js)
 test command: tap test/*.js
 git repository: https://github.com/twotwo/practice-nodejs.git
 keywords: node.js startup
@@ -59,16 +59,18 @@ Is this ok? (yes) yes
 ### index.js
 
 ```js
-var http = require('http');
+var http = require("http")
 
 /* 使用package.json中定义的端口，如果没有定义就使用3000*/
-var port = process.env.npm_package_config_port ||3000;
+var port = process.env.npm_package_config_port || 3000
 
-http.createServer(function(req, res) {
-    res.end('Hello World!');
-}).listen(port, "127.0.0.1");
+http
+  .createServer(function(req, res) {
+    res.end("Hello World!")
+  })
+  .listen(port, "127.0.0.1")
 
-console.log("Node app is running at localhost:" + port);
+console.log("Node app is running at localhost:" + port)
 ```
 
 ### package.json
@@ -90,10 +92,7 @@ console.log("Node app is running at localhost:" + port);
     "type": "git",
     "url": "git+https://github.com/twotwo/practice-nodejs.git"
   },
-  "keywords": [
-    "node.js",
-    "startup"
-  ],
+  "keywords": ["node.js", "startup"],
   "author": "li3huo",
   "license": "MIT",
   "bugs": {
@@ -113,4 +112,3 @@ cd hello_node
 npm install
 npm start
 ```
-
