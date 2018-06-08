@@ -1,11 +1,27 @@
 const express = require("express")
 const app = express()
 
+app.set("trust proxy", (ip) => {
+  console.log('ip =', ip)
+  return true
+})
 app.set("port", process.env.npm_package_config_port || 3000)
 app.use(express.static(__dirname + "/"))
 
 // get an instance of router
 let router = express.Router()
+
+// route middleware that will happen on every request
+router.use((req, res, next) => {
+  // log each request to the console
+  let address = req.ips.join()
+  if (address.length === 0) {
+    address = req.ip
+  }
+   console.log("%s - %s - %s - %s", new Date().toTimeString(), address, req.method, req.url)
+  // continue doing what we were doing and go to the route
+  next()
+})
 
 /**
  * curl http://localhost:3000/news/123
@@ -22,6 +38,6 @@ router.get("/", (req, res) => {
 // apply the router to our application, start at /app
 app.use("/app", router)
 
-app.listen(app.get("port"), () => {
+app.listen(app.get("port"), "127.0.0.1", () => {
   console.log("Node app is running at localhost:" + app.get("port"))
 })
