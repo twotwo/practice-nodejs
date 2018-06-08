@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express")
+const router = express.Router()
 
 /* Fake Info for Demo */
-var info = require('../models/fake_info');
+const info = require("../models/fake_info")
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('user_list', { title: 'List Users', users: info.users });
-});
+router.get("/", function(req, res, next) {
+  console.log("/api/users ", req.baseUrl)
+  res.send({ title: "List Users", users: info.users })
+})
 
-module.exports = router;
+module.exports = router

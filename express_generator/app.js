@@ -1,3 +1,6 @@
+const path = require("path")
+const debug = require("debug")("srv:app")
+
 /**
  * Gen by [express-generator](https://github.com/expressjs/generator)
  *
@@ -5,7 +8,10 @@
 const express = require("express")
 const app = express()
 
-const path = require("path")
+// view engine setup
+// app.set("views", path.join(__dirname, "views")) //模板文件所在目录
+// app.set("view engine", "hbs") //要使用的模板引擎
+
 // const favicon = require('serve-favicon');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -16,6 +22,8 @@ const path = require("path")
  * `dev` :method :url :status :response-time ms - :res[content-length]
  */
 const logger = require("morgan")
+app.use(logger("dev"))
+
 /**
  * https://www.npmjs.com/package/cookie-parser
  * curl http://127.0.0.1:3000 --cookie "Cho=Kim;Greet=Hello"
@@ -51,14 +59,6 @@ app.use(
  * [body-parser](https://github.com/expressjs/body-parser) parse HTTP Body to req.body
  */
 const bodyParser = require("body-parser")
-
-const debug = require("debug")("srv:app")
-
-// view engine setup
-app.set("views", path.join(__dirname, "views")) //模板文件所在目录
-app.set("view engine", "hbs") //要使用的模板引擎
-
-app.use(logger("dev"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -69,20 +69,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, "public")))
 
 /**
- * Use the express.Router class to create modular,
- * load router modules in the app
+ * api 总入口
  */
-// const index = require('./routes/index');
-app.use("/", (req, res) => {
+const index = require("./routes/index")
+app.use("/api", index)
+
+//curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/app\?adf
+app.post("/app", (req, res) => {
+  debug("req.body=%O", req.body)
+  debug("req.query=%O", req.query)
   if (req.session.sign) {
     debug("sid=%O", req.session)
-    res.send(
-      "Welcome <strong>" +
-        req.session.name +
-        "</strong>, back again!\n" +
-        "sid=" +
-        req.sessionID
-    )
+    res.send("Welcome <strong>" + req.session.name + "</strong>, back again!\n")
   } else {
     req.session.sign = true
     req.session.name = "guest_" + req.sessionID.substr(-10, 10)
@@ -90,11 +88,8 @@ app.use("/", (req, res) => {
   }
 })
 
-const users = require("./routes/users")
-app.use("/users", users)
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   let err = new Error("Not Found")
   err.status = 404
   //route to error handling
@@ -105,14 +100,14 @@ app.use(function(req, res, next) {
  * [Error handling](http://expressjs.com/en/guide/error-handling.html)
  *
  */
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get("env") === "dev" ? err : {}
 
   // render the error page
   res.status(err.status || 500)
-  res.render("error")
+  res.send({ error: err.status, message: res.locals.message })
 })
 
 module.exports = app
