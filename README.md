@@ -22,7 +22,7 @@ Node app is running at localhost:3000
 Hello World!%
 ```
 
-## 2. express_manually
+## 2. [express_manually](./express_manually)
 
 基于 express 的 web 程序，启动方式与 `hello_node` 相同
 

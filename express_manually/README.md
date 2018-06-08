@@ -52,3 +52,9 @@ npm install
 npm start
 ```
 
+### Automatically restart the server with any changes
+
+```bash
+npm install -g nodemon
+npm run dev
+```
