@@ -20,7 +20,7 @@ updated 1 package in 1.523s
 * [sequelize](https://www.npmjs.com/package/sequelize)
 * [mysql2](https://www.npmjs.com/package/mysql2)
 
-### 1. conf/orm.js
+### 1. 配置数据库接入参数 - `models/orm-<ENV>.js`
 ORM配置文件，包括数据库、连接池和Sequelize的一些设置
 
 ```JS
@@ -55,14 +55,22 @@ var config = {
 };
 module.exports = config
 ```
-### 2. conf/*.sql
-真实表结构，正式项目不建议用sync({force: true})方式自动创建表结构
+### 2. 保存表结构 - `models/*.sql`
+保存真实表结构，方便编写映像文件
 
-### 3. models/*.js
+**正式项目不建议用sync({force: true})方式自动创建表结构**
+
+### 3. 编写映像文件 - `models/*.js`
 表对象映射文件，与对应conf/*.sql 一一对应
 
-### 4. test/sequelize_user.test.js
+### 4. 增删改查的测试用例 - `test/sequelize_*.test.js`
 t_project_user的增删改查操作
+
+### 5. 业务逻辑及测试用例 - `services/user.js`/`test/user_service.test.js`
+
+```bash
+$ jest test/user_service.test.js
+```
 
 ## Running Project
 

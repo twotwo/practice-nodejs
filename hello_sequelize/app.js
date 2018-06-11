@@ -2,7 +2,7 @@ const debug = require('debug')('sequelize');
 
 //获取Sequelize单一实例
 const Factory = require('./libs/sequelize_factory');
-const Sequelize = Factory.Sequelize;
+const Sequelize = Factory.Sequelize
 const sequelize = Factory.sequelize;
 
 //测试连接
