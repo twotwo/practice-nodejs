@@ -69,7 +69,7 @@ t_project_user的增删改查操作
 ### 5. 业务逻辑及测试用例 - `services/user.js`/`test/user_service.test.js`
 
 ```bash
-$ jest test/user_service.test.js
+$ DEBUG=service:* jest test/user_service.test.js
 ```
 
 ## Running Project

@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: Factory.Sequelize.STRING(100),
       field: 'email'
+    },
+    signinTime: {
+      type: Factory.Sequelize.INTEGER(10),
+      field: 'signin_time'
+    },
+    score: {
+      type: Factory.Sequelize.INTEGER(5),
+      field: 'score'
     }
   }, {
     //不添加创建、更新时间戳

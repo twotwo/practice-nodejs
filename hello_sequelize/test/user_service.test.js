@@ -22,32 +22,57 @@ describe("基于 User 表的业务逻辑", () => {
     Factory.sequelize.close()
     debug("afterAll")
   })
-  describe("[管理员]查看用户信息", () => {
+  describe("Service直接返回DAO方法", () => {
     test("#userService.findAll", done => {
-      userService.findAll((err, users) => {
-        if (err) {
+      userService
+        .findAll()
+        .then(users => {
+          debug("find %d users", users.length)
+          expect(users.length).toBeGreaterThan(3)
+          for (let i = 0; i < users.length; i++) {
+            debug("user.username = %s", users[i].username)
+          }
+          done()
+        })
+        .catch(err => {
           debug("userService.findAll err = %O", err)
-          return
-        }
-        debug("find %d users", users.length)
-        for (let i = 0; i < users.length; i++) {
-          debug("user.username = %s", users[i].username)
-        }
-        done()
-      })
+          done()
+        })
     })
 
-    test("#userService.findByUsername", done => {
-      // let user = userService.findOne("李四")
-      // expect(user.username).toBe("李四")
-      // debug("user = %O", user)
+  })
 
-      userService.findByUsername("李四").then(user => {
-        debug("user = %O", user.dataValues)
-        // expect(err).toBeNull()
-        expect(user.username).toEqual("李四")
-        done()
-      })
+  describe("Promise封装的返回", () => {
+
+    test("#userService.findByUsername", done => {
+      userService
+        .findByUsername("李四")
+        .then(user => {
+          debug("user = %O", user.dataValues)
+          expect(user.username).toEqual("李四")
+          done()
+        })
+        .catch(err => {
+          expect(err).toBeNull()
+          debug("userService.findByUsername, err = %O", err)
+          done()
+        })
+    })
+
+    test("#userService.signin", done => {
+      debug("#userService.signin ========")
+      userService
+        .signin("李四")
+        .then(result => {
+          debug("result = %O", result.user.dataValues)
+          expect(result.user.signinTime).toBeGreaterThan(Date.now() / 1000 - 1000)
+          done()
+        })
+        .catch(err => {
+          debug("userService.signin, err = %O", err)
+          // expect(err).toBeNull()
+          done()
+        })
     })
   })
 })
