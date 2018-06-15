@@ -75,11 +75,29 @@ module.exports = {
 1.  `const debug = require('debug')('srv:www')`
 2.  debug access url
 
+### 业务代码
+
+#### 多级路由中间件
+
+* routers/index.js // 路由总入口
+* routers/users.js // 定义为到 api/users 的一个api接口
+
+### 测试代码
+
+* test/express-api-users.test.js
+
 ## 运行
 
 ```bash
 # 运行测试
-npx cross-env DEBUG=srv:* jest test/express-api.test.js
+npx cross-env DEBUG=srv:*,jest:* jest test/express-api-users.test.js
+ PASS  test/express-api-users.test.js
+  Express API - /api/
+    用户 API 测试
+      ✓ 1. /api/users#获取全部用户列表 (56ms)
+      ✓ 2. /api/user/1#获取id是1的用户信息 (5ms)
+
+# 测试代码覆盖率
 jest --coverage
 
 # Opening reports
@@ -95,6 +113,4 @@ npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* nodemon ./bin/www
   srv:www Access URL = http://localhost:8080/jest/ +3ms
 ```
 
-### 业务代码
 
-### 测试代码
