@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "node ./bin/www"
+    "dev": "npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* nodemon ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
     "morgan": "~1.9.0"

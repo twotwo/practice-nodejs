@@ -22,6 +22,10 @@ HTTP assertions made easy via superagent.
 
 a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
 
+### [nodemon](https://www.npmjs.com/package/nodemon)
+
+automatically restart node application when code change
+
 ## Init Project
 
 ```bash
@@ -47,12 +51,29 @@ module.exports = {
 ```json
 {
   ...,
+  "scripts": {
+    "dev": "npx cross-env DEBUG=srv:* nodemon ./bin/www"
+  },
+  ...,
   "jest": {
     "testEnvironment": "node",
     "verbose": true
   }
 }
 ```
+
+### app.js
+
+1.  `const debug = require('debug')('srv:app')`
+2.  replace cookie-parser with express-session
+3.  read and set context to app with `CONTEXT=...`
+4.  insert index router at application context
+5.  remove userRouter, only have 2 routers: static resource & index router
+
+### bin/www
+
+1.  `const debug = require('debug')('srv:www')`
+2.  debug access url
 
 ## 运行
 
@@ -63,6 +84,15 @@ jest --coverage
 
 # Opening reports
 open coverage/lcov-report/*.html
+```
+
+```bash
+npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* nodemon ./bin/www
+[nodemon] starting `node ./bin/www`
+  srv:app process.env.CONTEXT=/jest +0ms
+  srv:app indexRouter@/jest +2ms
+  srv:www process.env.PORT=8080 +2ms
+  srv:www Access URL = http://localhost:8080/jest/ +3ms
 ```
 
 ### 业务代码
