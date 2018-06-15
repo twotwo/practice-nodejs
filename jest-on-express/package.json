@@ -1,0 +1,29 @@
+{
+  "name": "jest-on-express",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "debug": "^2.6.9",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "supertest": "^3.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  }
+}

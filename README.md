@@ -51,3 +51,7 @@ Hello World!%
 ## 8. [http-client](./http-client)
 
 使用 `axios` 和 `command-line-args` 完成的一些 http 工具
+
+## 9. [jest-on-express](./jest-on-express)
+
+使用 `jest` 对 `express` 服务进行单元测试
