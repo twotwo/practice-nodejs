@@ -29,7 +29,10 @@ const debug = require("debug")("service:user")
 // }
 
 User.findAll = () => {
-  return user_dao.findAll()
+  return user_dao.findAll().then(users => {
+    debug("find %d users", users.length)
+    return users
+  })
 }
 
 /**
@@ -60,81 +63,61 @@ User.findByUsername = username => {
  * @return {code: 0-成功/>0-业务错误码/<0-程序异常, msg: '提示信息', err - 错误对象}
  */
 User.signin = username => {
-  return new Promise((resolve, reject) => {
-    // 1. find the user
-    user_dao
-      .findOne({ where: { username: username } })
-      .then(user => {
-        if (user === null) {
-          reject({
-            code: 404,
-            msg: "用户不存在@" + username
-          })
-        }
-        // 2. update user info
-        //检查签到时间
-        if (user.signinTime > 0) {
-          debug(
-            "User.signin username[%s], signinTime=%d",
-            user.username,
-            user.signinTime
-          )
-          //is today?
-          if (
-            new Date().toDateString() ===
-            new Date(user.signinTime * 1000).toDateString()
-          )
-            reject({
-              code: 440,
-              msg: "can't sign in twice a day!"
-            })
-        }
+  return user_dao
+    .findOne({ where: { username: username } })
+    .then(user => {
+      if (user === null) {
+        throw new Error("用户不存在@" + username)
+      }
 
-        user.signinTime = (Date.now() / 1000) << 0
-        user.score = user.score + 1
-        //http://docs.sequelizejs.com/manual/tutorial/instances.html#working-in-bulk-creating-updating-and-destroying-multiple-rows-at-once-
-        user_dao
-          .update(
-            { signinTime: user.signinTime, score: user.score },
-            { where: { id: user.id }, returning: true }
+      // 1. find the user
+      debug(
+        "User.signin username[%s], signinTime=%d",
+        user.username,
+        user.signinTime
+      )
+
+      //检查签到时间
+      if (user.signinTime > 0) {
+        //is today?
+        if (
+          new Date().toDateString() ===
+          new Date(user.signinTime * 1000).toDateString()
+        )
+          throw new Error("当日已签到@" + username)
+      }
+      return user
+    })
+    .then(user => {
+      // 2. update user info: 更新签到时间和签到积分
+
+      user.signinTime = (Date.now() / 1000) << 0
+      user.score = user.score + 1
+      //http://docs.sequelizejs.com/manual/tutorial/instances.html#working-in-bulk-creating-updating-and-destroying-multiple-rows-at-once-
+      user_dao
+        .update(
+          { signinTime: user.signinTime, score: user.score },
+          { where: { id: user.id }, returning: true }
+        )
+        .spread((affectedCount, affectedRows) => {
+          debug(
+            "user_dao.update affectedCount=%d, affectedRows=%d",
+            affectedCount,
+            affectedRows
           )
-          .spread((affectedCount, affectedRows) => {
-            debug(
-              "user_dao.update affectedCount=%d, affectedRows=%d",
-              affectedCount,
-              affectedRows
-            )
-            if (affectedRows > 0) {
-              // debug("user = %O", user.dataValues)
-              //3. write a signin log to db
-              // ..
-              // debug("user = %O", user.dataValues)
-              resolve({
-                code: 0,
-                msg: "sign-in ok!",
-                user
-              })
-            } else {
-              reject({
-                code: 440,
-                msg: "can't record data!"
-              })
-            }
-          })
-          .catch(err => {
-            debug("user_dao.update failed: username[%s], err=%O", username, err)
-            reject({
-              code: -1,
-              msg: "error@user_dao.update",
-              err
-            })
-          })
-      })
-      .catch(err => {
-        // debug("User.signin failed: username[%s], err=%O", username, err)
-        reject({ code: -1, msg: "error@User.signin", err })
-      })
-  })
+          if ((affectedRows = 0)) {
+            throw new Error("签到信息更新失败@" + username)
+          }
+          debug("User.signin update over")
+        })
+      return user
+    })
+    .then(user => {
+      //3. write a signin log to db
+      debug("User.signin over")
+      // return user obj to caller
+      return user.dataValues
+    })
 }
 
 User.update = (user, id) => {

@@ -27,7 +27,7 @@ describe("基于 User 表的业务逻辑", () => {
       userService
         .findAll()
         .then(users => {
-          debug("find %d users", users.length)
+          debug("userService.findAll() find %d users", users.length)
           expect(users.length).toBeGreaterThan(3)
           for (let i = 0; i < users.length; i++) {
             debug("user.username = %s", users[i].username)
@@ -39,40 +39,46 @@ describe("基于 User 表的业务逻辑", () => {
           done()
         })
     })
-
   })
 
   describe("Promise封装的返回", () => {
-
     test("#userService.findByUsername", done => {
       userService
         .findByUsername("李四")
         .then(user => {
-          debug("user = %O", user.dataValues)
+          debug('userService.findByUsername("李四") user = %O', user.dataValues)
           expect(user.username).toEqual("李四")
           done()
         })
         .catch(err => {
-          expect(err).toBeNull()
           debug("userService.findByUsername, err = %O", err)
+          expect(err).toBeNull()
           done()
         })
     })
 
-    test("#userService.signin", done => {
-      debug("#userService.signin ========")
-      userService
-        .signin("李四")
-        .then(result => {
-          debug("result = %O", result.user.dataValues)
-          expect(result.user.signinTime).toBeGreaterThan(Date.now() / 1000 - 1000)
-          done()
-        })
-        .catch(err => {
-          debug("userService.signin, err = %O", err)
-          // expect(err).toBeNull()
-          done()
-        })
-    })
+    // 1. 不存在的用户, 2. 正常签到， 3. 重复签到
+    for (let username of ["nouser", "李四", "李四"]) {
+      debug("#userService.signin ======== user = %s", username)
+
+      test("#userService.signin", done => {
+        userService
+          .signin(username)
+          .then(user => {
+            debug("userService..signin() user = %O", user)
+            expect(user.signinTime).toBeGreaterThan(Date.now() / 1000 - 1000)
+            done()
+          })
+          .catch(err => {
+            debug("userService.signin, user = %s, err = %s", username, err)
+            if (username === "nouser") {
+              expect(err.message).toEqual("用户不存在@nouser")
+            } else if (username === "李四") {
+              expect(err.message).toEqual("当日已签到@李四")
+            }
+            done()
+          })
+      })
+    }
   })
 })
