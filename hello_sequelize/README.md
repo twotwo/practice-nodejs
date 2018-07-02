@@ -98,6 +98,14 @@ mysql test> select * from t_project_user
 ### 1. [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
 定义对象和表结构的映射
 
+#### [Automatically generate models](https://github.com/sequelize/sequelize-auto)
+
+```bash
+npm install -g sequelize-auto mysql
+# generate model for table signin_log
+sequelize-auto -o "./models" -d test -h 106.75.19.156 -u node -p 3306 -x "pD#5T~l14+,i" -e mysql -t t_project_user_signin_log
+```
+
 #### Import
 
 ```javascript
