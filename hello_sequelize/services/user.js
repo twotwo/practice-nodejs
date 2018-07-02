@@ -114,6 +114,15 @@ User.signin = username => {
     })
     .then(user => {
       //3. write a signin log to db
+      Factory.getDataAcessObject("user_signin_log")
+        .create({
+          username: user.username,
+          signin_time: 123,
+          score: 1
+        })
+        .then(log => {
+          debug("User.signin add log %O", log.dataValues)
+        })
       debug("User.signin over")
       // return user obj to caller
       return user.dataValues
