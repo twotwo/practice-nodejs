@@ -8,26 +8,6 @@ const User = {
 }
 const debug = require("debug")("service:user")
 
-// User.findAll = () => {
-//   return user_dao.findAll()
-
-// }
-
-// /**
-//  *
-//  * @param {*} callback (err, users)
-//  */
-// User.findAll = callback => {
-//   user_dao
-//     .findAll()
-//     .then(users => {
-//       return callback(null, users)
-//     })
-//     .catch(err => {
-//       return callback(err, null)
-//     })
-// }
-
 User.findAll = () => {
   return user_dao.findAll().then(users => {
     debug("find %d users", users.length)
@@ -40,7 +20,6 @@ User.findAll = () => {
  * @param {*} username
  */
 User.findByUsername = username => {
-  // return user_dao.findOne({ where: { username: username } })
   return new Promise((resolve, reject) => {
     user_dao
       .findOne({ where: { username: username } })
