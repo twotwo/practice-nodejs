@@ -1,36 +1,33 @@
-//获取Sequelize单一实例
-const Factory = require('../libs/sequelize_factory');
-
 /**
  * 表结构对应: order.sql
  * 
  * [sequelize 数据类型](http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes)
  */
 module.exports = (sequelize, DataTypes) => {
-  return Factory.sequelize.define("user", {
+  return sequelize.define("Order", {
     id: {
-      type: Factory.Sequelize.INTEGER(12),
+      type: DataTypes.INTEGER(12),
       primaryKey: true,
       field: "t_id"
     },
     uid: {
-      type: Factory.Sequelize.STRING(64),
+      type: DataTypes.STRING(64),
       field: 't_uid'
     },
     goodid: {
-      type: Factory.Sequelize.INTEGER(12),
+      type: DataTypes.INTEGER(12),
       field: 't_goodid_fk'
     },
     status: {
-      type: Factory.Sequelize.INTEGER(2),
+      type: DataTypes.INTEGER(2),
       field: 't_status'
     },
     createtime: {
-      type: Factory.Sequelize.DATE,
+      type: DataTypes.DATE,
       field: 't_createtime'
     },
     paytime: {
-      type: Factory.Sequelize.DATE,
+      type: DataTypes.DATE,
       field: 't_paytime'
     }
   }, {
