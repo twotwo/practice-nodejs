@@ -4,9 +4,7 @@
  * 基于 Sequelize 实现的 对一个表对象的增删改查操作
  */
 process.env.NODE_ENV = "dev";
-const debug = require("debug")("dao:user");
-// Sequelize, sequelize 全局唯一实例
-const Factory = require("../libs/sequelize_factory");
+const debug = require("debug")("models:user")
 
 debug("sequelize.pool = %O", Factory.sequelize.options.pool);
 

@@ -1,11 +1,13 @@
 module.exports = {
   development: {
     dialect: "sqlite",
-    storage: "./db.development.sqlite"
+    storage: "./db.development.sqlite",
+    operatorsAliases: false
   },
   test: {
     dialect: "sqlite",
     storage: ":memory:",
+    operatorsAliases: false,
     // disable logging; default: console.log
     logging: false
   },

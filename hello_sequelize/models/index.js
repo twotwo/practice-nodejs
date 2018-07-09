@@ -10,6 +10,8 @@ const db = {}
 
 const debug = require("debug")("models")
 
+debug("config env= %s, dialect = %s", env, config.dialect)
+
 if (config.use_env_variable) {
   debug(config.use_env_variable, "=", process.env[config.use_env_variable])
 }
@@ -27,7 +29,7 @@ fs.readdirSync(__dirname)
     )
   })
   .forEach(file => {
-    debug('loading %s ...', file)
+    debug("loading %s ...", file)
     //http://docs.sequelizejs.com/manual/tutorial/models-definition.html#import
     const model = sequelize.import(path.join(__dirname, file))
     db[model.name] = model
