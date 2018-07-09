@@ -2,7 +2,7 @@
  * Test Case based on [Jest](https://facebook.github.io/jest/docs/en/api.html)
  *
  * 基于 Sequelize 实现的 对一个表对象的增删改查操作
- * 
+ *
  * DEBUG=init:*,models,unit:* jest test/unit/user.test.js
  */
 //http://docs.sequelizejs.com/class/lib/model.js~Model.html
@@ -139,19 +139,26 @@ describe("Sequelize User Model", () => {
         })
     })
 
-    test("#sequelize.query 2", done => {
+    test("#sequelize.query 2", () => {
       debug("#sequelize.query 2")
-      this.User.sequelize
+
+      return this.User.sequelize
         .query("SELECT count(*) as count FROM t_project_user")
         .then(myTableRows => {
-          debug("count = %d", myTableRows[0][0].count)
-          done()
-          //应该有5条数据
-          expect(myTableRows[0][0].count).toBe(5)
+          // debug("count = %d", myTableRows[0][0].count)
+          let count = myTableRows[0][0].count
+          // get count by query
+          return count
+        })
+        .then(count1 => {
+          return this.User.count().then(count2 => {
+            expect(count1).toBe(count2)
+            debug("query count = %d, model count = %d", count1, count2)
+            return count2
+          })
         })
         .catch(err => {
           debug("sequelize.query 2 failed: ", err)
-          done()
         })
     })
   })
