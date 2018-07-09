@@ -2,6 +2,8 @@
  * Test Case based on [Jest](https://facebook.github.io/jest/docs/en/api.html)
  *
  * 基于 Sequelize 实现的 对一个表对象的增删改查操作
+ * 
+ * DEBUG=init:*,models,unit:* jest test/unit/order.test.js
  */
 const debug = require("debug")("unit:models:order")
 
@@ -23,7 +25,6 @@ describe("基于 Sequelize 实现的 各种表对象操作", () => {
 
   // shutdown after all tests
   afterAll(() => {
-    // debug('sequelize.pool = %O', Factory.sequelize.connectionManager.pool);
     require("../../models").sequelize.close()
   })
 
@@ -60,45 +61,45 @@ describe("基于 Sequelize 实现的 各种表对象操作", () => {
         })
     })
 
-    test("#Order.update", done => {
+    test("#Order.update", () => {
       debug("#Order.update")
       // 更新数据
-      this.Order.update(
+      return this.Order.update(
         { uid: "张三", paytime: new Date() },
         { where: { id: query_key } }
       )
+        .bind(this)
         .then(result => {
           debug("affectedCount = %d, affectedRows = %s", result[0], result[1])
           expect(result[0]).toBe(1)
-        })
-        .then(() => {
-          this.Order.findOne({ where: { id: query_key } }).then(order => {
-            if (order) {
-              debug("order = %O", order.dataValues)
+
+          return this.Order.findOne({ where: { id: query_key } }).then(
+            order => {
+              expect(order).not.toBeNull()
+              // debug("Order.update, order = %O", order.dataValues)
               expect(order.uid).toBe("张三")
+              return order
             }
-          })
-          done()
+          )
         })
         .catch(err => {
           debug("Order.update failed: %O", err)
-          done()
         })
     })
 
-    test("#Order.delete", done => {
-      this.Order.destroy({
+    test("#Order.delete", () => {
+      return this.Order.destroy({
         where: {
           id: query_key
         }
       })
-        .then(() => {
-          done()
+        .then(result => {
+          // debug("Order.delete, result = %O", result)
+          expect(result).toBe(1)
         })
         .catch(err => {
-          debug("Order.delete failed: ", err)
-          done()
-        })
+        debug("Order.delete failed: ", err)
+      })
     })
   })
 })
