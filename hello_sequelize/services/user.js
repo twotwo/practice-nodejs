@@ -1,15 +1,12 @@
-//获取Sequelize单一实例
-const Factory = require("../libs/sequelize_factory")
-// define model
-const user_dao = Factory.getDataAcessObject("user")
-const User = {
-  Factory,
-  user_dao
-}
+const User = require("../models").User
+const SigninLog = require("../models").SigninLog
+
 const debug = require("debug")("service:user")
 
-User.findAll = () => {
-  return user_dao.findAll().then(users => {
+module.exports = Service = {}
+
+Service.findAll = () => {
+  return User.findAll().then(users => {
     debug("find %d users", users.length)
     return users
   })
@@ -19,51 +16,54 @@ User.findAll = () => {
  *
  * @param {*} username
  */
-User.findByUsername = username => {
-  return new Promise((resolve, reject) => {
-    user_dao
-      .findOne({ where: { username: username } })
-      .then(user => {
-        // throw new Error('test')
-        resolve(user)
-      })
-      .catch(err => {
-        // debug("User.findOne failed: username[%s], err=%O", username, err)
-        reject(err)
-      })
-
-    // xx_dao.action
-  })
+Service.findByUsername = username => {
+  return User.findOne({ where: { username: username } })
 }
 
 /**
- * 用户签到业务逻辑
+ * 用户注册
+ * 
+ * @param {*} username 
+ * @param {*} password 
+ * @param {*} email 
+ */
+Service.signup = (username, password, email) => {
+  if(!password || password.length <6) {
+    throw new Error("密码太短！")
+  }
+  return User.findOne({ where: { username: username } })
+    .then(user => {
+      if (user) {
+        throw new Error("用户名已存在@" + username)
+      }
+    }).then (()=> {
+      return User.create({ username, password, email }).then(user => {
+        debug("Service.signup user=%O", user.dataValues)
+        // return user obj to caller
+        return user.dataValues
+      })
+    })
+}
+
+/**
+ * 用户签到
  * @param {*} username
  * @return {code: 0-成功/>0-业务错误码/<0-程序异常, msg: '提示信息', err - 错误对象}
  */
-User.signin = username => {
-  return user_dao
-    .findOne({ where: { username: username } })
+Service.signin = username => {
+  return User.findOne({ where: { username: username } })
     .then(user => {
       if (user === null) {
         throw new Error("用户不存在@" + username)
       }
 
       // 1. find the user
-      debug(
-        "User.signin username[%s], signinTime=%d",
-        user.username,
-        user.signinTime
-      )
+      debug("Service.signin username[%s], signinTime=%d", user.username, user.signinTime)
 
       //检查签到时间
       if (user.signinTime > 0) {
         //is today?
-        if (
-          new Date().toDateString() ===
-          new Date(user.signinTime * 1000).toDateString()
-        )
-          throw new Error("当日已签到@" + username)
+        if (new Date().toDateString() === new Date(user.signinTime * 1000).toDateString()) throw new Error("当日已签到@" + username)
       }
       return user
     })
@@ -73,51 +73,47 @@ User.signin = username => {
       user.signinTime = (Date.now() / 1000) << 0
       user.score = user.score + 1
       //http://docs.sequelizejs.com/manual/tutorial/instances.html#working-in-bulk-creating-updating-and-destroying-multiple-rows-at-once-
-      user_dao
+      User
         .update(
           { signinTime: user.signinTime, score: user.score },
           { where: { id: user.id }, returning: true }
         )
         .spread((affectedCount, affectedRows) => {
           debug(
-            "user_dao.update affectedCount=%d, affectedRows=%d",
+            "User.update affectedCount=%d, affectedRows=%d",
             affectedCount,
             affectedRows
           )
           if ((affectedRows = 0)) {
             throw new Error("签到信息更新失败@" + username)
           }
-          debug("User.signin update over")
+          debug("Service.signin update over")
         })
       return user
     })
     .then(user => {
       //3. write a signin log to db
-      Factory.getDataAcessObject("user_signin_log")
-        .create({
-          username: user.username,
-          signin_time: 123,
-          score: 1
-        })
-        .then(log => {
-          debug("User.signin add log %O", log.dataValues)
-        })
-      debug("User.signin over")
-      // return user obj to caller
-      return user.dataValues
+      return SigninLog.create({
+        username: user.username,
+        signin_time: 123,
+        score: 1
+      }).then(log => {
+        debug("Service.signin add log %O", log.dataValues)
+        // return user obj to caller
+        return user.dataValues
+      })
+      debug("Service.signin over")
     })
 }
 
-User.update = (user, id) => {
-  user_dao
-    .update(user, { where: { id: id } })
+Service.update = (user, id) => {
+  User.update(user, { where: { id: id } })
     .then(user => {
       return true
     })
     .catch(err => {
-      debug("user_dao.update failed: username[%s], err=%O", username, err)
+      debug("User.update failed: username[%s], err=%O", username, err)
       return false
     })
 }
 
-module.exports = User
