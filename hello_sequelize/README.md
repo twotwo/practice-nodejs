@@ -17,59 +17,46 @@ added 50 packages in 7.907s
 updated 1 package in 1.523s
 ```
 
-* [sequelize](https://www.npmjs.com/package/sequelize)
-* [mysql2](https://www.npmjs.com/package/mysql2)
+- [sequelize](https://www.npmjs.com/package/sequelize)
+- [mysql2](https://www.npmjs.com/package/mysql2)
 
-### 1. 配置数据库接入参数 - `models/orm-<ENV>.js`
-ORM配置文件，包括数据库、连接池和Sequelize的一些设置
+### 1. 配置数据库接入参数 - `config/database.js`
 
-```JS
-/**
- * Sequelize 带连接池的配置
- */
-var config = {
-    database: 'test', // 使用哪个数据库
-    username: 'test', // 用户名
-    password: 'test', // 口令
-    option: {
-        operatorsAliases: false, //http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
-        host: 'localhost', // 主机名
-        port: 3306, // 端口号，MySQL默认3306
-        logging: false,
-        dialect: 'mysql',
-        define: {
-            underscored: true,
-            freezeTableName: false,
-            charset: 'utf8',
-            dialectOptions: {
-              collate: 'utf8_general_ci'
-            },
-            timestamps: false
-        },
-        pool: {
-            max: 5,
-            min: 0,
-            idle: 30000
-        }
-    }
-};
-module.exports = config
-```
-### 2. 保存表结构 - `models/*.sql`
+三套环境的配置文件，包括数据库、连接池和 Sequelize 的一些设置
+
+**注意**
+
+代码库中不包含数据库账号等敏感信息
+
+### 2. Models 加载类 - `models/index.js`
+
+把 `models/*.js` 都加载进来
+
+### 3. 保存表结构 - `models/*.sql`
+
 保存真实表结构，方便编写映像文件
 
-**正式项目不建议用sync({force: true})方式自动创建表结构**
+### 4. 编写映像文件 - `models/*.js`
 
-### 3. 编写映像文件 - `models/*.js`
-表对象映射文件，与对应conf/*.sql 一一对应
+表对象映射文件，与对应 models/*.sql 一一对应
 
-### 4. 增删改查的测试用例 - `test/sequelize_*.test.js`
-t_project_user的增删改查操作
+**正式项目不建议用 sync({force: true})方式自动创建表结构**
 
-### 5. 业务逻辑及测试用例 - `services/user.js`/`test/user_service.test.js`
+### 5. 单元测试用例 - `test/unit/*.test.js`
+
+* order.test.js - t_project_order 表的增删改查操作
+* user.test.js - t_project_user 表的增删改查操作
 
 ```bash
-$ DEBUG=service:* jest test/user_service.test.js
+$ npm run test-unit
+```
+
+### 6. 集成测试用例 - `test/integration/user_service.test.js`
+
+* user_service.test.js - 面向用户的服务的集成测试
+
+```bash
+$ npm run test-integration
 ```
 
 ## Running Project
@@ -96,6 +83,7 @@ mysql test> select * from t_project_user
 ## Features of Sequelize
 
 ### 1. [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
+
 定义对象和表结构的映射
 
 #### [Automatically generate models](https://github.com/sequelize/sequelize-auto)
@@ -110,11 +98,14 @@ sequelize-auto -o "./models" -d test -h 106.75.19.156 -u node -p 3306 -x "pD#5T~
 
 ```javascript
 // 获取dao
-const user_dao = sequelize.import('user', require('../models/user'));
+const user_dao = sequelize.import("user", require("../models/user"))
 
 // The model definition is done in /path/to/models/user.js
-module.exports = (sequelize) => {
-    return sequelize.define("user", {}, {
+module.exports = sequelize => {
+  return sequelize.define(
+    "user",
+    {},
+    {
       //不添加创建、更新时间戳
       timestamps: false,
       //使用下划线命名法
@@ -122,64 +113,72 @@ module.exports = (sequelize) => {
       //不自动修改表名
       freezeTableName: true,
       // define the table's name
-      tableName: 't_project_user'
-    })
-  };
+      tableName: "t_project_user"
+    }
+  )
+}
 ```
 
 #### Configuration
 
 ```javascript
-const Bar = sequelize.define('bar', { /* bla */ }, {
-  // don't add the timestamp attributes (updatedAt, createdAt)
-  timestamps: false,
+const Bar = sequelize.define(
+  "bar",
+  {
+    /* bla */
+  },
+  {
+    // don't add the timestamp attributes (updatedAt, createdAt)
+    timestamps: false,
 
-  // don't delete database entries but set the newly added attribute deletedAt
-  // to the current date (when deletion was done). paranoid will only work if
-  // timestamps are enabled
-  paranoid: true,
+    // don't delete database entries but set the newly added attribute deletedAt
+    // to the current date (when deletion was done). paranoid will only work if
+    // timestamps are enabled
+    paranoid: true,
 
-  // don't use camelcase for automatically added attributes but underscore style
-  // so updatedAt will be updated_at
-  underscored: true,
+    // don't use camelcase for automatically added attributes but underscore style
+    // so updatedAt will be updated_at
+    underscored: true,
 
-  // disable the modification of table names; By default, sequelize will automatically
-  // transform all passed model names (first parameter of define) into plural.
-  // if you don't want that, set the following
-  freezeTableName: true,
+    // disable the modification of table names; By default, sequelize will automatically
+    // transform all passed model names (first parameter of define) into plural.
+    // if you don't want that, set the following
+    freezeTableName: true,
 
-  // define the table's name
-  tableName: 'my_very_custom_table_name',
+    // define the table's name
+    tableName: "my_very_custom_table_name",
 
-  // Enable optimistic locking.  When enabled, sequelize will add a version count attribute
-  // to the model and throw an OptimisticLockingError error when stale instances are saved.
-  // Set to true or a string with the attribute name you want to use to enable.
-  version: true
-});
+    // Enable optimistic locking.  When enabled, sequelize will add a version count attribute
+    // to the model and throw an OptimisticLockingError error when stale instances are saved.
+    // Set to true or a string with the attribute name you want to use to enable.
+    version: true
+  }
+)
 ```
 
 ### 2. [Executing raw SQL queries](http://docs.sequelizejs.com/manual/installation/usage.html#executing-raw-sql-queries)
 
 ```javascript
 sequelize
-  .query(
-    'SELECT * FROM projects WHERE status = :status ',
-    { raw: true, replacements: { status: 'active' } }
-  )
+  .query("SELECT * FROM projects WHERE status = :status ", {
+    raw: true,
+    replacements: { status: "active" }
+  })
   .then(projects => {
     console.log(projects)
-  });
+  })
 
-  sequelize
-  .query('SELECT * FROM projects', { model: Projects })
+sequelize
+  .query("SELECT * FROM projects", { model: Projects })
   .then(projects => {
     // Each record will now be mapped to the project's model.
     console.log(projects)
-  });
+  })
 ```
 
 ### 3. [Querying](http://docs.sequelizejs.com/manual/tutorial/querying.html)
-增删改查等常见操作： .create/.destroy/.update/.find*
+
+增删改查等常见操作： .create/.destroy/.update/.find\*
 
 ```javascript
 // search for known ids
@@ -189,16 +188,15 @@ User.findById(123).then(user => {
 })
 
 // search for attributes
-User.findOne({ where: {username: '张三'} }).then(user => {
+User.findOne({ where: { username: "张三" } }).then(user => {
   // user will be the first entry of the Users table with the username '张三' || null
 })
 
-
 Post.findAll({
   where: {
-    [Op.or]: [{authorId: 12}, {authorId: 13}]
+    [Op.or]: [{ authorId: 12 }, { authorId: 13 }]
   }
-});
+})
 // SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
 
 Post.findAll({
@@ -207,24 +205,32 @@ Post.findAll({
       [Op.or]: [12, 13]
     }
   }
-});
+})
 // SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
 
 Post.destroy({
   where: {
-    status: 'inactive'
+    status: "inactive"
   }
-});
+})
 // DELETE FROM post WHERE status = 'inactive';
 
-Post.update({
-  updatedAt: null,
-}, {
-  where: {
-    deletedAt: {
-      [Op.ne]: null
+Post.update(
+  {
+    updatedAt: null
+  },
+  {
+    where: {
+      deletedAt: {
+        [Op.ne]: null
+      }
     }
   }
-});
+)
 // UPDATE post SET updatedAt = null WHERE deletedAt NOT NULL;
 ```
+
+## 代码编写实践
+
+* [How To Use Promises With Sequelize](https://medium.com/@rdf014/how-to-use-promises-with-sequelize-dd82c26bb2a)
+* [Promise Patterns & Anti-Patterns](https://www.datchley.name/promise-patterns-anti-patterns/)
