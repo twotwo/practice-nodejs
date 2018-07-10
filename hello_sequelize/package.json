@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "DEBUG=sequelize node app.js",
-    "test": "DEBUG=dao:* jest"
+    "test": "npm run test-unit && npm run test-integration && npm run coverage",
+    "test-unit": "cross-env NODE_ENV=test DEBUG=init:*,models,unit:* jest test/unit/*.test.js",
+    "test-integration": "cross-env NODE_ENV=test DEBUG=service:*,integration:* jest test/integration/*.test.js",
+    "coverage": "cross-env jest --coverage && echo open coverage folder for detail"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
     "sqlite3": "^4.0.1"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "debug": "^3.1.0"
   },
   "jest": {
