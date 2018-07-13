@@ -8,33 +8,7 @@
 //http://docs.sequelizejs.com/class/lib/model.js~Model.html
 const debug = require("debug")("unit:models:user")
 
-const Users = [
-  {
-    username: "张三",
-    password: "pass",
-    email: "张三@m.com"
-  },
-  {
-    username: "李四",
-    password: "pass",
-    email: "李四@m.com"
-  },
-  {
-    username: "王二",
-    password: "pass",
-    email: "王二@m.com"
-  },
-  {
-    username: "陈武",
-    password: "pass",
-    email: "陈武@m.com"
-  },
-  {
-    username: "赵六",
-    password: "pass",
-    email: "赵六@m.com"
-  }
-]
+
 
 // 测试用例
 describe("Sequelize User Model", () => {
@@ -42,18 +16,7 @@ describe("Sequelize User Model", () => {
    * 初始化测试数据：新建表，插入5条数据
    */
   beforeAll(() => {
-    // Sync all models that aren't already in the database
-    return require("../../models")
-      .sequelize.sync()
-      .then(() => {
-        this.User = require("../../models").User
-        return this.User.bulkCreate(Users).then(results => {
-          // debug("bulk create %O", results)
-          // https://jestjs.io/docs/en/expect
-          expect(results).toHaveLength(5) // insert 5 records
-          return results
-        })
-      })
+    return require("../bulk-create").addUsers()
   })
 
   beforeEach(() => {

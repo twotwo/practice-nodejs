@@ -32,8 +32,7 @@ describe("基于 User 表的业务逻辑", () => {
     debug("beforeAll")
     if (process.env.NODE_ENV === "test") {
       debug("init test db")
-      // Sync all models that aren't already in the database
-      return require("../../models").sequelize.sync()
+      return require("../bulk-create").addUsers()
     }
   })
   // shutdown after all tests
@@ -77,41 +76,52 @@ describe("基于 User 表的业务逻辑", () => {
   })
 
   describe("Promise封装的返回", () => {
-      test("#userService.findByUsername", done => {
+    test("#userService.findByUsername", done => {
+      userService
+        .findByUsername("李四")
+        .then(user => {
+          debug('userService.findByUsername("李四") user = %O', user)
+          expect(user.username).toEqual("李四")
+          done()
+        })
+        .catch(err => {
+          debug("userService.findByUsername, err = %s", err.message)
+          expect(err).toBeNull()
+          done()
+        })
+    })
+    // 1. 不存在的用户, 2. 正常签到， 3. 重复签到
+    for (let username of ["nouser", "张三", "李四", "李四"]) {
+      debug("#userService.signin ======== user = %s", username)
+      test("#userService.signin", done => {
         userService
-          .findByUsername("李四")
+          .signin(username)
           .then(user => {
-            debug('userService.findByUsername("李四") user = %O', user.dataValues)
-            expect(user.username).toEqual("李四")
+            debug("userService.signin() user = %o", user)
+            if (username !== "nouser") {
+              expect(user).not.toBeNull()
+              // debug("user.signinTime = %d", user.signinTime)
+              expect(user.signinTime).toBeGreaterThan(Date.now() / 1000 - 1000)
+            } else {
+              expect(user).toBeNull()
+            }
+
             done()
           })
           .catch(err => {
-            debug("userService.findByUsername, err = %s", err.message)
-            expect(err).toBeNull()
+            debug(
+              "userService.signin() user = %s, err = %s",
+              username,
+              err.message
+            )
+            if (username === "nouser") {
+              expect(err.message).toMatch("用户不存在@nouser")
+            } else {
+              expect(err.message).toMatch("当日已签到")
+            }
             done()
           })
       })
-      // 1. 不存在的用户, 2. 正常签到， 3. 重复签到
-      for (let username of ["nouser", "李四", "李四"]) {
-        debug("#userService.signin ======== user = %s", username)
-        test("#userService.signin", done => {
-          userService
-            .signin(username)
-            .then(user => {
-              debug("userService.signin() user = %O", user)
-              expect(user.signinTime).toBeGreaterThan(Date.now() / 1000 - 1000)
-              done()
-            })
-            .catch(err => {
-              debug("userService.signin, user = %s, err = %s", username, err.message)
-              if (username === "nouser") {
-                expect(err.message).toEqual("用户不存在@nouser")
-              } else if (username === "李四") {
-                expect(err.message).toEqual("当日已签到@李四")
-              }
-              done()
-            })
-        })
-      }
+    }
   })
 })
