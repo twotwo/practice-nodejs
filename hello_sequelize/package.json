@@ -4,7 +4,7 @@
   "description": "Sequelize getting started",
   "main": "app.js",
   "scripts": {
-    "dev": "DEBUG=sequelize node app.js",
+    "dev": "DEBUG=sequelize node --trace-sync-io init-db.js",
     "test": "npm run test-unit && npm run test-integration && npm run coverage",
     "test-unit": "cross-env NODE_ENV=test DEBUG=init:*,models,unit:* jest test/unit/*.test.js",
     "test-integration": "cross-env NODE_ENV=test DEBUG=service:*,integration:* jest test/integration/*.test.js",
@@ -30,7 +30,8 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "debug": "^3.1.0"
+    "debug": "^3.1.0",
+    "nodemon": "^1.18.3"
   },
   "jest": {
     "testEnvironment": "node",

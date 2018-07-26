@@ -41,3 +41,13 @@ models.sequelize
 
 // debug("db config = %O", models.sequelize.config)
 // debug("db options = %O", models.sequelize.options)
+
+models.User.findAll()
+  .then(userInstArray => {
+    debug("User.findAll")
+    return userInstArray.map(i => i.get())
+  })
+  .then(userDataArray => {
+    debug("users = %o", userDataArray)
+  })
+  .catch(err => err)
