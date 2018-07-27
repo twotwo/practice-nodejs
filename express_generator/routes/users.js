@@ -16,15 +16,38 @@ router.get("/", function(req, res, next) {
 })
 
 /**
- * ab -c 10 -n 10 "http://localhost:3000/users/perf"
+ * Wrapp setTimeout with Promise
+ *
+ * @param {*} t delay t ms
+ * @param {*} v
  */
-router.get("/perf", function(req, res, next) {
+const delay = (t, v) => {
+  return new Promise(resolve => {
+    setTimeout(resolve.bind(null, v), t)
+  })
+}
+
+/**
+ * ab -c 10 -n 10 "http://localhost:3000/users/perf/100"
+ */
+router.get("/perf/:time", function(req, res, next) {
   debug("/api/users ", req.baseUrl)
-  setTimeout(() => {
-    debug("process 1 s ...")
+  let time = req.params.time || 1000
+  if (isNaN(time)) {
+    res.send({ code: 1, msg: "invalid paramters", err: "time=" + time })
+    return res.end()
+  }
+
+  // setTimeout(() => {
+  //   debug("process %d ms ...", time)
+  //   res.send("perf over\n")
+  //   res.end()
+  // }, time)
+  return delay(time).then(() => {
+    debug("process %d ms ...", time)
     res.send("perf over\n")
     res.end()
-  }, 1000)
+  })
 })
 
 module.exports = router
