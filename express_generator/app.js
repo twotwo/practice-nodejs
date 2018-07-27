@@ -1,5 +1,5 @@
+const debug = require("debug")("srv:app") // add by li3huo
 const path = require("path")
-const debug = require("debug")("srv:app")
 
 /**
  * Gen by [express-generator](https://github.com/expressjs/generator)
@@ -12,9 +12,6 @@ const app = express()
 // app.set("views", path.join(__dirname, "views")) //模板文件所在目录
 // app.set("view engine", "hbs") //要使用的模板引擎
 
-// const favicon = require('serve-favicon');
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 /**
  * [morgan](https://github.com/expressjs/morgan) HTTP request logger middleware for node.js
  *
@@ -67,12 +64,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
  * 负责提供 Express 应用程序的静态资源
  */
 app.use(express.static(path.join(__dirname, "public")))
+// const favicon = require('serve-favicon');
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 /**
- * api 总入口
+ * mount routes to /
  */
 const index = require("./routes/index")
-app.use("/api", index)
+app.use("/", index)
 
 //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/app\?adf
 app.post("/app", (req, res) => {
