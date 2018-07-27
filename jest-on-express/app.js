@@ -1,11 +1,24 @@
-const express = require('express')
+/**
+ * Project generat by [express-generator](https://github.com/expressjs/generator)
+ *
+ * 4 steps practise to improve
+ */
+
 // 1. add debug
 const debug = require('debug')('srv:app')
+
+const express = require('express')
 const path = require('path')
-const logger = require('morgan')
 
 const app = express()
 
+/**
+ * [morgan](https://github.com/expressjs/morgan) HTTP request logger middleware for node.js
+ *
+ * `common` :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
+ * `dev` :method :url :status :response-time ms - :res[content-length]
+ */
+const logger = require('morgan')
 app.use(logger('dev'))
 
 /**
@@ -15,7 +28,7 @@ const session = require('express-session')
 app.use(
   session({
     name: 'sid', // The name of the session ID cookie to set in the response (and read from in the request).
-    secret: 'express generator',
+    secret: 'express practise',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -39,9 +52,12 @@ app.set('context', context)
 
 // set static at context
 app.use(app.get('context'), express.static(path.join(__dirname, 'public')))
+// const favicon = require('serve-favicon');
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 /**
- * 4. insert index router at application context
+ * 4. insert index router to application context
  */
 debug('indexRouter@%s', app.get('context'))
 const indexRouter = require('./routes/index')
