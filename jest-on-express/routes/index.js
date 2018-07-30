@@ -3,11 +3,12 @@ const router = express.Router()
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' })
+  // res.render('index', { title: 'Express' })
+  res.end('/route')
 })
 
-/* 用户接口入口 */
-const users = require('./users')
-router.use('/api/users', users)
+/* 子路由入口 */
+router.use('/perf', require('./perf'))
+router.use('/users', require('./users'))
 
 module.exports = router

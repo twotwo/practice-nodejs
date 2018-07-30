@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* nodemon --trace-sync-io ./bin/www"
+    "dev": "npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* nodemon --trace-sync-io ./bin/www",
+    "perf": "npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* node ./bin/www"
   },
   "dependencies": {
     "express": "~4.16.0",
