@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "koa": "^2.5.2"
+    "koa": "^2.5.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.38.0"
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "node app.js",
+    "dev": "node --trace-sync-io app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

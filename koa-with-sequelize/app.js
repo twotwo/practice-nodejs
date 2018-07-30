@@ -1,27 +1,25 @@
+const logger = require("koa-logger")
+const router = require("koa-router")()
 const Koa = require("koa")
 const app = new Koa()
 
 // logger
+app.use(logger())
 
-app.use(async (ctx, next) => {
-  await next()
-  const rt = ctx.response.get("X-Response-Time")
-  console.log(`${ctx.method} ${ctx.url} - ${rt}`)
-})
+// route definitions
+router.get("/", findAll)
 
-// x-response-time
+app.use(router.routes())
 
-app.use(async (ctx, next) => {
-  const start = Date.now()
-  await next()
-  const ms = Date.now() - start
-  ctx.set("X-Response-Time", `${ms}ms`)
-})
+/**
+ * sequelize function
+ * @param {*} ctx
+ */
+async function findAll(ctx) {
+  const userInsts = await User.findAll()
+  ctx.body = userInsts.map(i => i.get())
+}
 
-// response
-
-app.use(async ctx => {
-  ctx.body = "Hello World"
-})
+const User = require("./models").User
 
 app.listen(3000)
