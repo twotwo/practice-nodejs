@@ -7,7 +7,7 @@ const app = new Koa()
 app.use(logger())
 
 // route definitions
-router.get("/", findAll)
+router.get("/", findAll).get("/2", findAll2)
 
 app.use(router.routes())
 
@@ -21,5 +21,29 @@ async function findAll(ctx) {
 }
 
 const User = require("./models").User
+
+/**
+ * only use mysql2
+ */
+const pool = require("mysql2/promise").createPool({
+  host: process.env.DB_HOSTNAME,
+  port: 3306,
+  user: "node",
+  password: "pD#5T~l14+,i",
+  database: "test",
+  connectionLimit: 150
+})
+
+async function findAll2(ctx) {
+  try {
+    const [rows, fields, sql] = await pool.query("SELECT id, username, password, email FROM t_project_user")
+    ctx.body = { rows: rows, sql: sql }
+    // const query = await pool.query("SELECT * FROM t_project_user")
+    // ctx.body = { rows: query._rows, fields: query._fields, sql: query.sql }
+  } catch(err) {
+    console.log("caught exception!", err)
+    ctx.body = err
+  }
+}
 
 app.listen(3000)
