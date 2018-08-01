@@ -15,11 +15,16 @@ const app = express()
 /**
  * [morgan](https://github.com/expressjs/morgan) HTTP request logger middleware for node.js
  *
- * `common` :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
- * `dev` :method :url :status :response-time ms - :res[content-length]
+ * predefined format
+ *  `common` :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]
+ *  `dev` :method :url :status :response-time ms - :res[content-length]
+ *  `short` :remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms
+ * format
+ *  morgan(':method :url :status :res[content-length] - :response-time ms')
  */
-const logger = require("morgan")
-app.use(logger("dev"))
+// const logger = require("morgan")
+// app.use(logger("short"))
+require("./libs/express_helper").setLogger(app, '/tmp/express-access.log')
 
 /**
  * https://www.npmjs.com/package/cookie-parser

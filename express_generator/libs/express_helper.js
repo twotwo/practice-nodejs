@@ -49,7 +49,7 @@ exports.getConfig = () => {
 const cache = require("memory-cache")
 
 /**
- * 
+ *
  * @param {*} duration store cache in seconds
  */
 exports.cache = duration => {
@@ -60,7 +60,7 @@ exports.cache = duration => {
       res.send(cachedBody)
       return
     } else {
-      debug('saving key[%s]', key)
+      debug("saving key[%s]", key)
       res.sendResponse = res.send
       res.send = body => {
         cache.put(key, body, duration * 1000)
@@ -69,4 +69,36 @@ exports.cache = duration => {
       next()
     }
   }
+}
+
+/**
+ * https://www.npmjs.com/package/morgan
+ *
+ * @param {*} app - set morgan as express logger middleware
+ * @param {*} logFile - stream to log file
+ */
+exports.setLogger = (app, logFile) => {
+  // log file rotation
+  const fs = require("fs")
+  const morgan = require("morgan")
+  const path = require("path")
+  // https://www.npmjs.com/package/rotating-file-stream
+  const rfs = require("rotating-file-stream")
+
+  const logDirectory = path.dirname(logFile)
+  const fileName = path.basename(logFile)
+
+  // ensure log directory exists
+  fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+
+  // create a rotating write stream
+  var accessLogStream = rfs(fileName, {
+    interval: "1d", // rotate daily
+    path: logDirectory
+  })
+
+  // setup the logger
+  const format = ':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status - :response-time ms - :res[content-length] ":referrer" ":user-agent"'
+  app.use(morgan(format, { stream: accessLogStream }))
+  debug("setLogger save logFile [%s] in [%s]", fileName, logDirectory)
 }
