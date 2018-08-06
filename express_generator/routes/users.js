@@ -6,7 +6,7 @@ const debug = require("debug")("srv:route:user")
 /* Fake Info for Demo */
 const info = require("../models/fake_info")
 
-const cache = require("../libs/express_helper").cache
+const cache = require("../libs/express-helper").cache
 
 /**
  * users list

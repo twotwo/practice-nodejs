@@ -59,11 +59,11 @@ exports.cache = duration => {
     if (cachedResp) {
       res.status(cachedResp.status).send(cachedResp.body)
       return
-    } 
+    }
     debug("saving key[%s]", key)
     res.sendResponse = res.send
     res.send = body => {
-      cache.put(key, { body, status: res.statusCode}, duration * 1000)
+      cache.put(key, { body, status: res.statusCode }, duration * 1000)
       res.sendResponse(body)
     }
     next()
@@ -97,7 +97,8 @@ exports.setLogger = (app, logFile) => {
   })
 
   // setup the logger
-  const format = ':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status - :response-time ms - :res[content-length] ":referrer" ":user-agent"'
+  const format =
+    ':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status - :response-time ms - :res[content-length] ":referrer" ":user-agent"'
   app.use(morgan(format, { stream: accessLogStream }))
   debug("setLogger save logFile [%s] in [%s]", fileName, logDirectory)
 }

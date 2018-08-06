@@ -24,7 +24,11 @@ const app = express()
  */
 // const logger = require("morgan")
 // app.use(logger("short"))
-require("./libs/express_helper").setLogger(app, '/tmp/express-access.log')
+// require("./libs/express_helper").setConnectLogger(app, '/tmp/express-access.log')
+const logger = require("./libs/log4js-helper")
+// init log4js config
+logger.init(process.env.LOGGER_PATH || "/tmp/log")
+logger.setConnectLogger(app)
 
 /**
  * https://www.npmjs.com/package/cookie-parser
