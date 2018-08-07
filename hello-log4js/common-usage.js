@@ -1,16 +1,28 @@
+// /**
+//  * Initialise log4js first, so we don't miss any log messages
+//  */
+// const log4js = require("log4js")
+// const config = require("./config/log4js.json")
+// if (process.env.NODE_ENV === "dev") {
+//   //https://log4js-node.github.io/log4js-node/api.html#configuration---log4jsconfigureobject--string
+//   log4js.configure(config.dev)
+//   log4js.getLogger("log4js").info("use config.dev", config.dev)
+// } else {
+//   log4js.configure(config.production)
+//   log4js.getLogger("log4js").info("use config.production", config.production)
+// }
+
 /**
  * Initialise log4js first, so we don't miss any log messages
  */
-const log4js = require("log4js")
-const config = require("./config/log4js.json")
-if (process.env.NODE_ENV === "dev") {
-  //https://log4js-node.github.io/log4js-node/api.html#configuration---log4jsconfigureobject--string
-  log4js.configure(config.dev)
-  log4js.getLogger("log4js").info("use config.dev", config.dev)
-} else {
-  log4js.configure(config.production)
-  log4js.getLogger("log4js").info("use config.production", config.production)
+const env = process.env.NODE_ENV || "development"
+let config = require("./config/logging")[env]
+if (typeof (config) === 'string') {
+  config = require("./config/logging")[config]
 }
+const log4js = require("log4js")
+log4js.configure(config)
+log4js.getLogger("log4js").info("env =", env, "use config", config)
 
 /**
  * https://log4js-node.github.io/log4js-node/api.html#loggers---log4jsgetloggercategory

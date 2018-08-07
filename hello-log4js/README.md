@@ -75,7 +75,10 @@ node date-file-rolling.js
 ### Common usage
 
 ```bash
-NODE_ENV=dev node common-usage.js
+NODE_ENV=qa node common-usage.js
+cat /tmp/log/app.log
+NODE_ENV=production node common-usage.js
+cat /tmp/log/app.log
 ```
 
 根据指定的环境变量指定不同的日志配置
