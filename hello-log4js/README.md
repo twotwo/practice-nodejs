@@ -79,3 +79,11 @@ NODE_ENV=dev node common-usage.js
 ```
 
 根据指定的环境变量指定不同的日志配置
+
+### Under PM2
+
+`pm2 install pm2-intercom` # install pm2-intercom
+
+```bash
+pm2 start pm2.json
+```
