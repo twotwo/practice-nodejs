@@ -72,6 +72,8 @@ node started.js
 node date-file-rolling.js
 ```
 
+**推荐用法**
+
 ### Common usage
 
 ```bash

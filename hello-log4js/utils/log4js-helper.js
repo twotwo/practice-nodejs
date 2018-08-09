@@ -3,36 +3,31 @@ const path = require("path")
 
 // exports alias of module.exports
 /**
- * init log4js configration
- * 
- * @param {*} logDirectory appender.dateFile's path
+ * init log4js configration by NODE_ENV
  */
-exports.init = logDirectory => {
-  log4js.configure({
-    appenders: {
-      console: { type: "console" },
-      httpFile: {
-        type: "dateFile",
-        filename: path.join(logDirectory, "http.log")
-      },
-      serviceFile: {
-        type: "dateFile",
-        filename: path.join(logDirectory, "service.log")
-      }
-    },
-    categories: {
-      http: { appenders: ["httpFile"], level: "info" },
-      service: { appenders: ["serviceFile"], level: "info" },
-      default: { appenders: ["console"], level: "info" }
-    }
-  })
-  log4js.getLogger().info("log4js save logFile to [%s]", logDirectory)
+exports.init = () => {
+  if (global.log4js) {
+    log4js
+      .getLogger("log4js-helper")
+      .warn("won't init twice, stack =", new Error())
+    return
+  }
+  const env = process.env.NODE_ENV || "development"
+  let config = require("../config/logging")[env]
+  if (typeof config === "string") {
+    config = require("../config/logging")[config]
+  }
+  log4js.configure(config)
+  log4js
+    .getLogger("log4js-helper")
+    .info("env =", env, "stack =", new Error(), "use config", config)
+  global.log4js = true
 }
 
 /**
  * get a logger
- * 
- * @param {*} name logger's name, see also init()
+ *
+ * @param {*} name - name of log category
  */
 exports.getLogger = name => {
   if (!name) {
