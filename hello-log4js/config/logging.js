@@ -51,10 +51,15 @@ module.exports = {
           type: "coloured",
           pattern: "[%r] %p [%c] - %m%n"
         }
+      },
+      "no-noise": {
+        type: "categoryFilter",
+        exclude: ["http", "account"],
+        appender: "console"
       }
     },
     categories: {
-      default: { appenders: ["console"], level: "DEBUG" }
+      default: { appenders: ["no-noise"], level: "DEBUG" }
     }
   }
 }
