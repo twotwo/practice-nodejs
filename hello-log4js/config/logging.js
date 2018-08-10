@@ -1,22 +1,22 @@
-// 日志配置，在应用启动时初始化
+// 日志配置，在`bin/www`中初始化
 module.exports = {
   production: {
     appenders: {
       access: {
         type: "dateFile",
-        filename: "/tmp/log/access.log",
+        filename: "/var/log/platform/access.log",
         pattern: "-yyyyMMdd",
         category: "http"
       },
       app: {
         type: "file",
-        filename: "/tmp/log/app.log",
+        filename: "/var/log/platform/app.log",
         maxLogSize: 10485760,
         numBackups: 10
       },
       errorFile: {
         type: "file",
-        filename: "/tmp/log/errors.log"
+        filename: "/var/log/platform/errors.log"
       },
       errors: {
         type: "logLevelFilter",
@@ -25,8 +25,8 @@ module.exports = {
       }
     },
     categories: {
-      default: { appenders: ["app", "errors"], level: "DEBUG" },
-      http: { appenders: ["access"], level: "DEBUG" }
+      default: { appenders: ["app", "errors"], level: "INFO" },
+      http: { appenders: ["access"], level: "INFO" }
     }
   },
   qa: "production",
@@ -36,6 +36,20 @@ module.exports = {
         type: "console",
         layout: {
           type: "coloured"
+        }
+      }
+    },
+    categories: {
+      default: { appenders: ["console"], level: "DEBUG" }
+    }
+  },
+  test: {
+    appenders: {
+      console: {
+        type: "stdout",
+        layout: {
+          type: "coloured",
+          pattern: "[%r] %p [%c] - %m%n"
         }
       }
     },

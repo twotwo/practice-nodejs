@@ -1,5 +1,6 @@
 const log4js = require("log4js")
 const path = require("path")
+const callerPath = require("caller-path")
 
 // exports alias of module.exports
 /**
@@ -9,7 +10,7 @@ exports.init = () => {
   if (global.log4js) {
     log4js
       .getLogger("log4js-helper")
-      .warn("won't init twice, stack =", new Error())
+      .error("won't init twice, called by[%s]", callerPath())
     return
   }
   const env = process.env.NODE_ENV || "development"
@@ -20,7 +21,7 @@ exports.init = () => {
   log4js.configure(config)
   log4js
     .getLogger("log4js-helper")
-    .info("env =", env, "stack =", new Error(), "use config", config)
+    .info("env = %s, called by[%s]\nconfig=%O", env, callerPath(), config)
   global.log4js = true
 }
 

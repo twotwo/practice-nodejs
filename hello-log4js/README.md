@@ -22,7 +22,10 @@ log4js.configure({
 
 ### Date Rolling File Appender
 
+console/stdout
+
 [Date Rolling File Appender](https://log4js-node.github.io/log4js-node/dateFile.html)
+
 
 ### Connect / Express Logger
 
@@ -31,6 +34,9 @@ log4js.configure({
 ### Layouts
 
 [Layouts](https://log4js-node.github.io/log4js-node/layouts.html)
+
+- Coloured
+- 
 
 [Pattern && Pattern format](https://log4js-node.github.io/log4js-node/layouts.html#pattern)
 
