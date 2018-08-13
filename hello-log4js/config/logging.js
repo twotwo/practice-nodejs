@@ -27,7 +27,9 @@ module.exports = {
     categories: {
       default: { appenders: ["app", "errors"], level: "INFO" },
       http: { appenders: ["access"], level: "INFO" }
-    }
+    },
+    pm2: true,
+    pm2InstanceVar: "INSTANCE_ID"
   },
   qa: "production",
   development: {

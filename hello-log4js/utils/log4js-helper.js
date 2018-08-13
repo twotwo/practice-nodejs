@@ -38,6 +38,18 @@ exports.getLogger = name => {
 }
 
 /**
+ * get a logger
+ *
+ * @param {*} name - name of log category
+ */
+exports.info = (name, info) => {
+  if (process.env.INSTANCE_ID) {
+    info = '[' + process.env.INSTANCE_ID+'] '+info
+  }
+  log4js.getLogger(name).info(info)
+}
+
+/**
  * https://log4js-node.github.io/log4js-node/connect-logger.html
  * @param {*} app - Express Instance
  */
@@ -51,8 +63,8 @@ exports.setConnectLogger = app => {
       level: "auto",
       format: (req, res, format) =>
         format(
-          `:remote-addr - ${
-            req.headers["origin"]
+          `:remote-addr - ${req.headers["origin"]} - ${
+          process.env.INSTANCE_ID
           } - ":method :url HTTP/:http-version" :status :content-length - :response-time ms - ":referrer" ":user-agent"`
         ),
       nolog: "\\.(gif|jpe?g|png)$"

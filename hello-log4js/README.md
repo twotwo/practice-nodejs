@@ -11,6 +11,10 @@
 
 [Using with PM2](https://log4js-node.github.io/log4js-node/clustering.html#im-using-pm2-but-im-not-getting-any-logs)
 
+```bash
+pm2 install pm2-intercom
+```
+
 ```javascript
 log4js.configure({
   appenders: { out: { type: 'stdout'}},
@@ -20,12 +24,15 @@ log4js.configure({
 });
 ```
 
+pm2InstanceVar //对应pm2 apps.instance_var
+
 ### Date Rolling File Appender
 
 console/stdout
 
 [Date Rolling File Appender](https://log4js-node.github.io/log4js-node/dateFile.html)
 
+`alwaysIncludePattern` - boolean (default false) - include the pattern in the name of the current log file as well as the backups.
 
 ### Connect / Express Logger
 
