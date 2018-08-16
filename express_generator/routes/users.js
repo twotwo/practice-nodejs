@@ -6,14 +6,14 @@ const debug = require("debug")("srv:route:user")
 /* Fake Info for Demo */
 const info = require("../models/fake_info")
 
-const cache = require("../libs/express-helper").cache
+const cache = require("../utils/express-helper").cache
 
 /**
  * users list
  *
  */
 router.get("/", (req, res, next) => {
-  debug("/a/users ", req.baseUrl)
+  debug("/users ", req.baseUrl)
   res.send({ title: "List Users", users: info.users })
 })
 

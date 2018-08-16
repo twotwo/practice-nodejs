@@ -24,8 +24,8 @@ const app = express()
  */
 // const logger = require("morgan")
 // app.use(logger("short"))
-// require("./libs/express_helper").setConnectLogger(app, '/tmp/express-access.log')
-const logger = require("./libs/log4js-helper")
+// require("./utils/express_helper").setConnectLogger(app, '/tmp/express-access.log')
+const logger = require("./utils/log4js-helper")
 // init log4js config
 logger.init(process.env.LOGGER_PATH || "/tmp/log")
 logger.setConnectLogger(app)
@@ -80,8 +80,8 @@ app.use(express.static(path.join(__dirname, "public")))
 /**
  * mount routes to /
  */
-const index = require("./routes/index")
-app.use("/", index)
+const routes = require("./routes")
+app.use("/", routes)
 
 //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/app\?adf
 app.post("/app", (req, res) => {

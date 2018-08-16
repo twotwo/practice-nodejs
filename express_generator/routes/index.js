@@ -6,7 +6,7 @@ const router = express.Router();
 
 const debug = require("debug")("srv:route")
 
-router.get("/", function (req, res, next) {
+router.get("/", function(req, res, next) {
   debug("get / =%s", req.baseUrl)
   res.end("hit route")
 })

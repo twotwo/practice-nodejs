@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "DEBUG=express:*,srv:*,helper:* nodemon ./bin/www"
+    "dev": "DEBUG=express:router,srv:*,helper:* nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -22,6 +22,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "debug": "^2.6.9"
+    "debug": "^2.6.9",
+    "nodemon": "^1.18.3"
   }
 }

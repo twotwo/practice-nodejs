@@ -4,8 +4,7 @@ A barebones Node.js app using [Express 4](http://expressjs.com/).
 
 ## Dependencies
 
- * express-generator `npm install -g express-generator # Gloabal Install`
-
+- express-generator `npm install -g express-generator # Gloabal Install`
 
 ## Generate Project by express-generator
 
@@ -67,7 +66,6 @@ Make sure you have [Node.js](http://nodejs.org/) lts/carbon and [express-generat
 
     var port = normalizePort(process.env.npm_package_config_port||3000); #add to bin/www
 
-
 ## Running Project
 
 ```bash
@@ -80,7 +78,8 @@ curl localhost:3000 # 访问服务
 
 ## Add features to Project
 
-### 1. 在首页中显示users链接
+### 1. 在首页中显示 users 链接
+
 参考 [hbs](https://github.com/pillarjs/hbs) view engine
 
 views/index.hbs
@@ -96,12 +95,17 @@ views/index.hbs
 ### 2. 添加一些展示用的业务数据
 
 models/fake_info.js
-```js
 
+```js
 ```
 
-### 3. users增删改查的业务逻辑
+### 3. users 增删改查的业务逻辑
 
 views/user_list.hbs //展示用户列表
-routes/users.js     //业务逻辑
+routes/users.js //业务逻辑
 
+`curl http://localhost:3000/users`
+
+### 4. server side cache
+
+[Simple server side cache for Express.js with Node.js](http://goenning.net/2016/02/10/simple-server-side-cache-for-expressjs/)
