@@ -18,8 +18,9 @@ app.set('port', port)
 
 /**
  * Create HTTP server.
+ *
+ * https://nodejs.org/docs/latest/api/http.html#http_class_http_server
  */
-
 const server = http.createServer(app)
 
 /**
@@ -29,6 +30,19 @@ const server = http.createServer(app)
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
+server.on('close', () => {
+  debug('Close HTTP Server...')
+})
+
+process.on('exit', code => {
+  debug(`About to exit with code: ${code}`)
+  server.close()
+})
+
+process.on('SIGINT', () => {
+  debug('Received SIGINT.')
+  process.exit()
+})
 
 /**
  * Normalize a port into a number, string, or false.

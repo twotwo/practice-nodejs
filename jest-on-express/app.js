@@ -59,8 +59,8 @@ app.use(app.get('context'), express.static(path.join(__dirname, 'public')))
 /**
  * 4. insert index router to application context
  */
-debug('indexRouter@%s', app.get('context'))
-const indexRouter = require('./routes/index')
-app.use(app.get('context'), indexRouter)
+debug('mount routes to %s', app.get('context'))
+const routes = require('./routes')
+app.use(app.get('context'), routes)
 
 module.exports = app
