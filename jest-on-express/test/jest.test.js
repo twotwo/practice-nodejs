@@ -7,7 +7,7 @@ const debug = require('debug')('jest:api')
 debug.enabled = true
 
 // 测试用例
-describe('Express API - /api/', () => {
+describe('Jest Usage', () => {
   beforeAll(() => {
     debug('beforeAll')
   })
@@ -63,5 +63,37 @@ describe('Express API - /api/', () => {
     })
 
     // describe('', () => {})
+  })
+
+  /**
+   * [Using Matchers](https://jestjs.io/docs/en/using-matchers)
+   *
+   * https://jestjs.io/docs/en/expect
+   *
+   */
+  describe('Jest Assertion - Expect', () => {
+    /**
+     * [Truthiness](https://jestjs.io/docs/en/using-matchers#truthiness)
+     *
+     */
+    describe('Truthiness', () => {
+      test('null', () => {
+        const n = null
+        expect(n).toBeNull()
+        expect(n).toBeDefined()
+        expect(n).not.toBeUndefined()
+        expect(n).not.toBeTruthy()
+        expect(n).toBeFalsy()
+      })
+
+      test('zero', () => {
+        const z = 0
+        expect(z).not.toBeNull()
+        expect(z).toBeDefined()
+        expect(z).not.toBeUndefined()
+        expect(z).not.toBeTruthy()
+        expect(z).toBeFalsy()
+      })
+    })
   })
 })

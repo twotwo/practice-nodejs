@@ -1,26 +1,8 @@
 module.exports = {
   development: {
-    username: 'node',
-    password: 'pD#5T~l14+,i',
-    database: 'test',
-    host: process.env.DB_HOSTNAME,
-    dialect: 'mysql',
-    operatorsAliases: false,
-    logging: false,
-    define: {
-      underscored: true,
-      freezeTableName: false,
-      charset: 'utf8',
-      dialectOptions: {
-        collate: 'utf8_general_ci'
-      },
-      timestamps: false
-    },
-    pool: {
-      max: 50,
-      min: 0,
-      idle: 3000
-    }
+    dialect: 'sqlite',
+    storage: './db.development.sqlite',
+    operatorsAliases: false
   },
   test: {
     dialect: 'sqlite',
@@ -41,7 +23,6 @@ module.exports = {
     // Options
     operatorsAliases: false, // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators-security
     logging: false,
-    dialect: 'mysql',
     define: {
       underscored: true,
       freezeTableName: false,
