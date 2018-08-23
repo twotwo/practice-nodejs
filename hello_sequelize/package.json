@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/twotwo/practice-nodejs#readme",
   "dependencies": {
-    "mysql2": "^1.5.3",
+    "mysql2": "^1.6.1",
     "sequelize": "^4.38.0",
-    "sqlite3": "^4.0.1"
+    "sqlite3": "^4.0.2"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

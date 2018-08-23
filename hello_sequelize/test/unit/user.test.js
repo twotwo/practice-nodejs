@@ -8,8 +8,6 @@
 //http://docs.sequelizejs.com/class/lib/model.js~Model.html
 const debug = require("debug")("unit:models:user")
 
-
-
 // 测试用例
 describe("Sequelize User Model", () => {
   /**
