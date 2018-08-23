@@ -19,20 +19,49 @@ describe('Express API - /api/', () => {
     // }, 1500)
   })
 
-  describe('用户 API 测试', () => {
-    test('1. /api/users#获取全部用户列表', () => {
-      debug('config env=%s', process.env.NODE_ENV)
+  describe('Jest Environment', () => {
+    test('NODE_ENV set to jest', () => {
+      debug('env=%s', process.env.NODE_ENV)
+      expect(process.env.NODE_ENV).toBe('test')
     })
   })
 
-  describe('test.each(table)(name, fn)', () => {
-    test.each([
-      [1, 1, 3],
-      [1, 2, 3],
-      [2, 1, 3]
-    ])('%i + %i = %i', (a, b, expected) => {
-      expect(a + b).toBe(expected)
-      return expect(1).toBe(1)
+  /**
+   * [Jest Methods](https://jestjs.io/docs/en/api.html)
+   */
+  describe('Jest Methods Test', () => {
+    /**
+     * [test.each(table)(name, fn)](https://jestjs.io/docs/en/api.html#testeachtable-name-fn)
+     *
+     */
+    describe('test.each(table)(name, fn)', () => {
+      test.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
+        '.add(%i + %i) = %i',
+        (a, b, expected) => {
+          expect(a + b).toBe(expected)
+        }
+      )
     })
+
+    /**
+     * [describe.skip(name, fn)](https://jestjs.io/docs/en/api.html#describeskipname-fn)
+     *  alias: xdescribe(name, fn)
+     */
+    xdescribe('describe.skip(name, fn)', () => {
+      test('a test', () => {
+        expect(0).toBe(0)
+      })
+    })
+
+    /**
+     * https://jestjs.io/docs/en/api.html#testonlyname-fn-timeout
+     *
+     * test => test.only
+     */
+    test('test.only(name, fn, timeout) ignore other tests', () => {
+      expect(1).toBeGreaterThan(0)
+    })
+
+    // describe('', () => {})
   })
 })
