@@ -1,7 +1,13 @@
+/**
+ * node main.js -v --url <my url> --logtype console --origin <my host>
+ */
+
 // 接受的命令行参数
 const optionDefinitions = [
   { name: "verbose", alias: "v", type: Boolean, defaultValue: true },
-  { name: "src", type: String, multiple: true, defaultOption: true },
+  { name: "url", type: String, multiple: false, defaultOption: true },
+  { name: "origin", type: String, defaultValue: "http://admin.net" },
+  { name: "logtype", type: String, defaultValue: "dateFile" },
   { name: "timeout", alias: "t", type: Number }
 ]
 
@@ -25,49 +31,64 @@ const log4js = require("log4js")
 
 log4js.configure({
   appenders: {
-    file: { type: "dateFile", filename: "http.log" }
+    file: { type: options.logtype, filename: "http.log" }
   },
   categories: {
     default: { appenders: ["file"], level: "debug" }
-  }
+  },
+  disableClustering: true
 })
 
 const logger = log4js.getLogger("tester")
 
+const url = require("url")
+const myURL = url.parse(options.url)
+const baseURL = myURL.port
+  ? `${myURL.protocol}//${myURL.hostname}:${myURL.port}/`
+  : `${myURL.protocol}//${myURL.hostname}/`
+const URI = myURL.path
+logger.info("baseURL = %s, URI = %s, origin = %s", baseURL, URI, options.origin)
+
 const axios = require("axios")
 const instance = axios.create({
-  baseURL: "http://localhost/game_platform_v3/",
+  baseURL: baseURL,
   timeout: 1000,
-  headers: { Origin: "http://monitor.feiliu.com/" }
+  headers: { Origin: options.origin }
 })
 
 const monitor = () => {
-  instance.get("/article/home/10053?max=1").then(resp => {
+  instance.get(URI).then(resp => {
     if (resp.data.code === 0) {
-      logger.debug(
-        "%s@%s, news = %o",
-        resp.data.msg,
-        resp.data.host,
-        resp.data.list["news"]
-      )
+      logger.debug("%s@%s, news = %o", resp.data.msg, resp.data.host, resp.data.list["news"])
     } else {
       logger.error("[%d] %o", resp.status, resp.data)
     }
   })
 }
 
-// const timeout = 1000 * 60
-// setInterval(() => {
-//   monitor()
-// }, timeout)
+/**
+ * Generate Random Time in Seconds
+ */
+const genRandomTime = () => {
+  let min = 20,
+    max = 100
+  const now = new Date()
+  if ([19, 20, 21].indexOf(now.getHours()) !== -1) {
+    min = 5
+    max = 15
+  }
+
+  if ([0, 8, 9, 11, 12, 13, 18, 22, 23].indexOf(now.getHours()) !== -1) {
+    max = 20
+  }
+
+  //Generate Random number between
+  return Math.floor(Math.random() * (max - min + 1) + min) * 1000
+}
 
 const excute = () => {
-  const min = 4,
-    max = 10
-  //Generate Random number between
-  const rand = Math.floor(Math.random() * (max - min + 1) + min)
   monitor()
-  setTimeout(excute, rand * 1000)
+  setTimeout(excute, genRandomTime())
 }
 
 excute()
