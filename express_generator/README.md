@@ -2,6 +2,8 @@
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
+More info see [jest-on-express](../jest-on-express/)
+
 ## Dependencies
 
 - express-generator `npm install -g express-generator # Gloabal Install`

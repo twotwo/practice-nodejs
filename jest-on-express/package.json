@@ -7,11 +7,15 @@
     "perf": "npx cross-env PORT=8080 CONTEXT=/jest DEBUG=srv:* node ./bin/www"
   },
   "dependencies": {
-    "express": "~4.16.0",
+    "caller-path": "^2.0.0",
+    "connect-redis": "^3.3.3",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "log4js": "^3.0.5",
     "memory-cache": "^0.2.0",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.1",
+    "redis": "^2.8.0",
     "sequelize": "^4.38.0",
     "sqlite3": "^4.0.2"
   },
