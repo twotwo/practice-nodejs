@@ -5,11 +5,18 @@ const log = log4js.getLogger('express-helper')
 const redis = require('./redis-helper')
 
 /**
+ * https://www.npmjs.com/package/connect-redis
+ */
+session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+
+/**
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class
  */
 class Helper {
   constructor () {
     log.warn('init instance')
+    this.store = new RedisStore({ client: redis.getClient() })
   }
 
   /**
@@ -32,6 +39,25 @@ class Helper {
       ).split(',')[0]
     }
     next()
+  }
+
+  /**
+   * express-session with redis
+   */
+  getSession () {
+    return session({
+      name: 'sid', // The name of the session ID cookie to set in the response (and read from in the request).
+      secret: 'express key',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        // 在 HTTP 中也激活 cookie
+        secure: false,
+        // Specifies the number (in milliseconds) to use when calculating the Expires Set-Cookie attribute.
+        maxAge: 3600000 // one hour
+      },
+      store: this.store
+    })
   }
 
   /**

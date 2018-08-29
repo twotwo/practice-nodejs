@@ -24,21 +24,8 @@ app.use(logger('dev'))
 /**
  * 2. replace cookie-parser with express-session
  */
-const session = require('express-session')
-app.use(
-  session({
-    name: 'sid', // The name of the session ID cookie to set in the response (and read from in the request).
-    secret: 'express practise',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      // 在 HTTP 中也激活 cookie
-      secure: false,
-      // Specifies the number (in milliseconds) to use when calculating the Expires Set-Cookie attribute.
-      maxAge: 3600000 // one hour
-    }
-  })
-)
+const helper = require('./utils/express-helper')
+app.use(helper.getSession())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

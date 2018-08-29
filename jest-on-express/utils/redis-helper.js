@@ -13,12 +13,6 @@ const log = log4js.getLogger('redis-helper')
 const redis = require('redis')
 
 /**
- * https://www.npmjs.com/package/connect-redis
- */
-session = require('express-session')
-const RedisStore = require('connect-redis')(session)
-
-/**
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class
  */
 class Cache {
@@ -30,7 +24,6 @@ class Cache {
     const env = process.env.NODE_ENV || 'development'
     const config = require('../config/redis')[env]
     this.client = redis.createClient(config)
-    this.store = new RedisStore({ client: this.client })
 
     // Native Promises
     const { promisify } = require('util')
@@ -45,10 +38,10 @@ class Cache {
   }
 
   /**
-   * 获取 RedisStore 实例
+   * 获取 Redis client 实例 -- 不要直接传给业务！
    */
-  getStore () {
-    return this.store
+  getClient () {
+    return this.client
   }
 
   /**
