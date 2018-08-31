@@ -6,7 +6,7 @@
 const optionDefinitions = [
   { name: "verbose", alias: "v", type: Boolean, defaultValue: true },
   { name: "url", type: String, multiple: false, defaultOption: true },
-  { name: "origin", type: String, defaultValue: "http://admin.net" },
+  { name: "origin", type: String, defaultValue: "http://monitor.net" },
   { name: "logtype", type: String, defaultValue: "dateFile" },
   { name: "timeout", alias: "t", type: Number }
 ]
@@ -36,7 +36,9 @@ log4js.configure({
   categories: {
     default: { appenders: ["file"], level: "debug" }
   },
-  disableClustering: true
+  pm2: true,
+  pm2InstanceVar: "INSTANCE_ID"
+  // disableClustering: true
 })
 
 const logger = log4js.getLogger("tester")
@@ -56,14 +58,31 @@ const instance = axios.create({
   headers: { Origin: options.origin }
 })
 
+let headers = {}
+
 const monitor = () => {
-  instance.get(URI).then(resp => {
-    if (resp.data.code === 0) {
-      logger.debug("%s@%s, news = %o", resp.data.msg, resp.data.host, resp.data.list["news"])
-    } else {
-      logger.error("[%d] %o", resp.status, resp.data)
-    }
-  })
+  instance
+    .get(URI, { headers })
+    .then(resp => {
+      if (resp.headers["set-cookie"]) {
+        headers = { Cookie: resp.headers["set-cookie"] }
+        debug("find cookie=%s", resp.headers["set-cookie"])
+      }
+      if (resp.data.code === 0) {
+        logger.debug(
+          "[%d] %s@%s, news = %o",
+          process.env.INSTANCE_ID,
+          resp.data.msg,
+          resp.data.host,
+          resp.data.list["news"]
+        )
+      } else {
+        logger.error("[%d] %o", resp.status, resp.data)
+      }
+    })
+    .catch(ex => {
+      logger.error("get failed. err = %s", ex.message)
+    })
 }
 
 /**
