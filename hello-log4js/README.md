@@ -26,6 +26,20 @@ log4js.configure({
 
 pm2InstanceVar //对应pm2 apps.instance_var
 
+貌似pm2 v3下的 pm2-intercom 无法正常接收到消息，放弃。
+
+```bash
+ Module activated
+┌──────────────┬─────────┬────────────┬────────┬─────────┬─────┬─────────────┬───────┐
+│ Module       │ version │ target PID │ status │ restart │ cpu │ memory      │ user  │
+├──────────────┼─────────┼────────────┼────────┼─────────┼─────┼─────────────┼───────┤
+│ pm2-intercom │ 1.0.0   │ N/A        │ online │ 0       │ 0%  │ 63.703 MB   │ liyan │
+└──────────────┴─────────┴────────────┴────────┴─────────┴─────┴─────────────┴───────┘
+ Use `pm2 show <id|name>` to get more details about an app
+➜  hello-log4js git:(master) ✗ pm2 -v
+3.0.3
+```
+
 ### Date Rolling File Appender
 
 console/stdout
@@ -102,6 +116,26 @@ cat /tmp/log/app.log
 
 `pm2 install pm2-intercom` # install pm2-intercom
 
+[PM2 Runtime | Reference | CLI](https://pm2.io/doc/en/runtime/reference/pm2-cli/)
+
 ```bash
 pm2 start pm2.json
+```
+
+Update Config in JSON
+
+```bash
+## dump all processes for resurrecting them later
+➜  restful-api-tester git:(master) ✗ pm2 save
+## kill daemon, stop pm2
+➜  restful-api-tester git:(master) ✗ pm2 kill
+## start with new config
+➜  restful-api-tester git:(master) ✗ pm2 start pm2.json
+## resurrect previously dumped processes
+➜  restful-api-tester git:(master) ✗ pm2 resurrect
+```
+
+```bash
+## upgrade pm2
+➜  restful-api-tester git:(master) ✗ pm2 deepUpdate
 ```

@@ -23,6 +23,8 @@ exports.init = () => {
     .getLogger("log4js-helper")
     .info("env = %s, called by[%s]\nconfig=%O", env, callerPath(), config)
   global.log4js = true
+  //cluster id
+  global.cid = process.env.INSTANCE_ID || -1
 }
 
 /**

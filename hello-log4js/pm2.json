@@ -9,7 +9,7 @@
       "watch": true,
       "env": {
         "NODE_ENV": "dev",
-        "DEBUG": "log4js:clustering,log4js:main,log4js:message"
+        "DEBUG": "pm2-tester,log4js:clustering"
       }
     }
   ]

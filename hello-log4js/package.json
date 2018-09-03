@@ -12,10 +12,13 @@
   "dependencies": {
     "caller-path": "^2.0.0",
     "log4js": "^3.0.5",
-    "pm2": "^3.0.3"
+    "pm2": "^3.0.4"
   },
   "jest": {
     "testEnvironment": "node",
     "verbose": true
+  },
+  "devDependencies": {
+    "debug": "^3.1.0"
   }
 }
