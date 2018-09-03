@@ -37,7 +37,7 @@ log4js.configure({
     default: { appenders: ["file"], level: "debug" }
   },
   pm2: true,
-  pm2InstanceVar: "INSTANCE_ID"
+  pm2InstanceVar: "M_INSTANCE_ID"
   // disableClustering: true
 })
 
@@ -66,12 +66,22 @@ const monitor = () => {
     .then(resp => {
       if (resp.headers["set-cookie"]) {
         headers = { Cookie: resp.headers["set-cookie"] }
-        debug("find cookie=%s", resp.headers["set-cookie"])
+        debug(
+          "[%d] find cookie=%s",
+          process.env.M_INSTANCE_ID,
+          resp.headers["set-cookie"]
+        )
       }
       if (resp.data.code === 0) {
+        debug(
+          "[%d] %s@%s",
+          process.env.M_INSTANCE_ID,
+          resp.data.msg,
+          resp.data.host
+        )
         logger.debug(
           "[%d] %s@%s, news = %o",
-          process.env.INSTANCE_ID,
+          process.env.M_INSTANCE_ID,
           resp.data.msg,
           resp.data.host,
           resp.data.list["news"]
