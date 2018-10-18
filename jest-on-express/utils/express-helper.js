@@ -7,7 +7,7 @@ const redis = require('./redis-helper')
 /**
  * https://www.npmjs.com/package/connect-redis
  */
-session = require('express-session')
+const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 
 /**
@@ -66,18 +66,21 @@ class Helper {
    */
   cache (duration) {
     return (req, res, next) => {
+      // use url as key
       let key = '__express__' + req.originalUrl || req.url
       // let cachedResp = cache.get(key)
       return redis
         .get(key)
         .then(cachedResp => {
           if (cachedResp) {
+            // hit response cache, return response
             res.status(cachedResp.status).send(cachedResp.body)
           } else {
-            debug('saving key[%s]', key)
+            // missing, continue running
             res.sendResponse = res.send
             res.send = body => {
               // cache.put(key, { body, status: res.statusCode }, duration * 1000)
+              debug('saving key[%s]', key)
               redis.put(key, { body, status: res.statusCode }, duration)
               res.sendResponse(body)
             }

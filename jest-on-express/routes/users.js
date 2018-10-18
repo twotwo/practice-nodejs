@@ -2,26 +2,12 @@ const express = require('express')
 const router = express.Router()
 const debug = require('debug')('srv:api:users')
 
-const User = require('../models').User
-
-const findAll = () => {
-  return User.findAll()
-    .then(userInsts => {
-      // instance array
-      return userInsts.map(i => i.get())
-    })
-    .then(userDatas => {
-      return userDatas
-    })
-    .catch(err => {
-      throw new Error(err.message + '@Service.user.findAll')
-    })
-}
+const User = require('../services/users')
 
 /* GET users listing. */
 router.get('/', (req, res) => {
   // res.send([{ id: 1, name: 'dsf' }, { id: 2, name: 'dsf' }])
-  findAll()
+  User.findAll()
     .then(users => {
       res.send({users: users})
     }).catch(err => {
